@@ -6,12 +6,19 @@
     "pnpm": "10.34.5"
   },
   "packageManager": "pnpm@10.34.5",
+  "scripts": {
+    "dev:web": "pnpm --filter @acme/web run dev",
+    "dev:server": "pnpm --filter @acme/server run dev",
+    "db:up": "docker compose up -d --wait postgres",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs -f postgres"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  },
   "pnpm": {
     "overrides": {
       "@esbuild-kit/core-utils>esbuild": "0.25.12"
     }
-  },
-  "devDependencies": {
-    "typescript": "catalog:"
   }
 }

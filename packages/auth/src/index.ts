@@ -1,13 +1,6 @@
 import type { Auth, BetterAuthOptions } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { betterAuth } from 'better-auth/minimal';
-import {
-  admin,
-  haveIBeenPwned,
-  openAPI,
-  organization,
-  twoFactor,
-} from 'better-auth/plugins';
 import { z } from 'zod';
 
 type AuthDb = Parameters<typeof drizzleAdapter>[0];
@@ -44,8 +37,6 @@ export function createAuth(db: AuthDb, options: AuthOptions): AuthInstance {
         banned: false,
         banReason: null,
         banExpires: null,
-        // Two Factor plugin
-        twoFactorEnabled: false,
         ...additionalFields,
         id,
       }),
@@ -54,24 +45,6 @@ export function createAuth(db: AuthDb, options: AuthOptions): AuthInstance {
       // onPasswordReset: async (_data, _request) => {}, // turn on with requireEmailVerification
     },
     // emailVerification: { sendVerificationEmail: async () => {} }, // turn on with requireEmailVerification
-    ...(options.googleClientId && options.googleClientSecret ?
-      {
-        socialProviders: {
-          google: {
-            prompt: 'select_account',
-            clientId: options.googleClientId,
-            clientSecret: options.googleClientSecret,
-          },
-        },
-      }
-    : {}),
-    plugins: [
-      admin({ defaultRole: 'user' }),
-      haveIBeenPwned({ enabled: options.isProd }),
-      organization(),
-      openAPI(),
-      twoFactor(),
-    ],
     trustedOrigins: [options.appOrigin],
     session: { cookieCache: { enabled: true, maxAge: 60 * 5 } },
     secret: options.secret,

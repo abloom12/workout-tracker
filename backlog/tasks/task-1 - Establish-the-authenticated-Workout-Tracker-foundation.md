@@ -4,7 +4,7 @@ title: Establish the authenticated Workout Tracker foundation
 status: To Do
 assignee: []
 created_date: '2026-09-18 14:18'
-updated_date: '2026-09-18 14:40'
+updated_date: '2026-09-18 21:08'
 labels: []
 dependencies: []
 documentation:
@@ -107,3 +107,9 @@ Reduce the inherited authentication setup to the supported email/password and se
 - `pnpm dev` — supports a manual browser check of signup, login, protected-route redirection, authenticated shell navigation, keyboard operation, responsive layout, logout, and subsequent protected-route rejection.
 - `git diff --check` — verifies the implementation contains no whitespace errors.
 <!-- SECTION:PLAN:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Configure editor format-on-save for the web workspace so the shared Prettier configuration automatically formats files and organizes imports through @ianvs/prettier-plugin-sort-imports.
+<!-- SECTION:NOTES:END -->

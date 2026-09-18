@@ -1,7 +1,6 @@
 import * as path from 'node:path';
 import { includeIgnoreFile } from '@eslint/compat';
 import eslint from '@eslint/js';
-import importPlugin from 'eslint-plugin-import';
 import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
@@ -11,7 +10,6 @@ export const baseConfig = defineConfig(
   { files: ['**/*.js'], extends: [eslint.configs.recommended] },
   {
     files: ['**/*.ts', '**/*.tsx'],
-    plugins: { import: importPlugin },
     extends: [
       eslint.configs.recommended,
       ...tseslint.configs.recommendedTypeChecked,
@@ -41,7 +39,6 @@ export const baseConfig = defineConfig(
         { allowConstantLoopConditions: true },
       ],
       '@typescript-eslint/no-non-null-assertion': 'error',
-      'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
     },
   },
   { linterOptions: { reportUnusedDisableDirectives: true } },
