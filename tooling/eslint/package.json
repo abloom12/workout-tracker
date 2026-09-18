@@ -1,0 +1,31 @@
+{
+  "name": "@acme/eslint-config",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./base.ts",
+    "./react": "./react.ts"
+  },
+  "scripts": {
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@eslint/compat": "2.1.1",
+    "@eslint/js": "catalog:",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "eslint-plugin-react-refresh": "0.5.2",
+    "typescript-eslint": "8.70.0"
+  },
+  "devDependencies": {
+    "@acme/prettier-config": "workspace:*",
+    "@acme/tsconfig": "workspace:*",
+    "@total-typescript/ts-reset": "catalog:",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:"
+  },
+  "prettier": "@acme/prettier-config"
+}

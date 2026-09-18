@@ -1,0 +1,17 @@
+{
+  "name": "workout-tracker",
+  "version": "1.0.0",
+  "engines": {
+    "node": "24.21.0",
+    "pnpm": "10.34.5"
+  },
+  "packageManager": "pnpm@10.34.5",
+  "pnpm": {
+    "overrides": {
+      "@esbuild-kit/core-utils>esbuild": "0.25.12"
+    }
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  }
+}

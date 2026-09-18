@@ -1,0 +1,10 @@
+{
+  "extends": "@acme/tsconfig/node-build.json",
+  "compilerOptions": {
+    "outDir": "${configDir}/dist",
+    "rootDir": "${configDir}/src",
+    "types": ["@total-typescript/ts-reset"]
+  },
+  "include": ["src"],
+  "exclude": ["**/*.test.ts", "**/*.spec.ts"]
+}

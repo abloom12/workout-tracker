@@ -1,0 +1,6 @@
+{
+  "extends": "@acme/tsconfig/base.json",
+  "compilerOptions": { "types": ["@total-typescript/ts-reset", "node"] },
+  "include": ["."],
+  "exclude": ["node_modules"]
+}
