@@ -22,7 +22,6 @@ export const app: FastifyPluginAsync = async (server) => {
     appOrigin: config.appOrigin,
     baseURL: config.auth.baseUrl,
     secret: config.auth.secret,
-    isProd: config.isProd,
   });
   const { appRouter, createContext } = createApi(auth);
 
