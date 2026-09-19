@@ -2,7 +2,7 @@
   "extends": "@acme/tsconfig/node.json",
   "compilerOptions": {
     "rootDir": "${configDir}",
-    "types": ["@total-typescript/ts-reset", "node"],
+    "types": ["@total-typescript/ts-reset", "node"]
   },
-  "include": ["drizzle.config.ts", "src"],
+  "include": ["drizzle.config.ts", "src"]
 }

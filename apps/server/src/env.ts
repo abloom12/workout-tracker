@@ -27,9 +27,6 @@ export const config = {
   host: env.HOST,
   port: env.PORT,
   database: { url: env.DATABASE_URL },
-  auth: {
-    baseUrl: env.BETTER_AUTH_URL,
-    secret: env.BETTER_AUTH_SECRET,
-  },
+  auth: { baseUrl: env.BETTER_AUTH_URL, secret: env.BETTER_AUTH_SECRET },
   isProd: env.NODE_ENV === 'production',
 } as const;

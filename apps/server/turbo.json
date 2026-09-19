@@ -1,8 +1,1 @@
-{
-  "extends": ["//"],
-  "tasks": {
-    "dev": {
-      "interruptible": true
-    }
-  }
-}
+{ "extends": ["//"], "tasks": { "dev": { "interruptible": true } } }

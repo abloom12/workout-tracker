@@ -32,6 +32,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { useSidebar } from '@/hooks/use-sidebar';
 import { authClient } from '@/lib/auth-client';
 
 const navigation = [
@@ -45,6 +46,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   });
+  const { setOpenMobile } = useSidebar();
   const navigate = useNavigate();
   const [isSigningOut, setIsSigningOut] = useState(false);
 
@@ -82,7 +84,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild size="lg">
-              <Link to="/dashboard">
+              <Link to="/dashboard" onClick={() => setOpenMobile(false)}>
                 <span className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-lg">
                   <Dumbbell aria-hidden="true" />
                 </span>
@@ -103,7 +105,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
               {navigation.map((item) => (
                 <SidebarMenuItem key={item.to}>
                   <SidebarMenuButton asChild isActive={pathname === item.to}>
-                    <Link to={item.to}>
+                    <Link to={item.to} onClick={() => setOpenMobile(false)}>
                       <item.icon aria-hidden="true" />
                       <span>{item.title}</span>
                     </Link>
@@ -157,7 +159,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link to="/settings">
+                  <Link to="/settings" onClick={() => setOpenMobile(false)}>
                     <SettingsIcon aria-hidden="true" />
                     Settings
                   </Link>

@@ -1,7 +1,7 @@
-{ 
-  "extends": "@acme/tsconfig/base.json", 
+{
+  "extends": "@acme/tsconfig/base.json",
   "compilerOptions": {
-   "lib": ["ES2023"],
+    "lib": ["ES2023"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "types": ["@total-typescript/ts-reset", "node"],
@@ -10,5 +10,5 @@
     "noEmit": false,
     "sourceMap": true
   },
-  "include": ["src"] 
+  "include": ["src"]
 }
