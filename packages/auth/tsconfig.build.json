@@ -3,8 +3,8 @@
   "compilerOptions": {
     "outDir": "${configDir}/dist",
     "rootDir": "${configDir}/src",
-    "types": ["@total-typescript/ts-reset"]
+    "types": ["@total-typescript/ts-reset"],
   },
   "include": ["src"],
-  "exclude": ["**/*.test.ts", "**/*.spec.ts"]
+  "exclude": ["src/auth.ts", "**/*.test.ts", "**/*.spec.ts"],
 }
