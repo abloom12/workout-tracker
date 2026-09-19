@@ -1,60 +1,44 @@
 import { useQuery } from '@tanstack/react-query';
-import { createFileRoute, Link } from '@tanstack/react-router';
-import { toast } from 'sonner';
+import { createFileRoute, Link, redirect } from '@tanstack/react-router';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { authClient } from '@/lib/auth-client';
+import { defaultAuthRedirect } from '@/lib/auth-redirect';
 import { trpc } from '@/lib/trpc';
 
-export const Route = createFileRoute('/')({ component: RouteComponent });
+export const Route = createFileRoute('/')({
+  beforeLoad: async () => {
+    const { data: session } = await authClient.getSession();
+
+    if (session) {
+      throw redirect({ to: defaultAuthRedirect });
+    }
+  },
+  component: RouteComponent,
+});
 
 function RouteComponent() {
-  const { data: session } = authClient.useSession();
-
-  const handleSignOut = async () => {
-    const { error } = await authClient.signOut();
-
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-
-    toast.success('Signed out successfully');
-  };
-
   return (
     <main className="flex min-h-screen items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Home</CardTitle>
+          <CardTitle>Workout Tracker</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
-          {session ?
-            <>
-              <p>Signed in as {session.user.email}</p>
-              <div className="flex gap-2">
-                <Button asChild>
-                  <Link to="/settings">Settings</Link>
-                </Button>
-                <Button variant="outline" onClick={() => void handleSignOut()}>
-                  Sign Out
-                </Button>
-              </div>
-            </>
-          : <>
-              <p>Welcome. Sign in or create an account to continue.</p>
-              <div className="flex gap-2">
-                <Button asChild>
-                  <Link to="/login">Sign In</Link>
-                </Button>
-                <Button asChild variant="outline">
-                  <Link to="/signup">Sign Up</Link>
-                </Button>
-              </div>
-            </>
-          }
+          <p className="text-muted-foreground">
+            Make every workout count. Sign in or create an account to continue.
+          </p>
+
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button className="flex-1" size="lg" asChild>
+              <Link to="/login">Sign In</Link>
+            </Button>
+            <Button className="flex-1" size="lg" asChild variant="outline">
+              <Link to="/signup">Create an account</Link>
+            </Button>
+          </div>
 
           <ApiConnectionStatus />
         </CardContent>
