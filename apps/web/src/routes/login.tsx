@@ -72,11 +72,22 @@ function RouteComponent() {
             <FieldGroup>
               <form.AppField
                 name="email"
-                children={(field) => <field.InputField label="Email" />}
+                children={(field) => (
+                  <field.InputField
+                    type="email"
+                    label="Email"
+                    autoComplete="username"
+                  />
+                )}
               />
               <form.AppField
                 name="password"
-                children={(field) => <field.PasswordField label="Password" />}
+                children={(field) => (
+                  <field.PasswordField
+                    label="Password"
+                    autoComplete="current-password"
+                  />
+                )}
               />
 
               <form.AppForm>

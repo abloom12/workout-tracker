@@ -4,7 +4,7 @@ packages:
   - tooling/*
 
 catalog:
-  "@eslint/js": 9.39.4
+  "@eslint/js": 10.0.1
   "@total-typescript/ts-reset": 0.6.1
   "@trpc/client": 11.16.0
   "@trpc/server": 11.19.0
@@ -12,7 +12,7 @@ catalog:
   "@types/node": 24.12.2
   better-auth: 1.7.5
   dotenv: 17.4.2
-  eslint: 9.39.4
+  eslint: 10.10.0
   prettier: 3.9.8
   tsdown: 0.21.10
   typescript: 6.0.2

@@ -1,5 +1,4 @@
 import { useStore } from '@tanstack/react-form';
-import { DollarSign } from 'lucide-react';
 
 import { useFieldContext } from '@/lib/form';
 import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field';

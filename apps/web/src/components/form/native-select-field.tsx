@@ -6,7 +6,7 @@ import { NativeSelect, NativeSelectOption } from '../ui/native-select';
 
 type SelectFieldProps = {
   label: string;
-  options: Array<{ value: string; label: string }>;
+  options: { value: string; label: string }[];
   placeholder?: string;
   description?: string;
 };

@@ -1,10 +1,10 @@
 ---
 id: TASK-1
 title: Establish the authenticated Workout Tracker foundation
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-09-18 14:18'
-updated_date: '2026-09-18 21:08'
+updated_date: '2026-09-18 22:35'
 labels: []
 dependencies: []
 documentation:

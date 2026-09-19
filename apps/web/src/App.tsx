@@ -9,6 +9,7 @@ import { trpc } from '@/lib/trpc';
 import { routeTree } from '@/routeTree.gen';
 
 declare module '@tanstack/react-router' {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions -- TanStack Router requires declaration merging.
   interface Register {
     router: typeof router;
   }

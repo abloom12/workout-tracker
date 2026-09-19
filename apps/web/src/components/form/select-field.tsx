@@ -14,7 +14,7 @@ import {
 
 type SelectFieldProps = {
   label: string;
-  options: Array<{ value: string; label: string }>;
+  options: { value: string; label: string }[];
   groupLabel?: string;
   placeholder?: string;
   description?: string;

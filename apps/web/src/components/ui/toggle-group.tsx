@@ -2,8 +2,8 @@ import * as React from 'react';
 import { type VariantProps } from 'class-variance-authority';
 import { ToggleGroup as ToggleGroupPrimitive } from 'radix-ui';
 
-import { toggleVariants } from '@/components/ui/toggle';
 import { cn } from '@/lib/cn';
+import { toggleVariants } from './toggle-variants';
 
 const ToggleGroupContext = React.createContext<
   VariantProps<typeof toggleVariants> & {
@@ -68,8 +68,8 @@ function ToggleGroupItem({
   return (
     <ToggleGroupPrimitive.Item
       data-slot="toggle-group-item"
-      data-variant={context.variant || variant}
-      data-size={context.size || size}
+      data-variant={context.variant ?? variant}
+      data-size={context.size ?? size}
       data-spacing={context.spacing}
       className={cn(
         [
@@ -88,8 +88,8 @@ function ToggleGroupItem({
           'group-data-[spacing=0]/toggle-group:has-data-[icon=inline-start]:pl-1.5',
         ],
         toggleVariants({
-          variant: context.variant || variant,
-          size: context.size || size,
+          variant: context.variant ?? variant,
+          size: context.size ?? size,
         }),
         className,
       )}
