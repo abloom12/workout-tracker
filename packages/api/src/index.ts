@@ -22,7 +22,7 @@ function createAppRouter() {
   const publicProcedure = t.procedure;
 
   const protectedProcedure = t.procedure.use(({ ctx, next }) => {
-    if (!ctx.session?.user || !ctx.session?.session) {
+    if (!ctx.session) {
       throw new TRPCError({ code: 'UNAUTHORIZED' });
     }
 

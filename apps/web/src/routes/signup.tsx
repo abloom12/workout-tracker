@@ -21,6 +21,8 @@ import { authSearchSchema, getAuthRedirect } from '@/lib/auth-redirect';
 import { useAppForm } from '@/lib/form';
 
 export const Route = createFileRoute('/signup')({
+  component: RouteComponent,
+  validateSearch: authSearchSchema,
   beforeLoad: async ({ search }) => {
     const { data: session } = await authClient.getSession();
 
@@ -28,8 +30,6 @@ export const Route = createFileRoute('/signup')({
       throw redirect({ to: getAuthRedirect(search.redirect) });
     }
   },
-  component: RouteComponent,
-  validateSearch: authSearchSchema,
 });
 
 const signupSchema = z
@@ -47,19 +47,12 @@ const signupSchema = z
     path: ['confirm'],
   });
 
-type SignupSchema = z.infer<typeof signupSchema>;
-
 function RouteComponent() {
   const navigate = useNavigate({ from: '/signup' });
   const { redirect: redirectTo } = Route.useSearch();
 
   const form = useAppForm({
-    defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-      confirm: '',
-    } as SignupSchema,
+    defaultValues: { name: '', email: '', password: '', confirm: '' },
     validators: { onChange: signupSchema },
     onSubmit: async ({ value }) => {
       const { error } = await authClient.signUp.email({

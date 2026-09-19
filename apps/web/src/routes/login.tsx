@@ -15,6 +15,8 @@ import { authSearchSchema, getAuthRedirect } from '@/lib/auth-redirect';
 import { useAppForm } from '@/lib/form';
 
 export const Route = createFileRoute('/login')({
+  component: RouteComponent,
+  validateSearch: authSearchSchema,
   beforeLoad: async ({ search }) => {
     const { data: session } = await authClient.getSession();
 
@@ -22,8 +24,6 @@ export const Route = createFileRoute('/login')({
       throw redirect({ to: getAuthRedirect(search.redirect) });
     }
   },
-  component: RouteComponent,
-  validateSearch: authSearchSchema,
 });
 
 const loginSchema = z.object({
