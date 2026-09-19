@@ -4,7 +4,7 @@ title: Establish the authenticated Workout Tracker foundation
 status: In Progress
 assignee: []
 created_date: '2026-09-18 14:18'
-updated_date: '2026-09-18 22:35'
+updated_date: '2026-09-19 20:56'
 labels: []
 dependencies: []
 documentation:
@@ -112,4 +112,6 @@ Reduce the inherited authentication setup to the supported email/password and se
 
 <!-- SECTION:NOTES:BEGIN -->
 Configure editor format-on-save for the web workspace so the shared Prettier configuration automatically formats files and organizes imports through @ianvs/prettier-plugin-sort-imports.
+
+Scope decision: Editable profile and password settings were deferred to TASK-11 so Exercise and Workout MVP work can proceed sooner. TASK-1 retains the protected account settings placeholder, core Better Auth capabilities, authenticated shell, and required signup/login/logout/protected-route journey.
 <!-- SECTION:NOTES:END -->
