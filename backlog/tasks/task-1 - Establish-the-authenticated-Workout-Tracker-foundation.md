@@ -1,10 +1,10 @@
 ---
 id: TASK-1
 title: Establish the authenticated Workout Tracker foundation
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-09-18 14:18'
-updated_date: '2026-09-19 20:56'
+updated_date: '2026-09-19 22:30'
 labels: []
 dependencies: []
 documentation:
@@ -21,11 +21,11 @@ The repository needs a runnable Workout Tracker foundation based on the approved
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 A clean checkout can install dependencies and start the React application, Fastify API, and PostgreSQL database using documented commands
-- [ ] #2 Committed migrations initialize a fresh database successfully
-- [ ] #3 A visitor can sign up, log in, enter the authenticated application shell, log out, and is prevented from opening protected product routes anonymously
-- [ ] #4 The authenticated shell identifies the product as Workout Tracker and provides a responsive, keyboard-operable foundation for its product surfaces
-- [ ] #5 Repository-level formatting, linting, typechecking, and production builds pass using documented commands
+- [x] #1 A clean checkout can install dependencies and start the React application, Fastify API, and PostgreSQL database using documented commands
+- [x] #2 Committed migrations initialize a fresh database successfully
+- [x] #3 A visitor can sign up, log in, enter the authenticated application shell, log out, and is prevented from opening protected product routes anonymously
+- [x] #4 The authenticated shell identifies the product as Workout Tracker and provides a responsive, keyboard-operable foundation for its product surfaces
+- [x] #5 Repository-level formatting, linting, typechecking, and production builds pass using documented commands
 <!-- AC:END -->
 
 ## Implementation Plan
@@ -106,6 +106,10 @@ Reduce the inherited authentication setup to the supported email/password and se
 - `pnpm build` — verifies all workspaces produce their production builds.
 - `pnpm dev` — supports a manual browser check of signup, login, protected-route redirection, authenticated shell navigation, keyboard operation, responsive layout, logout, and subsequent protected-route rejection.
 - `git diff --check` — verifies the implementation contains no whitespace errors.
+
+## Scope Amendment
+
+Editable profile and password settings were deferred to TASK-11 to prioritize the Exercise and Workout MVP. TASK-1 retains the protected settings placeholder and core Better Auth capabilities; this amendment supersedes the profile/password form verification references above.
 <!-- SECTION:PLAN:END -->
 
 ## Implementation Notes
@@ -114,4 +118,17 @@ Reduce the inherited authentication setup to the supported email/password and se
 Configure editor format-on-save for the web workspace so the shared Prettier configuration automatically formats files and organizes imports through @ianvs/prettier-plugin-sort-imports.
 
 Scope decision: Editable profile and password settings were deferred to TASK-11 so Exercise and Workout MVP work can proceed sooner. TASK-1 retains the protected account settings placeholder, core Better Auth capabilities, authenticated shell, and required signup/login/logout/protected-route journey.
+
+Final verification:
+- `pnpm install --frozen-lockfile` passed with the committed workspace lockfile.
+- PostgreSQL 17 was healthy; the initial migration was applied to a fresh database and safely reapplied.
+- Manual browser verification passed for signup, protected-route redirect, authenticated Dashboard entry, Settings navigation, logout, anonymous route rejection, and subsequent login.
+- Responsive and keyboard checks passed, including skip navigation, sidebar controls, account menu behavior, and mobile sidebar closure after navigation.
+- `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, and `git diff --check` passed.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Established the independent Workout Tracker foundation with React/Vite, Fastify, PostgreSQL 17, Better Auth, core authentication migrations, reproducible Turbo orchestration, a responsive protected application shell, and documented local workflows. Verified frozen installation, database initialization, the complete browser authentication journey, responsive keyboard operation, formatting, linting, typechecking, production builds, and whitespace.
+<!-- SECTION:FINAL_SUMMARY:END -->

@@ -1,16 +1,17 @@
 ---
 id: TASK-2
 title: Establish the live deployment path
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-09-18 14:19'
+updated_date: '2026-09-19 22:31'
 labels: []
 dependencies:
   - TASK-1
 documentation:
   - doc-1
 type: chore
-ordinal: 2000
+ordinal: 1000
 ---
 
 ## Description
