@@ -1,16 +1,17 @@
 ---
 id: TASK-3
 title: Provide the curated Exercise library
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-09-18 14:19'
+updated_date: '2026-09-20 00:15'
 labels: []
 dependencies:
   - TASK-1
 documentation:
   - doc-1
 type: feature
-ordinal: 3000
+ordinal: 500
 ---
 
 ## Description
