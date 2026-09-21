@@ -5,8 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1789839974331,
-      "tag": "0000_quick_marvel_zombies",
+      "when": 1789930664626,
+      "tag": "0000_better_auth",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789933704069,
+      "tag": "0001_exercise-library",
       "breakpoints": true
     }
   ]
