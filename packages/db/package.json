@@ -15,7 +15,7 @@
     "db:seed": "tsx src/seed.ts",
     "db:studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push",
-    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "format": "prettier --check . --ignore-path ../../.gitignore --ignore-path .prettierignore",
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.json"
   },

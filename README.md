@@ -5,7 +5,10 @@ PostgreSQL, Better Auth, tRPC, and Turborepo.
 
 The current foundation provides email/password authentication, protected
 application routes, a responsive authenticated shell, and account session
-controls. Exercise and workout features are delivered in later slices.
+controls. It also provides an application-owned curated Exercise catalog
+through an authenticated read-only tRPC API. User-facing Exercise selection,
+Workout composition, scheduling, logging, and History are delivered in later
+slices.
 
 ## Prerequisites
 
@@ -65,6 +68,15 @@ pnpm db:migrate
 
 Drizzle records applied migrations, so rerunning this command is safe.
 
+Seed the application-owned Exercise catalog:
+
+```bash
+pnpm db:seed
+```
+
+The seed command can be rerun safely and inserts any missing configured
+Exercises without creating duplicates.
+
 Stop and remove the Compose services with:
 
 ```bash
@@ -83,6 +95,12 @@ pnpm dev
 
 Turbo builds local workspace dependencies, starts the Fastify API and Vite
 application, and watches them for changes.
+
+To additionally rerun typechecking and linting as relevant files change:
+
+```bash
+pnpm dev:check
+```
 
 - Web application: http://localhost:5173
 - Fastify API: http://localhost:3000
@@ -105,8 +123,21 @@ Anonymous visitors cannot access protected Dashboard or Settings routes.
 | `pnpm db:down`     | Stop and remove Compose services               |
 | `pnpm db:logs`     | Follow logs from a detached PostgreSQL service |
 | `pnpm db:migrate`  | Apply committed migrations                     |
+| `pnpm db:seed`     | Seed the application-owned Exercise catalog    |
 | `pnpm db:generate` | Generate a migration from schema changes       |
 | `pnpm db:studio`   | Open Drizzle Studio                            |
+
+## API tests
+
+Run the focused API integration tests against the migrated and seeded
+PostgreSQL database:
+
+```bash
+pnpm -F @acme/api test
+```
+
+The Exercise coverage verifies anonymous rejection and authenticated retrieval
+through the protected tRPC router.
 
 ## Quality commands
 
