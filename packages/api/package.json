@@ -9,11 +9,14 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@acme/db": "workspace:*",
     "@trpc/server": "catalog:",
     "better-auth": "catalog:",
     "zod": "catalog:"
@@ -25,7 +28,8 @@
     "@total-typescript/ts-reset": "catalog:",
     "eslint": "catalog:",
     "prettier": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "prettier": "@acme/prettier-config"
 }
