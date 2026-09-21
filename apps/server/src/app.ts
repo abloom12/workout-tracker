@@ -23,7 +23,7 @@ export const app: FastifyPluginAsync = async (server) => {
     baseURL: config.auth.baseUrl,
     secret: config.auth.secret,
   });
-  const { appRouter, createContext } = createApi(auth);
+  const { appRouter, createContext } = createApi(auth, db);
 
   await server.register(fastifyCors, {
     origin: config.corsOrigin,

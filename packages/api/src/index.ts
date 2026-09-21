@@ -3,8 +3,11 @@ import { initTRPC, TRPCError } from '@trpc/server';
 import { type CreateFastifyContextOptions } from '@trpc/server/adapters/fastify';
 import { fromNodeHeaders } from 'better-auth/node';
 
+import type { Database } from '@acme/db';
+
 export type ApiSession = Auth['$Infer']['Session'] | null;
 export type ApiContext = {
+  db: Database;
   req: CreateFastifyContextOptions['req'];
   res: CreateFastifyContextOptions['res'];
   session: ApiSession;
@@ -31,15 +34,24 @@ function createAppRouter() {
     });
   });
 
+  const exerciseRouter = router({
+    list: protectedProcedure.query(({ ctx }) =>
+      ctx.db.query.exercise.findMany({
+        columns: { id: true, name: true },
+        orderBy: (exercise, { asc }) => [asc(exercise.name)],
+      }),
+    ),
+  });
+
   const healthRouter = router({
     ping: publicProcedure.query(() => ({ ok: true, message: 'pong' })),
     me: protectedProcedure.query(({ ctx }) => ({ user: ctx.user })),
   });
 
-  return router({ health: healthRouter });
+  return router({ exercise: exerciseRouter, health: healthRouter });
 }
 
-export function createApi(auth: Auth): Api {
+export function createApi(auth: Auth, db: Database): Api {
   async function createContext({
     req,
     res,
@@ -48,7 +60,7 @@ export function createApi(auth: Auth): Api {
       headers: fromNodeHeaders(req.headers),
     });
 
-    return { req, res, session };
+    return { db, req, res, session };
   }
 
   const appRouter = createAppRouter();
