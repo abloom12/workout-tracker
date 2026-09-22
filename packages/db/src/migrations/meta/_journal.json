@@ -15,6 +15,13 @@
       "when": 1789933704069,
       "tag": "0001_exercise-library",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790036378176,
+      "tag": "0002_unusual_barracuda",
+      "breakpoints": true
     }
   ]
 }
