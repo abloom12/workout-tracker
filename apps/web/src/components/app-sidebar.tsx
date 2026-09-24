@@ -2,6 +2,7 @@ import type { ComponentProps } from 'react';
 import { useState } from 'react';
 import { Link, useNavigate, useRouterState } from '@tanstack/react-router';
 import {
+  BicepsFlexed,
   Dumbbell,
   EllipsisVertical,
   LayoutDashboard,
@@ -37,6 +38,7 @@ import { authClient } from '@/lib/auth-client';
 
 const navigation = [
   { title: 'Dashboard', to: '/dashboard', icon: LayoutDashboard },
+  { title: 'Workouts', to: '/workout-lab', icon: Dumbbell },
   { title: 'Settings', to: '/settings', icon: SettingsIcon },
 ] as const;
 
@@ -86,7 +88,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
             <SidebarMenuButton asChild size="lg">
               <Link to="/dashboard" onClick={() => setOpenMobile(false)}>
                 <span className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-lg">
-                  <Dumbbell aria-hidden="true" />
+                  <BicepsFlexed aria-hidden="true" />
                 </span>
                 <span className="truncate text-base font-semibold">
                   Workout Tracker

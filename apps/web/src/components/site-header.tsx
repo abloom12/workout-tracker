@@ -7,7 +7,7 @@ export function SiteHeader() {
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   });
-  const title = pathname === '/settings' ? 'Settings' : 'Dashboard';
+  const title = pathname.replace('/', '');
 
   return (
     <header className="border-border flex h-14 shrink-0 items-center border-b">
