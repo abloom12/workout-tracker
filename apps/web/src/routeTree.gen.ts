@@ -15,6 +15,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
+import { Route as AppWorkoutLabRouteImport } from './routes/_app/workout-lab'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -45,6 +46,11 @@ const AppSettingsRoute = AppSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppWorkoutLabRoute = AppWorkoutLabRouteImport.update({
+  id: '/workout-lab',
+  path: '/workout-lab',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/dashboard': typeof AppDashboardRoute
   '/settings': typeof AppSettingsRoute
+  '/workout-lab': typeof AppWorkoutLabRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/dashboard': typeof AppDashboardRoute
   '/settings': typeof AppSettingsRoute
+  '/workout-lab': typeof AppWorkoutLabRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -68,12 +76,14 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/settings': typeof AppSettingsRoute
+  '/_app/workout-lab': typeof AppWorkoutLabRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/signup' | '/dashboard' | '/settings'
+  fullPaths:
+    '/' | '/login' | '/signup' | '/dashboard' | '/settings' | '/workout-lab'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/signup' | '/dashboard' | '/settings'
+  to: '/' | '/login' | '/signup' | '/dashboard' | '/settings' | '/workout-lab'
   id:
     | '__root__'
     | '/'
@@ -82,6 +92,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/_app/dashboard'
     | '/_app/settings'
+    | '/_app/workout-lab'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -135,17 +146,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/workout-lab': {
+      id: '/_app/workout-lab'
+      path: '/workout-lab'
+      fullPath: '/workout-lab'
+      preLoaderRoute: typeof AppWorkoutLabRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
   }
 }
 
 interface AppRouteRouteChildren {
   AppDashboardRoute: typeof AppDashboardRoute
   AppSettingsRoute: typeof AppSettingsRoute
+  AppWorkoutLabRoute: typeof AppWorkoutLabRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDashboardRoute: AppDashboardRoute,
   AppSettingsRoute: AppSettingsRoute,
+  AppWorkoutLabRoute: AppWorkoutLabRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(

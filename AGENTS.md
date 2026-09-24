@@ -22,3 +22,7 @@ Do not edit Backlog task, draft, document, decision, or milestone markdown files
 
 </CRITICAL_INSTRUCTION>
 <!-- BACKLOG.MD GUIDELINES END -->
+
+## Coding standards
+
+Before changing application code, schemas, or migrations, read and follow `docs/CODING_STANDARDS.md`. In particular, v0 schema changes replace the affected generated migration and all later migrations (including corresponding Drizzle metadata), then regenerate and re-migrate; do not stack follow-up migrations for pre-production schema revisions.

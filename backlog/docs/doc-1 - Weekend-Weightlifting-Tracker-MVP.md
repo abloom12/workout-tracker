@@ -3,7 +3,7 @@ id: doc-1
 title: Weekend Weightlifting Tracker MVP
 type: specification
 created_date: '2026-09-18 14:07'
-updated_date: '2026-09-18 14:09'
+updated_date: '2026-09-23 01:50'
 ---
 # Weekend Weightlifting Tracker MVP
 
@@ -17,10 +17,10 @@ A focused weightlifting tracker combines a credible product problem with the cre
 
 Deliver a public weightlifting application in which an authenticated user can:
 
-- build reusable Workouts from a curated Exercise library;
+- build a Training Split containing reusable Workouts assembled from a curated Exercise library;
 - schedule Workouts for calendar dates;
 - perform scheduled Workouts by logging sets, reps, and weight; and
-- review Workout and Exercise History without later template changes rewriting completed training.
+- review Workout and Exercise History without later Workout changes rewriting completed training.
 
 The deployed application is the primary résumé project. The source fullstack starter remains a separate supporting project.
 
@@ -28,7 +28,7 @@ The deployed application is the primary résumé project. The source fullstack s
 
 1. As a lifter, I can browse a curated library of traditional weightlifting Exercises so that I can build Workouts without maintaining an exercise catalog.
 
-2. As a lifter, I can create a named Workout and add or remove Exercises from it so that I can reuse an ordered training routine such as Push Day or Upper Body Day.
+2. As a lifter, I can create a named Training Split, add or remove individually named Workouts, and choose and order their Exercises from the curated library so that I can reuse a training structure such as Push, Pull, and Legs.
 
 3. As a lifter, I can delete a Workout after reviewing a warning so that I can remove routines I no longer use.
 
@@ -45,7 +45,8 @@ The deployed application is the primary résumé project. The source fullstack s
 ### Domain language
 
 - **Exercise:** A reusable weightlifting movement from the application’s curated Exercise library.
-- **Workout:** A reusable, ordered group of Exercises, such as Push Day or Upper Body Day.
+- **Workout:** A reusable, user-owned, named and ordered group of Exercises, such as Push Day or Upper Body Day. “Workout Template” is not a separate user-facing concept.
+- **Training Split:** A reusable, date-free ordered group of Workouts. The same Workout may appear more than once; a Split does not schedule or record training.
 - **Scheduled Workout:** A Workout assigned to a calendar date.
 - **Workout Session:** A performed occurrence of a Workout containing logged Sets.
 - **Set Log:** The performed data for one set: reps and weight.
@@ -64,12 +65,15 @@ These terms must retain their distinct meanings in user-facing copy, data contra
 - Cardio, distance-based activities, duration-based activities, and CrossFit-style movements or workouts are excluded.
 - The exact contents of the initial Exercise library are not prescribed by this specification.
 
-### Workouts
+### Training Splits and Workouts
 
-- A user can create a Workout.
-- A Workout contains an ordered group of Exercises selected from the curated library.
-- A user can add and remove Exercises from a Workout.
-- A user can delete a Workout.
+- A user can create and edit a named Training Split containing at least one individually named Workout.
+- Training Splits and Workouts belong to the authenticated user; their names are required and case-insensitively unique per owner.
+- Workouts have an order within a Split. A user can add a Workout to or remove one from a Split; the same reusable Workout may appear more than once.
+- Removing a Workout from a Split does not delete the reusable Workout or completed history.
+- A Workout contains a nonempty ordered selection of Exercises from the curated library; the same Exercise may appear only once within a Workout.
+- A user can add, remove, and reorder Exercises within a Workout. Split and Exercise order survive saving and reloading.
+- A user can delete a reusable Workout.
 - Deleting a Workout requires a warning that explains the scheduling effect.
 - If the user confirms deletion, unperformed Scheduled Workouts referencing that Workout are also removed from the schedule.
 - Deleting or changing a reusable Workout must not alter completed Workout Sessions or their Set Logs.
@@ -108,9 +112,9 @@ These terms must retain their distinct meanings in user-facing copy, data contra
 ### Ownership and authentication
 
 - Product functionality uses the inherited email-and-password authentication system.
-- Workout data belongs to the authenticated user.
+- Training Splits and Workout data belong to the authenticated user.
 - Protected product data and operations must be scoped to that user on the server.
-- One user must not be able to read or mutate another user’s Workouts, schedules, Sessions, or Set Logs.
+- One user must not be able to read or mutate another user’s Training Splits, Workouts, schedules, Sessions, or Set Logs, including through Split membership.
 
 ### Product quality
 
@@ -156,7 +160,7 @@ Testing should use two principal public seams.
 Exercise the protected tRPC/Fastify API against PostgreSQL to verify:
 
 - authenticated ownership boundaries;
-- Workout creation and composition;
+- Training Split creation, composition, ordering, update, and reload with reusable Workouts and curated Exercises;
 - date-based scheduling;
 - Set Log validation;
 - acceptance of zero weight;
@@ -173,7 +177,7 @@ These tests should validate observable API and persistence behavior rather than 
 Exercise one focused browser journey through the React application:
 
 1. Sign up or log in.
-2. Create a Workout from curated Exercises.
+2. Create and save a named Training Split with a Workout assembled from curated Exercises; reload it to verify the saved structure.
 3. Schedule the Workout.
 4. Log multiple Sets with reps and whole-number weight.
 5. Complete the Workout Session.
@@ -216,7 +220,7 @@ The browser journey should also provide practical coverage of routing, dynamic f
 The three-day delivery priority is:
 
 1. Establish the repository, verify inherited authentication and database behavior, define the schema, and build the application shell.
-2. Implement the complete Workout-building, scheduling, and logging path with persistence.
+2. Implement the complete Split-first Workout-building, scheduling, and logging path with persistence.
 3. Add History, focused tests, responsive and accessibility polish, deployment, screenshots, and the public README.
 
 Deployment time must be protected rather than treated as optional end-of-project cleanup.
