@@ -188,7 +188,7 @@ function WorkoutLabPage() {
           {split.workouts.map((workout, workoutIndex) => (
             <Card
               key={workout.id}
-              className="border-foreground/30 w-[21rem] shrink-0 border ring-0"
+              className="w-[21rem] shrink-0"
               aria-label={`Workout ${workoutIndex + 1}`}
             >
               <CardContent className="flex min-h-[28rem] flex-col">

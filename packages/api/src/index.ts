@@ -7,6 +7,7 @@ import type { Database } from '@acme/db';
 import type { ApiContext } from './trpc.js';
 import { exerciseRouter } from './routers/exercise.js';
 import { healthRouter } from './routers/health.js';
+import { workoutRouter } from './routers/workout.js';
 import { router } from './trpc.js';
 
 export type { ApiContext, ApiSession } from './trpc.js';
@@ -19,7 +20,11 @@ export type Api = {
 };
 
 function createAppRouter() {
-  return router({ exercise: exerciseRouter, health: healthRouter });
+  return router({
+    exercise: exerciseRouter,
+    health: healthRouter,
+    workout: workoutRouter,
+  });
 }
 
 export function createApi(auth: Auth, db: Database): Api {
