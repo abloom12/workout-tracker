@@ -8,6 +8,24 @@ Backlog.md is this repo's issue tracker. See `docs/agents/issue-tracker.md`. Fol
 
 This repo uses a single-context domain-doc layout. See `docs/agents/domain.md`.
 
+## Coding standards
+
+Before changing code, read `docs/agents/coding-standards.md` for
+repo-wide guidance. Then read the standards doc for every area the
+change touches:
+
+| Area             | Standards                         |
+| ---------------- | --------------------------------- |
+| `apps/web/`      | `apps/web/docs/standards.md`      |
+| `apps/server/`   | `apps/server/docs/standards.md`   |
+| `packages/api/`  | `packages/api/docs/standards.md`  |
+| `packages/auth/` | `packages/auth/docs/standards.md` |
+| `packages/db/`   | `packages/db/docs/standards.md`   |
+
+For changes spanning areas, read all applicable docs. Treat the shared
+ESLint, Prettier, and TypeScript configurations under `tooling/` as the
+source of truth for mechanically enforced rules.
+
 <!-- BACKLOG.MD GUIDELINES START -->
 <!-- backlog.md-instructions-version: 1.52.0 -->
 

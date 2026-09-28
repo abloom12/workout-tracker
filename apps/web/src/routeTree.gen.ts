@@ -15,9 +15,9 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
-import { Route as AppWorkoutLabRouteImport } from './routes/_app/workout-lab'
-import { Route as AppWorkoutIndexRouteImport } from './routes/_app/workout.index'
-import { Route as AppWorkoutNewRouteImport } from './routes/_app/workout.new'
+import { Route as AppExercisesIndexRouteImport } from './routes/_app/exercises/index'
+import { Route as AppProgramsIndexRouteImport } from './routes/_app/programs/index'
+import { Route as AppWorkoutsIndexRouteImport } from './routes/_app/workouts/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -48,19 +48,19 @@ const AppSettingsRoute = AppSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppWorkoutLabRoute = AppWorkoutLabRouteImport.update({
-  id: '/workout-lab',
-  path: '/workout-lab',
+const AppExercisesIndexRoute = AppExercisesIndexRouteImport.update({
+  id: '/exercises/',
+  path: '/exercises/',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppWorkoutIndexRoute = AppWorkoutIndexRouteImport.update({
-  id: '/workout/',
-  path: '/workout/',
+const AppProgramsIndexRoute = AppProgramsIndexRouteImport.update({
+  id: '/programs/',
+  path: '/programs/',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppWorkoutNewRoute = AppWorkoutNewRouteImport.update({
-  id: '/workout/new',
-  path: '/workout/new',
+const AppWorkoutsIndexRoute = AppWorkoutsIndexRouteImport.update({
+  id: '/workouts/',
+  path: '/workouts/',
   getParentRoute: () => AppRouteRoute,
 } as any)
 
@@ -70,9 +70,9 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/dashboard': typeof AppDashboardRoute
   '/settings': typeof AppSettingsRoute
-  '/workout-lab': typeof AppWorkoutLabRoute
-  '/workout/new': typeof AppWorkoutNewRoute
-  '/workout/': typeof AppWorkoutIndexRoute
+  '/exercises/': typeof AppExercisesIndexRoute
+  '/programs/': typeof AppProgramsIndexRoute
+  '/workouts/': typeof AppWorkoutsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -80,9 +80,9 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/dashboard': typeof AppDashboardRoute
   '/settings': typeof AppSettingsRoute
-  '/workout-lab': typeof AppWorkoutLabRoute
-  '/workout/new': typeof AppWorkoutNewRoute
-  '/workout': typeof AppWorkoutIndexRoute
+  '/exercises': typeof AppExercisesIndexRoute
+  '/programs': typeof AppProgramsIndexRoute
+  '/workouts': typeof AppWorkoutsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -92,9 +92,9 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/settings': typeof AppSettingsRoute
-  '/_app/workout-lab': typeof AppWorkoutLabRoute
-  '/_app/workout/new': typeof AppWorkoutNewRoute
-  '/_app/workout/': typeof AppWorkoutIndexRoute
+  '/_app/exercises/': typeof AppExercisesIndexRoute
+  '/_app/programs/': typeof AppProgramsIndexRoute
+  '/_app/workouts/': typeof AppWorkoutsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -104,9 +104,9 @@ export interface FileRouteTypes {
     | '/signup'
     | '/dashboard'
     | '/settings'
-    | '/workout-lab'
-    | '/workout/new'
-    | '/workout/'
+    | '/exercises/'
+    | '/programs/'
+    | '/workouts/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -114,9 +114,9 @@ export interface FileRouteTypes {
     | '/signup'
     | '/dashboard'
     | '/settings'
-    | '/workout-lab'
-    | '/workout/new'
-    | '/workout'
+    | '/exercises'
+    | '/programs'
+    | '/workouts'
   id:
     | '__root__'
     | '/'
@@ -125,9 +125,9 @@ export interface FileRouteTypes {
     | '/signup'
     | '/_app/dashboard'
     | '/_app/settings'
-    | '/_app/workout-lab'
-    | '/_app/workout/new'
-    | '/_app/workout/'
+    | '/_app/exercises/'
+    | '/_app/programs/'
+    | '/_app/workouts/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -181,25 +181,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/workout-lab': {
-      id: '/_app/workout-lab'
-      path: '/workout-lab'
-      fullPath: '/workout-lab'
-      preLoaderRoute: typeof AppWorkoutLabRouteImport
+    '/_app/exercises/': {
+      id: '/_app/exercises/'
+      path: '/exercises'
+      fullPath: '/exercises/'
+      preLoaderRoute: typeof AppExercisesIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/workout/': {
-      id: '/_app/workout/'
-      path: '/workout'
-      fullPath: '/workout/'
-      preLoaderRoute: typeof AppWorkoutIndexRouteImport
+    '/_app/programs/': {
+      id: '/_app/programs/'
+      path: '/programs'
+      fullPath: '/programs/'
+      preLoaderRoute: typeof AppProgramsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/workout/new': {
-      id: '/_app/workout/new'
-      path: '/workout/new'
-      fullPath: '/workout/new'
-      preLoaderRoute: typeof AppWorkoutNewRouteImport
+    '/_app/workouts/': {
+      id: '/_app/workouts/'
+      path: '/workouts'
+      fullPath: '/workouts/'
+      preLoaderRoute: typeof AppWorkoutsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
   }
@@ -208,17 +208,17 @@ declare module '@tanstack/react-router' {
 interface AppRouteRouteChildren {
   AppDashboardRoute: typeof AppDashboardRoute
   AppSettingsRoute: typeof AppSettingsRoute
-  AppWorkoutLabRoute: typeof AppWorkoutLabRoute
-  AppWorkoutNewRoute: typeof AppWorkoutNewRoute
-  AppWorkoutIndexRoute: typeof AppWorkoutIndexRoute
+  AppExercisesIndexRoute: typeof AppExercisesIndexRoute
+  AppProgramsIndexRoute: typeof AppProgramsIndexRoute
+  AppWorkoutsIndexRoute: typeof AppWorkoutsIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDashboardRoute: AppDashboardRoute,
   AppSettingsRoute: AppSettingsRoute,
-  AppWorkoutLabRoute: AppWorkoutLabRoute,
-  AppWorkoutNewRoute: AppWorkoutNewRoute,
-  AppWorkoutIndexRoute: AppWorkoutIndexRoute,
+  AppExercisesIndexRoute: AppExercisesIndexRoute,
+  AppProgramsIndexRoute: AppProgramsIndexRoute,
+  AppWorkoutsIndexRoute: AppWorkoutsIndexRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(

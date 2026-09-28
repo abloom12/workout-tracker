@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Link, useNavigate, useRouterState } from '@tanstack/react-router';
 import {
   BicepsFlexed,
-  Dumbbell,
   EllipsisVertical,
   LayoutDashboard,
   LogOut,
@@ -38,7 +37,6 @@ import { authClient } from '@/lib/auth-client';
 
 const navigation = [
   { title: 'Dashboard', to: '/dashboard', icon: LayoutDashboard },
-  { title: 'Workouts', to: '/workout-lab', icon: Dumbbell },
   { title: 'Settings', to: '/settings', icon: SettingsIcon },
 ] as const;
 
