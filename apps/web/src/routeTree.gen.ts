@@ -14,6 +14,7 @@ import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
+import { Route as AppMockupRouteImport } from './routes/_app/mockup'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppExercisesIndexRouteImport } from './routes/_app/exercises/index'
 import { Route as AppProgramsIndexRouteImport } from './routes/_app/programs/index'
@@ -43,6 +44,11 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppMockupRoute = AppMockupRouteImport.update({
+  id: '/mockup',
+  path: '/mockup',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppSettingsRoute = AppSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/dashboard': typeof AppDashboardRoute
+  '/mockup': typeof AppMockupRoute
   '/settings': typeof AppSettingsRoute
   '/exercises/': typeof AppExercisesIndexRoute
   '/programs/': typeof AppProgramsIndexRoute
@@ -79,6 +86,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/dashboard': typeof AppDashboardRoute
+  '/mockup': typeof AppMockupRoute
   '/settings': typeof AppSettingsRoute
   '/exercises': typeof AppExercisesIndexRoute
   '/programs': typeof AppProgramsIndexRoute
@@ -91,6 +99,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/mockup': typeof AppMockupRoute
   '/_app/settings': typeof AppSettingsRoute
   '/_app/exercises/': typeof AppExercisesIndexRoute
   '/_app/programs/': typeof AppProgramsIndexRoute
@@ -103,6 +112,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/dashboard'
+    | '/mockup'
     | '/settings'
     | '/exercises/'
     | '/programs/'
@@ -113,6 +123,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/dashboard'
+    | '/mockup'
     | '/settings'
     | '/exercises'
     | '/programs'
@@ -124,6 +135,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/_app/dashboard'
+    | '/_app/mockup'
     | '/_app/settings'
     | '/_app/exercises/'
     | '/_app/programs/'
@@ -174,6 +186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/mockup': {
+      id: '/_app/mockup'
+      path: '/mockup'
+      fullPath: '/mockup'
+      preLoaderRoute: typeof AppMockupRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/settings': {
       id: '/_app/settings'
       path: '/settings'
@@ -207,6 +226,7 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteRouteChildren {
   AppDashboardRoute: typeof AppDashboardRoute
+  AppMockupRoute: typeof AppMockupRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppExercisesIndexRoute: typeof AppExercisesIndexRoute
   AppProgramsIndexRoute: typeof AppProgramsIndexRoute
@@ -215,6 +235,7 @@ interface AppRouteRouteChildren {
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDashboardRoute: AppDashboardRoute,
+  AppMockupRoute: AppMockupRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppExercisesIndexRoute: AppExercisesIndexRoute,
   AppProgramsIndexRoute: AppProgramsIndexRoute,

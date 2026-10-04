@@ -1,0 +1,1 @@
+# Auth Coding Standards

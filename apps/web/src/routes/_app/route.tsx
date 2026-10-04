@@ -36,7 +36,9 @@ function RouteComponent() {
       <AppSidebar user={session.user} variant="inset" />
       <SidebarInset id="main-content">
         <SiteHeader />
-        <Outlet />
+        <div className="p-2.5">
+          <Outlet />
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );

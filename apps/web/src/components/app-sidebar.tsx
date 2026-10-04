@@ -3,10 +3,12 @@ import { useState } from 'react';
 import { Link, useNavigate, useRouterState } from '@tanstack/react-router';
 import {
   BicepsFlexed,
+  Dumbbell,
   EllipsisVertical,
   LayoutDashboard,
   LogOut,
   Settings as SettingsIcon,
+  Table2,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -37,15 +39,76 @@ import { authClient } from '@/lib/auth-client';
 
 const navigation = [
   { title: 'Dashboard', to: '/dashboard', icon: LayoutDashboard },
-  { title: 'Settings', to: '/settings', icon: SettingsIcon },
+  { title: 'Programs', to: '/programs', icon: Table2 },
+  { title: 'Exercises', to: '/exercises', icon: Dumbbell },
+  { title: 'Mockup', to: '/mockup', icon: Table2 },
 ] as const;
 
 type AppSidebarProps = ComponentProps<typeof Sidebar> & { user: User };
 
 export function AppSidebar({ user, ...props }: AppSidebarProps) {
+  return (
+    <Sidebar collapsible="offcanvas" {...props}>
+      <SidebarBrand />
+      <SidebarNavigation />
+      <SidebarUserMenu user={user} />
+    </Sidebar>
+  );
+}
+
+function SidebarBrand() {
+  const { setOpenMobile } = useSidebar();
+
+  return (
+    <SidebarHeader>
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <SidebarMenuButton asChild size="lg">
+            <Link to="/dashboard" onClick={() => setOpenMobile(false)}>
+              <span className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-lg">
+                <BicepsFlexed aria-hidden="true" />
+              </span>
+              <span className="truncate text-base font-semibold">
+                Workout Tracker
+              </span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    </SidebarHeader>
+  );
+}
+
+function SidebarNavigation() {
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   });
+  const { setOpenMobile } = useSidebar();
+
+  return (
+    <SidebarContent>
+      <SidebarGroup>
+        <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            {navigation.map((item) => (
+              <SidebarMenuItem key={item.to}>
+                <SidebarMenuButton asChild isActive={pathname === item.to}>
+                  <Link to={item.to} onClick={() => setOpenMobile(false)}>
+                    <item.icon aria-hidden="true" />
+                    <span>{item.title}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
+    </SidebarContent>
+  );
+}
+
+function SidebarUserMenu({ user }: { user: User }) {
   const { setOpenMobile } = useSidebar();
   const navigate = useNavigate();
   const [isSigningOut, setIsSigningOut] = useState(false);
@@ -79,105 +142,66 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
   };
 
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild size="lg">
-              <Link to="/dashboard" onClick={() => setOpenMobile(false)}>
-                <span className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-lg">
-                  <BicepsFlexed aria-hidden="true" />
-                </span>
-                <span className="truncate text-base font-semibold">
-                  Workout Tracker
-                </span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
-
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {navigation.map((item) => (
-                <SidebarMenuItem key={item.to}>
-                  <SidebarMenuButton asChild isActive={pathname === item.to}>
-                    <Link to={item.to} onClick={() => setOpenMobile(false)}>
-                      <item.icon aria-hidden="true" />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton
-                  size="lg"
-                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                >
-                  <Avatar className="rounded-lg">
-                    {user.image && (
-                      <AvatarImage src={user.image} alt={user.name} />
-                    )}
-                    <AvatarFallback className="rounded-lg">
-                      {initials}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium">{user.name}</span>
-                    <span className="text-muted-foreground truncate text-xs">
-                      {user.email}
-                    </span>
-                  </span>
-                  <EllipsisVertical aria-hidden="true" className="ml-auto" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-                side="top"
-                align="start"
-                sideOffset={4}
+    <SidebarFooter>
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <SidebarMenuButton
+                size="lg"
+                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               >
-                <DropdownMenuLabel className="font-normal">
-                  <span className="grid text-left text-sm leading-tight">
-                    <span className="truncate font-medium">{user.name}</span>
-                    <span className="text-muted-foreground truncate text-xs">
-                      {user.email}
-                    </span>
+                <Avatar className="rounded-lg">
+                  {user.image && (
+                    <AvatarImage src={user.image} alt={user.name} />
+                  )}
+                  <AvatarFallback className="rounded-lg">
+                    {initials}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-medium">{user.name}</span>
+                  <span className="text-muted-foreground truncate text-xs">
+                    {user.email}
                   </span>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link to="/settings" onClick={() => setOpenMobile(false)}>
-                    <SettingsIcon aria-hidden="true" />
-                    Settings
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  variant="destructive"
-                  disabled={isSigningOut}
-                  onSelect={() => void handleSignOut()}
-                >
-                  <LogOut aria-hidden="true" />
-                  {isSigningOut ? 'Signing out…' : 'Sign out'}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
-    </Sidebar>
+                </span>
+                <EllipsisVertical aria-hidden="true" className="ml-auto" />
+              </SidebarMenuButton>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+              side="top"
+              align="start"
+              sideOffset={4}
+            >
+              <DropdownMenuLabel className="font-normal">
+                <span className="grid text-left text-sm leading-tight">
+                  <span className="truncate font-medium">{user.name}</span>
+                  <span className="text-muted-foreground truncate text-xs">
+                    {user.email}
+                  </span>
+                </span>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link to="/settings" onClick={() => setOpenMobile(false)}>
+                  <SettingsIcon aria-hidden="true" />
+                  Settings
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                variant="destructive"
+                disabled={isSigningOut}
+                onSelect={() => void handleSignOut()}
+              >
+                <LogOut aria-hidden="true" />
+                {isSigningOut ? 'Signing out…' : 'Sign out'}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    </SidebarFooter>
   );
 }
