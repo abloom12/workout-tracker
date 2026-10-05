@@ -22,6 +22,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Field, FieldLabel } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
 import {
   InputGroup,
   InputGroupAddon,
@@ -44,7 +46,7 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/cn';
 
-export const Route = createFileRoute('/_app/mockup')({
+export const Route = createFileRoute('/_app/mockups/mockup')({
   component: RouteComponent,
 });
 
@@ -146,8 +148,8 @@ const libraryExercises = [
 
 function RouteComponent() {
   return (
-    // Leave room for the app header, outlet padding, and desktop inset margins.
-    <div className="flex h-[calc(100dvh-4.75rem)] min-h-0 min-w-0 flex-col gap-3 overflow-hidden p-2 md:h-[calc(100dvh-5.75rem)]">
+    // Leave room for the app header, mockup navigation, and inset spacing.
+    <div className="flex h-[calc(100dvh-7.5rem)] min-h-0 min-w-0 flex-col gap-3 overflow-hidden p-2 md:h-[calc(100dvh-8.5rem)]">
       <ProgramHeader />
       <div className="grid min-h-0 min-w-0 flex-1 grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] gap-3 sm:grid-cols-[minmax(0,1fr)_240px] xl:grid-cols-[minmax(0,1fr)_280px]">
         <SplitBoard />
@@ -281,9 +283,37 @@ function WorkoutCard({ workout }: { workout: Workout }) {
                 <ItemTitle className="line-clamp-none w-full text-xs leading-snug">
                   {exercise.name}
                 </ItemTitle>
-                <ItemDescription className="text-xs tabular-nums">
-                  {exercise.prescription}
-                </ItemDescription>
+                <div className="mt-1 grid max-w-36 grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)] gap-2.5">
+                  <Field className="min-w-0 gap-1">
+                    <FieldLabel
+                      htmlFor={`mockup-one-day-${workout.day}-exercise-${index + 1}-sets`}
+                      className="text-muted-foreground text-[10px] font-normal"
+                    >
+                      Sets<span className="sr-only"> for {exercise.name}</span>
+                    </FieldLabel>
+                    <Input
+                      id={`mockup-one-day-${workout.day}-exercise-${index + 1}-sets`}
+                      defaultValue={exercise.prescription.split(' × ')[0]}
+                      readOnly
+                      className="px-2 text-center tabular-nums"
+                      inputMode="numeric"
+                    />
+                  </Field>
+                  <Field className="min-w-0 gap-1">
+                    <FieldLabel
+                      htmlFor={`mockup-one-day-${workout.day}-exercise-${index + 1}-reps`}
+                      className="text-muted-foreground text-[10px] font-normal"
+                    >
+                      Reps<span className="sr-only"> for {exercise.name}</span>
+                    </FieldLabel>
+                    <Input
+                      id={`mockup-one-day-${workout.day}-exercise-${index + 1}-reps`}
+                      defaultValue={exercise.prescription.split(' × ')[1]}
+                      readOnly
+                      className="px-2 text-center tabular-nums"
+                    />
+                  </Field>
+                </div>
               </ItemContent>
               <ItemActions>
                 <Button

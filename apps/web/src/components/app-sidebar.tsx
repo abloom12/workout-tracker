@@ -28,7 +28,6 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -41,7 +40,7 @@ const navigation = [
   { title: 'Dashboard', to: '/dashboard', icon: LayoutDashboard },
   { title: 'Programs', to: '/programs', icon: Table2 },
   { title: 'Exercises', to: '/exercises', icon: Dumbbell },
-  { title: 'Mockup', to: '/mockup', icon: Table2 },
+  { title: 'Mockups', to: '/mockups', icon: Table2 },
 ] as const;
 
 type AppSidebarProps = ComponentProps<typeof Sidebar> & { user: User };
@@ -88,12 +87,18 @@ function SidebarNavigation() {
   return (
     <SidebarContent>
       <SidebarGroup>
-        <SidebarGroupLabel>Navigation</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
             {navigation.map((item) => (
               <SidebarMenuItem key={item.to}>
-                <SidebarMenuButton asChild isActive={pathname === item.to}>
+                <SidebarMenuButton
+                  asChild
+                  isActive={
+                    pathname === item.to ||
+                    (item.to === '/mockups' &&
+                      pathname.startsWith('/mockups/'))
+                  }
+                >
                   <Link to={item.to} onClick={() => setOpenMobile(false)}>
                     <item.icon aria-hidden="true" />
                     <span>{item.title}</span>
