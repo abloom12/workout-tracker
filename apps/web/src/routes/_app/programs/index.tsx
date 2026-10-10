@@ -77,7 +77,7 @@ function WorkoutCard({ workout }: { workout: Workout }) {
   );
 
   return (
-    <li className="grid min-w-0 grid-cols-[40px_minmax(0,1fr)] items-start gap-3">
+    <li className="grid min-w-0 grid-cols-[40px_minmax(0,1fr)] items-start gap-3 @xl/itinerary:grid-cols-[140px_minmax(0,1fr)_24px]">
       <span
         aria-hidden="true"
         className="bg-card border-border relative z-10 flex size-10 items-center justify-center rounded-full border text-sm font-semibold tabular-nums"
