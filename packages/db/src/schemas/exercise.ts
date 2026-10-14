@@ -53,6 +53,7 @@ export const exercise_setup = pgTable(
       table.exercise_id,
       table.equipment_id,
       table.grip_id,
+      table.is_unilateral,
     ),
   ],
 );

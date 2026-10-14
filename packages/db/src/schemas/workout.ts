@@ -11,7 +11,7 @@ import {
   uuid,
 } from 'drizzle-orm/pg-core';
 
-import { user } from './auth-schema.js';
+import { user } from './auth.js';
 import { exercise_setup } from './exercise.js';
 import { modifier } from './modifier.js';
 
@@ -139,6 +139,7 @@ export const workoutRelations = relations(workout, ({ one, many }) => ({
   owner: one(user, { fields: [workout.ownerId], references: [user.id] }),
   exercises: many(workout_exercise),
 }));
+
 export const workoutExerciseRelations = relations(
   workout_exercise,
   ({ one, many }) => ({
@@ -153,9 +154,25 @@ export const workoutExerciseRelations = relations(
     sets: many(planned_set),
   }),
 );
-export const plannedSetRelations = relations(planned_set, ({ one }) => ({
+
+export const plannedSetRelations = relations(planned_set, ({ one, many }) => ({
   workoutExercise: one(workout_exercise, {
     fields: [planned_set.workout_exercise_id],
     references: [workout_exercise.id],
   }),
+  modifiers: many(planned_set_modifier),
 }));
+
+export const plannedSetModifierRelations = relations(
+  planned_set_modifier,
+  ({ one }) => ({
+    set: one(planned_set, {
+      fields: [planned_set_modifier.planned_set_id],
+      references: [planned_set.id],
+    }),
+    modifier: one(modifier, {
+      fields: [planned_set_modifier.modifier_id],
+      references: [modifier.id],
+    }),
+  }),
+);
