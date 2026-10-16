@@ -8,6 +8,7 @@ export const modifierValueKind = pgEnum('modifier_value_kind', [
 
 export const modifier = pgTable('modifier', {
   id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
+  code: text('code').notNull().unique(),
   name: text('name').notNull().unique(),
   value_kind: modifierValueKind('value_kind').notNull(),
 });
