@@ -26,6 +26,7 @@ export type PlannedWorkoutSnapshotV1 = {
     exercise: string;
     equipment: string;
     grip: string;
+    attachment: string | null;
     load_convention:
       | 'total_weight'
       | 'per_implement'

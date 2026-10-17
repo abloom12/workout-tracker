@@ -17,6 +17,7 @@
     "db:push": "drizzle-kit push",
     "format": "prettier --check . --ignore-path ../../.gitignore --ignore-path .prettierignore",
     "lint": "eslint .",
+    "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
@@ -34,7 +35,8 @@
     "eslint": "catalog:",
     "prettier": "catalog:",
     "tsx": "4.23.13",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "prettier": "@acme/prettier-config"
 }

@@ -144,7 +144,7 @@ try {
         })
         .onConflictDoUpdate({
           target: exercise_setup.code,
-          set: { name: seed.name, attachment_id: attachmentId },
+          set: { name: seed.name },
         });
     }
   });
