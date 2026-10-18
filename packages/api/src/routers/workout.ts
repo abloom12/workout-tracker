@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { workout, workoutExercise } from '@acme/db';
+import { workout, workout_exercise } from '@acme/db';
 
 import { protectedProcedure, router } from '../trpc.js';
 
@@ -10,23 +10,23 @@ export const workoutRouter = router({
     .input(
       z.object({
         name: z.string().trim().min(1, 'Workout name is required'),
-        exerciseIds: z
+        exerciseSetupIds: z
           .array(z.number().int().positive())
-          .min(1, 'Add at least one Exercise'),
+          .min(1, 'Add at least one exercise setup'),
       }),
     )
     .mutation(({ ctx, input }) =>
       ctx.db.transaction(async (tx) => {
-        const uniqueIds = [...new Set(input.exerciseIds)];
-        const existing = await tx.query.exercise.findMany({
+        const uniqueIds = [...new Set(input.exerciseSetupIds)];
+        const existing = await tx.query.exercise_setup.findMany({
           columns: { id: true },
-          where: (exercise, { inArray }) => inArray(exercise.id, uniqueIds),
+          where: (setup, { inArray }) => inArray(setup.id, uniqueIds),
         });
 
         if (existing.length !== uniqueIds.length) {
           throw new TRPCError({
             code: 'BAD_REQUEST',
-            message: 'One or more Exercises do not exist',
+            message: 'One or more exercise setups do not exist',
           });
         }
 
@@ -39,20 +39,18 @@ export const workoutRouter = router({
 
         if (!saved) throw new Error('Workout insert returned no row');
 
-        await tx
-          .insert(workoutExercise)
-          .values(
-            input.exerciseIds.map((exerciseId, position) => ({
-              workoutId: saved.id,
-              exerciseId,
-              position,
-            })),
-          );
+        await tx.insert(workout_exercise).values(
+          input.exerciseSetupIds.map((exerciseSetupId, position) => ({
+            workout_id: saved.id,
+            exercise_setup_id: exerciseSetupId,
+            position,
+          })),
+        );
 
         return {
           id: saved.id,
           name: input.name,
-          exerciseIds: input.exerciseIds,
+          exerciseSetupIds: input.exerciseSetupIds,
         };
       }),
     ),
@@ -60,10 +58,10 @@ export const workoutRouter = router({
     const workouts = await ctx.db.query.workout.findMany({
       columns: { id: true, name: true },
       where: (row, { eq }) => eq(row.ownerId, ctx.user.id),
-      orderBy: (row, { desc }) => [desc(row.id)],
+      orderBy: (row, { asc }) => [asc(row.name), asc(row.id)],
       with: {
         exercises: {
-          columns: { exerciseId: true },
+          columns: { exercise_setup_id: true },
           orderBy: (row, { asc }) => [asc(row.position)],
         },
       },
@@ -72,7 +70,9 @@ export const workoutRouter = router({
     return workouts.map(({ id, name, exercises }) => ({
       id,
       name,
-      exerciseIds: exercises.map(({ exerciseId }) => exerciseId),
+      exerciseSetupIds: exercises.map(
+        ({ exercise_setup_id }) => exercise_setup_id,
+      ),
     }));
   }),
 });
