@@ -9,6 +9,7 @@
   "packageManager": "pnpm@10.34.5",
   "scripts": {
     "build": "turbo run build",
+    "build:pkg": "turbo run build -F='./packages/*'",
     "dev": "turbo watch dev -F=@acme/web -F=@acme/server",
     "dev:check": "turbo watch dev typecheck lint --continue=always -F=@acme/web -F=@acme/server -F=@acme/api -F=@acme/auth -F=@acme/db",
     "dev:server": "turbo watch dev -F=@acme/server",
