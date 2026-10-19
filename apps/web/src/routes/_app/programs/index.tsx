@@ -1,39 +1,42 @@
 // import { useState } from 'react';
-// import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
-import { GripVertical, Pencil, Search, Trash } from 'lucide-react';
+import { GripVertical, Pencil, Search } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
   Card,
+  CardContent,
+  // CardContent,
   // CardAction,
   // CardContent,
-  // CardDescription,
+  CardDescription,
   // CardFooter,
-  // CardHeader,
-  // CardTitle,
+  CardHeader,
+  CardTitle,
 } from '@/components/ui/card';
-// import { Empty, EmptyTitle } from '@/components/ui/empty';
-// import {
-//   InputGroup,
-//   InputGroupAddon,
-//   InputGroupInput,
-// } from '@/components/ui/input-group';
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from '@/components/ui/empty';
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from '@/components/ui/input-group';
 import {
   Item,
-  ItemActions,
+  // ItemActions,
   ItemContent,
   ItemGroup,
   ItemMedia,
   ItemTitle,
 } from '@/components/ui/item';
-// import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-// import { Separator } from '@/components/ui/separator';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { Spinner } from '@/components/ui/spinner';
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
 import type { Workout } from './-test-data';
-import { TEST_WORKOUTS } from './-test-data';
 
 export const Route = createFileRoute('/_app/programs/')({
   loader: ({ context }) =>
@@ -44,28 +47,37 @@ export const Route = createFileRoute('/_app/programs/')({
 
 function RouteComponent() {
   return (
-    <div>
-      <ProgramBuilder />
-      {/*<ExercisePicker />*/}
+    <div className="@container/program-editor flex min-h-0 min-w-0 flex-1 flex-col">
+      <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_320px] grid-rows-[minmax(0,1fr)] gap-4">
+        <ProgramBuilder />
+        <ExercisePicker />
+      </div>
     </div>
   );
 }
 
 function ProgramBuilder() {
   return (
-    <Card className="@container/itinerary p-3">
-      <div className="relative">
-        <span
-          aria-hidden="true"
-          className="border-border pointer-events-none absolute top-5 bottom-5 left-[19px] border-l-2 border-dashed"
-        />
+    <Card className="@container/itinerary min-h-0 min-w-0 overflow-hidden p-3">
+      <Empty className="min-h-80">
+        <EmptyHeader>
+          <EmptyTitle>No workouts yet</EmptyTitle>
+          <EmptyDescription>
+            Add your first workout to get started.
+          </EmptyDescription>
+        </EmptyHeader>
+      </Empty>
 
-        <ol className="relative flex flex-col gap-3">
-          {TEST_WORKOUTS.map((workout) => (
-            <WorkoutCard key={workout.day} workout={workout} />
-          ))}
-        </ol>
-      </div>
+      <ScrollArea className="min-h-0 flex-1">
+        <div className="relative">
+          <span
+            aria-hidden="true"
+            className="border-border pointer-events-none absolute top-5 bottom-5 left-[19px] border-l-2 border-dashed"
+          />
+
+          {/*<ol className="relative flex flex-col gap-3"></ol>*/}
+        </div>
+      </ScrollArea>
     </Card>
   );
 }
@@ -125,9 +137,44 @@ function WorkoutCard({ workout }: { workout: Workout }) {
 }
 
 function ExercisePicker() {
+  const { trpc } = Route.useRouteContext();
+  const { data: exercises } = useSuspenseQuery(
+    trpc.exercise.list.queryOptions(),
+  );
+
   return (
-    <div>
-      <div>Exercises....</div>
-    </div>
+    <Card className="min-h-0 min-w-0 overflow-hidden">
+      <CardHeader className="shrink-0">
+        <CardTitle>Exercise library</CardTitle>
+
+        <CardDescription className="text-xs">Drag into any day</CardDescription>
+
+        <InputGroup className="shrink-0">
+          <InputGroupAddon>
+            <Search aria-hidden="true" />
+          </InputGroupAddon>
+          <InputGroupInput
+            placeholder="Search exercises…"
+            aria-label="Search exercises"
+            readOnly
+          />
+        </InputGroup>
+      </CardHeader>
+
+      <ScrollArea className="min-h-0 flex-1">
+        <CardContent>
+          <ul className="space-y-3">
+            {exercises.map((exercise) => (
+              <li key={exercise.id} className="flex items-center">
+                <Button variant="ghost" size="icon">
+                  <GripVertical />
+                </Button>
+                <p>{exercise.name}</p>
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </ScrollArea>
+    </Card>
   );
 }

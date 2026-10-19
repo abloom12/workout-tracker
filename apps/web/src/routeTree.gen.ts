@@ -19,13 +19,9 @@ import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppExercisesIndexRouteImport } from './routes/_app/exercises/index'
 import { Route as AppMockupsIndexRouteImport } from './routes/_app/mockups/index'
 import { Route as AppMockupsLibraryRouteImport } from './routes/_app/mockups/library'
-import { Route as AppMockupsMockupRouteImport } from './routes/_app/mockups/mockup'
 import { Route as AppMockupsMockupFiveRouteImport } from './routes/_app/mockups/mockup-five'
-import { Route as AppMockupsMockupFourRouteImport } from './routes/_app/mockups/mockup-four'
-import { Route as AppMockupsMockupThreeRouteImport } from './routes/_app/mockups/mockup-three'
 import { Route as AppMockupsMockupTwoRouteImport } from './routes/_app/mockups/mockup-two'
 import { Route as AppMockupsOldProgramsRouteImport } from './routes/_app/mockups/old-programs'
-import { Route as AppMockupsSplitRouteImport } from './routes/_app/mockups/split'
 import { Route as AppProgramsIndexRouteImport } from './routes/_app/programs/index'
 import { Route as AppWorkoutsIndexRouteImport } from './routes/_app/workouts/index'
 
@@ -78,24 +74,9 @@ const AppMockupsLibraryRoute = AppMockupsLibraryRouteImport.update({
   path: '/library',
   getParentRoute: () => AppMockupsRouteRoute,
 } as any)
-const AppMockupsMockupRoute = AppMockupsMockupRouteImport.update({
-  id: '/mockup',
-  path: '/mockup',
-  getParentRoute: () => AppMockupsRouteRoute,
-} as any)
 const AppMockupsMockupFiveRoute = AppMockupsMockupFiveRouteImport.update({
   id: '/mockup-five',
   path: '/mockup-five',
-  getParentRoute: () => AppMockupsRouteRoute,
-} as any)
-const AppMockupsMockupFourRoute = AppMockupsMockupFourRouteImport.update({
-  id: '/mockup-four',
-  path: '/mockup-four',
-  getParentRoute: () => AppMockupsRouteRoute,
-} as any)
-const AppMockupsMockupThreeRoute = AppMockupsMockupThreeRouteImport.update({
-  id: '/mockup-three',
-  path: '/mockup-three',
   getParentRoute: () => AppMockupsRouteRoute,
 } as any)
 const AppMockupsMockupTwoRoute = AppMockupsMockupTwoRouteImport.update({
@@ -106,11 +87,6 @@ const AppMockupsMockupTwoRoute = AppMockupsMockupTwoRouteImport.update({
 const AppMockupsOldProgramsRoute = AppMockupsOldProgramsRouteImport.update({
   id: '/old-programs',
   path: '/old-programs',
-  getParentRoute: () => AppMockupsRouteRoute,
-} as any)
-const AppMockupsSplitRoute = AppMockupsSplitRouteImport.update({
-  id: '/split',
-  path: '/split',
   getParentRoute: () => AppMockupsRouteRoute,
 } as any)
 const AppProgramsIndexRoute = AppProgramsIndexRouteImport.update({
@@ -132,13 +108,9 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AppDashboardRoute
   '/settings': typeof AppSettingsRoute
   '/mockups/library': typeof AppMockupsLibraryRoute
-  '/mockups/mockup': typeof AppMockupsMockupRoute
   '/mockups/mockup-five': typeof AppMockupsMockupFiveRoute
-  '/mockups/mockup-four': typeof AppMockupsMockupFourRoute
-  '/mockups/mockup-three': typeof AppMockupsMockupThreeRoute
   '/mockups/mockup-two': typeof AppMockupsMockupTwoRoute
   '/mockups/old-programs': typeof AppMockupsOldProgramsRoute
-  '/mockups/split': typeof AppMockupsSplitRoute
   '/exercises/': typeof AppExercisesIndexRoute
   '/mockups/': typeof AppMockupsIndexRoute
   '/programs/': typeof AppProgramsIndexRoute
@@ -151,13 +123,9 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AppDashboardRoute
   '/settings': typeof AppSettingsRoute
   '/mockups/library': typeof AppMockupsLibraryRoute
-  '/mockups/mockup': typeof AppMockupsMockupRoute
   '/mockups/mockup-five': typeof AppMockupsMockupFiveRoute
-  '/mockups/mockup-four': typeof AppMockupsMockupFourRoute
-  '/mockups/mockup-three': typeof AppMockupsMockupThreeRoute
   '/mockups/mockup-two': typeof AppMockupsMockupTwoRoute
   '/mockups/old-programs': typeof AppMockupsOldProgramsRoute
-  '/mockups/split': typeof AppMockupsSplitRoute
   '/exercises': typeof AppExercisesIndexRoute
   '/mockups': typeof AppMockupsIndexRoute
   '/programs': typeof AppProgramsIndexRoute
@@ -173,13 +141,9 @@ export interface FileRoutesById {
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/settings': typeof AppSettingsRoute
   '/_app/mockups/library': typeof AppMockupsLibraryRoute
-  '/_app/mockups/mockup': typeof AppMockupsMockupRoute
   '/_app/mockups/mockup-five': typeof AppMockupsMockupFiveRoute
-  '/_app/mockups/mockup-four': typeof AppMockupsMockupFourRoute
-  '/_app/mockups/mockup-three': typeof AppMockupsMockupThreeRoute
   '/_app/mockups/mockup-two': typeof AppMockupsMockupTwoRoute
   '/_app/mockups/old-programs': typeof AppMockupsOldProgramsRoute
-  '/_app/mockups/split': typeof AppMockupsSplitRoute
   '/_app/exercises/': typeof AppExercisesIndexRoute
   '/_app/mockups/': typeof AppMockupsIndexRoute
   '/_app/programs/': typeof AppProgramsIndexRoute
@@ -195,13 +159,9 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/settings'
     | '/mockups/library'
-    | '/mockups/mockup'
     | '/mockups/mockup-five'
-    | '/mockups/mockup-four'
-    | '/mockups/mockup-three'
     | '/mockups/mockup-two'
     | '/mockups/old-programs'
-    | '/mockups/split'
     | '/exercises/'
     | '/mockups/'
     | '/programs/'
@@ -214,13 +174,9 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/settings'
     | '/mockups/library'
-    | '/mockups/mockup'
     | '/mockups/mockup-five'
-    | '/mockups/mockup-four'
-    | '/mockups/mockup-three'
     | '/mockups/mockup-two'
     | '/mockups/old-programs'
-    | '/mockups/split'
     | '/exercises'
     | '/mockups'
     | '/programs'
@@ -235,13 +191,9 @@ export interface FileRouteTypes {
     | '/_app/dashboard'
     | '/_app/settings'
     | '/_app/mockups/library'
-    | '/_app/mockups/mockup'
     | '/_app/mockups/mockup-five'
-    | '/_app/mockups/mockup-four'
-    | '/_app/mockups/mockup-three'
     | '/_app/mockups/mockup-two'
     | '/_app/mockups/old-programs'
-    | '/_app/mockups/split'
     | '/_app/exercises/'
     | '/_app/mockups/'
     | '/_app/programs/'
@@ -327,32 +279,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppMockupsLibraryRouteImport
       parentRoute: typeof AppMockupsRouteRoute
     }
-    '/_app/mockups/mockup': {
-      id: '/_app/mockups/mockup'
-      path: '/mockup'
-      fullPath: '/mockups/mockup'
-      preLoaderRoute: typeof AppMockupsMockupRouteImport
-      parentRoute: typeof AppMockupsRouteRoute
-    }
     '/_app/mockups/mockup-five': {
       id: '/_app/mockups/mockup-five'
       path: '/mockup-five'
       fullPath: '/mockups/mockup-five'
       preLoaderRoute: typeof AppMockupsMockupFiveRouteImport
-      parentRoute: typeof AppMockupsRouteRoute
-    }
-    '/_app/mockups/mockup-four': {
-      id: '/_app/mockups/mockup-four'
-      path: '/mockup-four'
-      fullPath: '/mockups/mockup-four'
-      preLoaderRoute: typeof AppMockupsMockupFourRouteImport
-      parentRoute: typeof AppMockupsRouteRoute
-    }
-    '/_app/mockups/mockup-three': {
-      id: '/_app/mockups/mockup-three'
-      path: '/mockup-three'
-      fullPath: '/mockups/mockup-three'
-      preLoaderRoute: typeof AppMockupsMockupThreeRouteImport
       parentRoute: typeof AppMockupsRouteRoute
     }
     '/_app/mockups/mockup-two': {
@@ -367,13 +298,6 @@ declare module '@tanstack/react-router' {
       path: '/old-programs'
       fullPath: '/mockups/old-programs'
       preLoaderRoute: typeof AppMockupsOldProgramsRouteImport
-      parentRoute: typeof AppMockupsRouteRoute
-    }
-    '/_app/mockups/split': {
-      id: '/_app/mockups/split'
-      path: '/split'
-      fullPath: '/mockups/split'
-      preLoaderRoute: typeof AppMockupsSplitRouteImport
       parentRoute: typeof AppMockupsRouteRoute
     }
     '/_app/programs/': {
@@ -395,25 +319,17 @@ declare module '@tanstack/react-router' {
 
 interface AppMockupsRouteRouteChildren {
   AppMockupsLibraryRoute: typeof AppMockupsLibraryRoute
-  AppMockupsMockupRoute: typeof AppMockupsMockupRoute
   AppMockupsMockupFiveRoute: typeof AppMockupsMockupFiveRoute
-  AppMockupsMockupFourRoute: typeof AppMockupsMockupFourRoute
-  AppMockupsMockupThreeRoute: typeof AppMockupsMockupThreeRoute
   AppMockupsMockupTwoRoute: typeof AppMockupsMockupTwoRoute
   AppMockupsOldProgramsRoute: typeof AppMockupsOldProgramsRoute
-  AppMockupsSplitRoute: typeof AppMockupsSplitRoute
   AppMockupsIndexRoute: typeof AppMockupsIndexRoute
 }
 
 const AppMockupsRouteRouteChildren: AppMockupsRouteRouteChildren = {
   AppMockupsLibraryRoute: AppMockupsLibraryRoute,
-  AppMockupsMockupRoute: AppMockupsMockupRoute,
   AppMockupsMockupFiveRoute: AppMockupsMockupFiveRoute,
-  AppMockupsMockupFourRoute: AppMockupsMockupFourRoute,
-  AppMockupsMockupThreeRoute: AppMockupsMockupThreeRoute,
   AppMockupsMockupTwoRoute: AppMockupsMockupTwoRoute,
   AppMockupsOldProgramsRoute: AppMockupsOldProgramsRoute,
-  AppMockupsSplitRoute: AppMockupsSplitRoute,
   AppMockupsIndexRoute: AppMockupsIndexRoute,
 }
 

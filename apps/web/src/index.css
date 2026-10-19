@@ -58,7 +58,7 @@
     @apply font-sans;
   }
   #root {
-    @apply min-h-screen;
+    @apply min-h-screen supports-[height:100dvh]:min-h-dvh;
   }
 }
 
