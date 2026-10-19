@@ -1,13 +1,12 @@
-import type { Auth } from 'better-auth';
 import { type CreateFastifyContextOptions } from '@trpc/server/adapters/fastify';
 import { fromNodeHeaders } from 'better-auth/node';
 
+import type { AppAuth } from '@acme/auth';
 import type { Database } from '@acme/db';
 
 import type { ApiContext } from './trpc.js';
 import { exerciseRouter } from './routers/exercise.js';
 import { healthRouter } from './routers/health.js';
-import { workoutRouter } from './routers/workout.js';
 import { router } from './trpc.js';
 
 export type { ApiContext, ApiSession } from './trpc.js';
@@ -23,11 +22,10 @@ function createAppRouter() {
   return router({
     exercise: exerciseRouter,
     health: healthRouter,
-    workout: workoutRouter,
   });
 }
 
-export function createApi(auth: Auth, db: Database): Api {
+export function createApi(auth: AppAuth, db: Database): Api {
   async function createContext({
     req,
     res,

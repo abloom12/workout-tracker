@@ -1,10 +1,10 @@
-import type { Auth } from 'better-auth';
 import { initTRPC, TRPCError } from '@trpc/server';
 import { type CreateFastifyContextOptions } from '@trpc/server/adapters/fastify';
 
+import type { AppAuth } from '@acme/auth';
 import type { Database } from '@acme/db';
 
-export type ApiSession = Auth['$Infer']['Session'] | null;
+export type ApiSession = AppAuth['$Infer']['Session'] | null;
 
 export type ApiContext = {
   db: Database;

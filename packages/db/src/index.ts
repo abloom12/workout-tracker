@@ -2,6 +2,7 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 
 import * as schema from './schema.js';
 
+export { listExerciseSetups } from './queries/exercises.js';
 export * from './schema.js';
 
 export function createDB(databaseURL: string) {

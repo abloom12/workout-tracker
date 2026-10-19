@@ -7,6 +7,8 @@ import { createAuthOptions } from './options.js';
 
 type AuthDb = Parameters<typeof drizzleAdapter>[0];
 
+export type AppAuth = ReturnType<typeof createAuth>;
+
 export function createAuth(db: AuthDb, options: AuthOptions) {
   const authOptions = {
     ...createAuthOptions(options),

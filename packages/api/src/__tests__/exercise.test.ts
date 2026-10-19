@@ -1,9 +1,9 @@
 import { dirname, resolve } from 'node:path';
 import { loadEnvFile } from 'node:process';
 import { fileURLToPath } from 'node:url';
-import type { Auth } from 'better-auth';
 import { afterAll, expect, test } from 'vitest';
 
+import type { AppAuth } from '@acme/auth';
 import { createDB } from '@acme/db';
 
 import type { ApiContext, ApiSession } from '../index.js';
@@ -24,7 +24,7 @@ if (!databaseURL) {
 const db = createDB(databaseURL);
 const auth = {
   api: { getSession: () => Promise.resolve(null) },
-} as unknown as Auth;
+} as unknown as AppAuth;
 const { appRouter } = createApi(auth, db);
 
 function createCaller(session: ApiSession) {
@@ -55,6 +55,8 @@ function createTestSession(): NonNullable<ApiSession> {
       name: 'Test User',
       email: 'test@example.com',
       emailVerified: true,
+      role: 'user',
+      banned: false,
       image: null,
       createdAt: now,
       updatedAt: now,

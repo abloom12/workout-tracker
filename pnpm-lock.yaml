@@ -274,6 +274,9 @@ importers:
 
   packages/api:
     dependencies:
+      '@acme/auth':
+        specifier: workspace:*
+        version: link:../auth
       '@acme/db':
         specifier: workspace:*
         version: link:../db
