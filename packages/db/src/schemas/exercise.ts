@@ -8,13 +8,19 @@ import {
   unique,
 } from 'drizzle-orm/pg-core';
 
-export const exercise = pgTable('exercise', {
+export const muscle = pgTable('muscle', {
   id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
   code: text('code').notNull().unique(),
   name: text('name').notNull().unique(),
 });
 
 export const exercise_equipment = pgTable('exercise_equipment', {
+  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
+  code: text('code').notNull().unique(),
+  name: text('name').notNull().unique(),
+});
+
+export const exercise = pgTable('exercise', {
   id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
   code: text('code').notNull().unique(),
   name: text('name').notNull().unique(),
@@ -55,7 +61,9 @@ export const exercise_setup = pgTable(
     grip_id: integer('grip_id')
       .notNull()
       .references(() => exercise_grip.id),
-    attachment_id: integer('attachment_id').references(() => exercise_attachment.id),
+    attachment_id: integer('attachment_id').references(
+      () => exercise_attachment.id,
+    ),
     load_convention: loadConvention('load_convention').notNull(),
     is_unilateral: boolean('is_unilateral').notNull().default(false),
   },

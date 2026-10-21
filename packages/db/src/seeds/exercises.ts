@@ -1,6 +1,11 @@
-import type { exercise } from '../schemas/exercise.js';
+type ExerciseSeed = {
+  code: string;
+  name: string;
+  // family: string;
+  // equipment: string;
+};
 
-export const exercises = [
+export const exercises: ExerciseSeed[] = [
   // Chest
   { code: 'bench_press', name: 'Bench Press' },
   { code: 'incline_bench_press', name: 'Incline Bench Press' },
@@ -105,4 +110,4 @@ export const exercises = [
   { code: 'hang_clean', name: 'Hang Clean' },
   { code: 'power_clean', name: 'Power Clean' },
   { code: 'snatch', name: 'Snatch' },
-] satisfies (typeof exercise.$inferInsert)[];
+];
