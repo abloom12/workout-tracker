@@ -14,9 +14,11 @@ export type WorkoutExerciseDraft = {
   sets: PlannedSetDraft[];
 };
 
-export type WorkoutDraft = { name: string; exercises: WorkoutExerciseDraft[] };
-
-export type WorkoutDraftWithId = WorkoutDraft & { id: string };
+export type WorkoutDraft = {
+  id: string;
+  name: string;
+  exercises: WorkoutExerciseDraft[];
+};
 
 export type EditorDraft = {
   split: { name: string; workoutIds: string[] };

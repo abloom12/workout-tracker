@@ -9,13 +9,10 @@ import {
   EmptyTitle,
 } from '@/components/ui/empty';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import type { WorkoutDraftWithId } from '../-types';
+import type { WorkoutDraft } from '../-types';
 import { WorkoutCard } from './WorkoutCard';
 
-type SplitBuilderProps = {
-  workouts: WorkoutDraftWithId[];
-  onAddWorkout: () => void;
-};
+type SplitBuilderProps = { workouts: WorkoutDraft[]; onAddWorkout: () => void };
 
 export function SplitBuilder({ workouts, onAddWorkout }: SplitBuilderProps) {
   return (

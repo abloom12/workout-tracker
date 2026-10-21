@@ -1,14 +1,9 @@
+import { useDroppable } from '@dnd-kit/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { getRouteApi } from '@tanstack/react-router';
 import { ArrowDownToLine, Pencil } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyTitle,
-} from '@/components/ui/empty';
 import {
   Item,
   ItemContent,
@@ -16,13 +11,18 @@ import {
   ItemMedia,
   ItemTitle,
 } from '@/components/ui/item';
-import type { WorkoutDraftWithId, WorkoutExerciseDraft } from '../-types';
+import type { WorkoutDraft, WorkoutExerciseDraft } from '../-types';
 
 const routeApi = getRouteApi('/_app/programs/');
 
-type WorkoutCardProps = { position: number; workout: WorkoutDraftWithId };
+type WorkoutCardProps = { position: number; workout: WorkoutDraft };
 
 export function WorkoutCard({ position, workout }: WorkoutCardProps) {
+  const { ref, isDropTarget } = useDroppable({
+    id: workout.id,
+    data: { id: workout.id, position },
+  });
+
   const name = workout.name.trim() || `Workout Name`;
   const totalSets = workout.exercises.reduce(
     (total, exercise) => total + exercise.sets.length,
@@ -58,30 +58,36 @@ export function WorkoutCard({ position, workout }: WorkoutCardProps) {
           </p>
         </header>
 
-        <div className="border border-dashed">
-          <ItemGroup>
-            {workout.exercises.length === 0 ?
-              <Empty className="min-h-32 p-4">
-                <EmptyHeader>
-                  <EmptyTitle>No exercises yet</EmptyTitle>
-                  <EmptyDescription className="flex items-center gap-1">
-                    <ArrowDownToLine aria-hidden="true" className="size-3.5" />
-                    Drop an exercise here to get started
-                  </EmptyDescription>
-                </EmptyHeader>
-              </Empty>
-            : workout.exercises.map((exercise, index) => (
-                <Exercise key={exercise.id} exercise={exercise} index={index} />
-              ))
-            }
-          </ItemGroup>
+        <div ref={ref}>
+          {workout.exercises.length > 0 && (
+            <ItemGroup>
+              {workout.exercises.map((exercise, index) => (
+                <WorkoutExercise
+                  key={exercise.id}
+                  exercise={exercise}
+                  index={index}
+                />
+              ))}
+            </ItemGroup>
+          )}
+
+          <div className="flex min-h-28 items-center justify-center rounded-lg border border-dashed">
+            <div className="text-muted-foreground flex items-center gap-1">
+              <ArrowDownToLine aria-hidden="true" className="size-3.5" />
+              <p className="text-xs">
+                {isDropTarget ?
+                  'Release to place here'
+                : 'Drop an exercise here to get started'}
+              </p>
+            </div>
+          </div>
         </div>
       </section>
     </li>
   );
 }
 
-function Exercise({
+function WorkoutExercise({
   exercise,
   index,
 }: {
