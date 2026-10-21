@@ -1,16 +1,6 @@
 import type { ExerciseSetupSeed } from './types.js';
 
-const floorCoreSetups = [
-  {
-    code: 'plank_bodyweight_standard',
-    attachment: null,
-    name: 'Plank',
-    exercise: 'plank',
-    equipment: 'floor',
-    grip: 'standard',
-    load_convention: 'added_to_bodyweight',
-    is_unilateral: false,
-  },
+const crunchSetups = [
   {
     code: 'crunch_bodyweight_standard',
     attachment: null,
@@ -22,13 +12,13 @@ const floorCoreSetups = [
     is_unilateral: false,
   },
   {
-    code: 'l_sit_bodyweight_standard',
+    code: 'crunch_dumbbell_standard',
     attachment: null,
-    name: 'L-Sit',
-    exercise: 'l_sit',
-    equipment: 'floor',
+    name: 'Dumbbell Crunch',
+    exercise: 'crunch',
+    equipment: 'dumbbell',
     grip: 'standard',
-    load_convention: 'added_to_bodyweight',
+    load_convention: 'per_implement',
     is_unilateral: false,
   },
   {
@@ -41,11 +31,24 @@ const floorCoreSetups = [
     load_convention: 'added_to_bodyweight',
     is_unilateral: false,
   },
+] satisfies ExerciseSetupSeed[];
+
+const stabilitySetups = [
   {
-    code: 'bird_dog_floor_standard',
+    code: 'plank_bodyweight_standard',
     attachment: null,
-    name: 'Bird Dog',
-    exercise: 'bird_dog',
+    name: 'Plank',
+    exercise: 'plank',
+    equipment: 'floor',
+    grip: 'standard',
+    load_convention: 'added_to_bodyweight',
+    is_unilateral: false,
+  },
+  {
+    code: 'side_plank_floor_standard',
+    attachment: null,
+    name: 'Side Plank',
+    exercise: 'side_plank',
     equipment: 'floor',
     grip: 'standard',
     load_convention: 'added_to_bodyweight',
@@ -62,18 +65,28 @@ const floorCoreSetups = [
     is_unilateral: true,
   },
   {
-    code: 'side_plank_floor_standard',
+    code: 'bird_dog_floor_standard',
     attachment: null,
-    name: 'Side Plank',
-    exercise: 'side_plank',
+    name: 'Bird Dog',
+    exercise: 'bird_dog',
     equipment: 'floor',
     grip: 'standard',
     load_convention: 'added_to_bodyweight',
     is_unilateral: true,
   },
+  {
+    code: 'pallof_press_cable_standard',
+    attachment: 'd_handle',
+    name: 'Cable Pallof Press',
+    exercise: 'pallof_press',
+    equipment: 'cable',
+    grip: 'standard',
+    load_convention: 'total_weight',
+    is_unilateral: true,
+  },
 ] satisfies ExerciseSetupSeed[];
 
-const fixedBarCoreSetups = [
+const legRaiseAndLSitSetups = [
   {
     code: 'hanging_knee_raise_bodyweight_standard',
     attachment: null,
@@ -94,19 +107,39 @@ const fixedBarCoreSetups = [
     load_convention: 'added_to_bodyweight',
     is_unilateral: false,
   },
-] satisfies ExerciseSetupSeed[];
-
-const dumbbellCoreSetups = [
   {
-    code: 'crunch_dumbbell_standard',
+    code: 'l_sit_bodyweight_standard',
     attachment: null,
-    name: 'Dumbbell Crunch',
-    exercise: 'crunch',
-    equipment: 'dumbbell',
+    name: 'L-Sit',
+    exercise: 'l_sit',
+    equipment: 'floor',
     grip: 'standard',
-    load_convention: 'per_implement',
+    load_convention: 'added_to_bodyweight',
     is_unilateral: false,
   },
+  {
+    code: 'l_sit_parallel_bars_standard',
+    attachment: null,
+    name: 'Parallel Bar L-Sit',
+    exercise: 'l_sit',
+    equipment: 'parallel_bars',
+    grip: 'standard',
+    load_convention: 'added_to_bodyweight',
+    is_unilateral: false,
+  },
+  {
+    code: 'l_sit_olympic_rings_standard',
+    attachment: null,
+    name: 'Ring L-Sit',
+    exercise: 'l_sit',
+    equipment: 'olympic_rings',
+    grip: 'standard',
+    load_convention: 'added_to_bodyweight',
+    is_unilateral: false,
+  },
+] satisfies ExerciseSetupSeed[];
+
+const carrySetups = [
   {
     code: 'farmers_carry_dumbbell_standard',
     attachment: null,
@@ -129,50 +162,9 @@ const dumbbellCoreSetups = [
   },
 ] satisfies ExerciseSetupSeed[];
 
-const cableCoreSetups = [
-  {
-    code: 'pallof_press_cable_standard',
-    attachment: 'd_handle',
-    name: 'Cable Pallof Press',
-    exercise: 'pallof_press',
-    equipment: 'cable',
-    grip: 'standard',
-    load_convention: 'total_weight',
-    is_unilateral: true,
-  },
-] satisfies ExerciseSetupSeed[];
-
-const parallelBarsCoreSetups = [
-  {
-    code: 'l_sit_parallel_bars_standard',
-    attachment: null,
-    name: 'Parallel Bar L-Sit',
-    exercise: 'l_sit',
-    equipment: 'parallel_bars',
-    grip: 'standard',
-    load_convention: 'added_to_bodyweight',
-    is_unilateral: false,
-  },
-] satisfies ExerciseSetupSeed[];
-
-const olympicRingsCoreSetups = [
-  {
-    code: 'l_sit_olympic_rings_standard',
-    attachment: null,
-    name: 'Ring L-Sit',
-    exercise: 'l_sit',
-    equipment: 'olympic_rings',
-    grip: 'standard',
-    load_convention: 'added_to_bodyweight',
-    is_unilateral: false,
-  },
-] satisfies ExerciseSetupSeed[];
-
 export const coreSetups = [
-  ...floorCoreSetups,
-  ...fixedBarCoreSetups,
-  ...dumbbellCoreSetups,
-  ...cableCoreSetups,
-  ...parallelBarsCoreSetups,
-  ...olympicRingsCoreSetups,
+  ...crunchSetups,
+  ...stabilitySetups,
+  ...legRaiseAndLSitSetups,
+  ...carrySetups,
 ];

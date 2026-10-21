@@ -1,6 +1,6 @@
 import type { ExerciseSetupSeed } from './types.js';
 
-const barbellBackSetups = [
+const rowSetups = [
   {
     code: 'bent_over_row_barbell_standard',
     attachment: null,
@@ -40,6 +40,26 @@ const barbellBackSetups = [
     grip: 'underhand',
     load_convention: 'total_weight',
     is_unilateral: false,
+  },
+  {
+    code: 'bent_over_row_dumbbell_standard',
+    attachment: null,
+    name: 'Dumbbell Bent-Over Row',
+    exercise: 'bent_over_row',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: false,
+  },
+  {
+    code: 'bent_over_row_dumbbell_standard_unilateral',
+    attachment: null,
+    name: 'Single-Arm Dumbbell Bent-Over Row',
+    exercise: 'bent_over_row',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: true,
   },
   {
     code: 'chest_supported_row_barbell_standard',
@@ -82,6 +102,26 @@ const barbellBackSetups = [
     is_unilateral: false,
   },
   {
+    code: 'chest_supported_row_dumbbell_standard',
+    attachment: null,
+    name: 'Dumbbell Chest-Supported Row',
+    exercise: 'chest_supported_row',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: false,
+  },
+  {
+    code: 'chest_supported_row_dumbbell_standard_unilateral',
+    attachment: null,
+    name: 'Single-Arm Dumbbell Chest-Supported Row',
+    exercise: 'chest_supported_row',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: true,
+  },
+  {
     code: 'pendlay_row_barbell_standard',
     attachment: null,
     name: 'Pendlay Row',
@@ -112,82 +152,6 @@ const barbellBackSetups = [
     is_unilateral: false,
   },
   {
-    code: 'shrug_barbell_standard',
-    attachment: null,
-    name: 'Barbell Shrug',
-    exercise: 'shrug',
-    equipment: 'barbell',
-    grip: 'standard',
-    load_convention: 'total_weight',
-    is_unilateral: false,
-  },
-] satisfies ExerciseSetupSeed[];
-
-const dumbbellBackSetups = [
-  {
-    code: 'bent_over_row_dumbbell_standard',
-    attachment: null,
-    name: 'Dumbbell Bent-Over Row',
-    exercise: 'bent_over_row',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: false,
-  },
-  {
-    code: 'chest_supported_row_dumbbell_standard',
-    attachment: null,
-    name: 'Dumbbell Chest-Supported Row',
-    exercise: 'chest_supported_row',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: false,
-  },
-  {
-    code: 'shrug_dumbbell_standard',
-    attachment: null,
-    name: 'Dumbbell Shrug',
-    exercise: 'shrug',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: false,
-  },
-  {
-    code: 'pullover_dumbbell_standard',
-    attachment: null,
-    name: 'Dumbbell Pullover',
-    exercise: 'pullover',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: false,
-  },
-  {
-    code: 'bent_over_row_dumbbell_standard_unilateral',
-    attachment: null,
-    name: 'Single-Arm Dumbbell Bent-Over Row',
-    exercise: 'bent_over_row',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: true,
-  },
-  {
-    code: 'chest_supported_row_dumbbell_standard_unilateral',
-    attachment: null,
-    name: 'Single-Arm Dumbbell Chest-Supported Row',
-    exercise: 'chest_supported_row',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: true,
-  },
-] satisfies ExerciseSetupSeed[];
-
-const cableBackSetups = [
-  {
     code: 'seated_row_cable_standard_unilateral',
     attachment: 'd_handle',
     name: 'Single-Arm Seated Cable Row',
@@ -197,29 +161,6 @@ const cableBackSetups = [
     load_convention: 'per_implement',
     is_unilateral: true,
   },
-  {
-    code: 'lat_pulldown_cable_standard',
-    attachment: 'straight_bar',
-    name: 'Cable Lat Pulldown',
-    exercise: 'lat_pulldown',
-    equipment: 'cable',
-    grip: 'standard',
-    load_convention: 'total_weight',
-    is_unilateral: false,
-  },
-  {
-    code: 'straight_arm_pulldown_cable_standard',
-    attachment: 'straight_bar',
-    name: 'Cable Straight-Arm Pulldown',
-    exercise: 'straight_arm_pulldown',
-    equipment: 'cable',
-    grip: 'standard',
-    load_convention: 'total_weight',
-    is_unilateral: false,
-  },
-] satisfies ExerciseSetupSeed[];
-
-const fixedBarBackSetups = [
   {
     code: 'inverted_row_bodyweight_standard',
     attachment: null,
@@ -261,25 +202,18 @@ const fixedBarBackSetups = [
     is_unilateral: false,
   },
   {
-    code: 'chin_up_bodyweight_standard',
+    code: 'inverted_row_olympic_rings_standard',
     attachment: null,
-    name: 'Chin-Up',
-    exercise: 'chin_up',
-    equipment: 'fixed_bar',
+    name: 'Ring Inverted Row',
+    exercise: 'inverted_row',
+    equipment: 'olympic_rings',
     grip: 'standard',
     load_convention: 'added_to_bodyweight',
     is_unilateral: false,
   },
-  {
-    code: 'chin_up_bodyweight_close',
-    attachment: null,
-    name: 'Close-Grip Chin-Up',
-    exercise: 'chin_up',
-    equipment: 'fixed_bar',
-    grip: 'close',
-    load_convention: 'added_to_bodyweight',
-    is_unilateral: false,
-  },
+] satisfies ExerciseSetupSeed[];
+
+const pullUpSetups = [
   {
     code: 'pull_up_bodyweight_standard',
     attachment: null,
@@ -321,16 +255,6 @@ const fixedBarBackSetups = [
     is_unilateral: false,
   },
   {
-    code: 'muscle_up_bodyweight_standard',
-    attachment: null,
-    name: 'Muscle-Up',
-    exercise: 'muscle_up',
-    equipment: 'fixed_bar',
-    grip: 'standard',
-    load_convention: 'added_to_bodyweight',
-    is_unilateral: false,
-  },
-  {
     code: 'pull_up_bodyweight_standard_unilateral',
     attachment: null,
     name: 'Single-Arm Pull-Up',
@@ -351,53 +275,10 @@ const fixedBarBackSetups = [
     is_unilateral: true,
   },
   {
-    code: 'chin_up_bodyweight_standard_unilateral',
-    attachment: null,
-    name: 'Single-Arm Chin-Up',
-    exercise: 'chin_up',
-    equipment: 'fixed_bar',
-    grip: 'standard',
-    load_convention: 'added_to_bodyweight',
-    is_unilateral: true,
-  },
-] satisfies ExerciseSetupSeed[];
-
-const olympicRingsBackSetups = [
-  {
-    code: 'inverted_row_olympic_rings_standard',
-    attachment: null,
-    name: 'Ring Inverted Row',
-    exercise: 'inverted_row',
-    equipment: 'olympic_rings',
-    grip: 'standard',
-    load_convention: 'added_to_bodyweight',
-    is_unilateral: false,
-  },
-  {
-    code: 'chin_up_olympic_rings_standard',
-    attachment: null,
-    name: 'Ring Chin-Up',
-    exercise: 'chin_up',
-    equipment: 'olympic_rings',
-    grip: 'standard',
-    load_convention: 'added_to_bodyweight',
-    is_unilateral: false,
-  },
-  {
     code: 'pull_up_olympic_rings_standard',
     attachment: null,
     name: 'Ring Pull-Up',
     exercise: 'pull_up',
-    equipment: 'olympic_rings',
-    grip: 'standard',
-    load_convention: 'added_to_bodyweight',
-    is_unilateral: false,
-  },
-  {
-    code: 'muscle_up_olympic_rings_standard',
-    attachment: null,
-    name: 'Ring Muscle-Up',
-    exercise: 'muscle_up',
     equipment: 'olympic_rings',
     grip: 'standard',
     load_convention: 'added_to_bodyweight',
@@ -414,6 +295,46 @@ const olympicRingsBackSetups = [
     is_unilateral: true,
   },
   {
+    code: 'chin_up_bodyweight_standard',
+    attachment: null,
+    name: 'Chin-Up',
+    exercise: 'chin_up',
+    equipment: 'fixed_bar',
+    grip: 'standard',
+    load_convention: 'added_to_bodyweight',
+    is_unilateral: false,
+  },
+  {
+    code: 'chin_up_bodyweight_close',
+    attachment: null,
+    name: 'Close-Grip Chin-Up',
+    exercise: 'chin_up',
+    equipment: 'fixed_bar',
+    grip: 'close',
+    load_convention: 'added_to_bodyweight',
+    is_unilateral: false,
+  },
+  {
+    code: 'chin_up_bodyweight_standard_unilateral',
+    attachment: null,
+    name: 'Single-Arm Chin-Up',
+    exercise: 'chin_up',
+    equipment: 'fixed_bar',
+    grip: 'standard',
+    load_convention: 'added_to_bodyweight',
+    is_unilateral: true,
+  },
+  {
+    code: 'chin_up_olympic_rings_standard',
+    attachment: null,
+    name: 'Ring Chin-Up',
+    exercise: 'chin_up',
+    equipment: 'olympic_rings',
+    grip: 'standard',
+    load_convention: 'added_to_bodyweight',
+    is_unilateral: false,
+  },
+  {
     code: 'chin_up_olympic_rings_standard_unilateral',
     attachment: null,
     name: 'Single-Arm Ring Chin-Up',
@@ -425,10 +346,93 @@ const olympicRingsBackSetups = [
   },
 ] satisfies ExerciseSetupSeed[];
 
+const pulldownSetups = [
+  {
+    code: 'lat_pulldown_cable_standard',
+    attachment: 'straight_bar',
+    name: 'Cable Lat Pulldown',
+    exercise: 'lat_pulldown',
+    equipment: 'cable',
+    grip: 'standard',
+    load_convention: 'total_weight',
+    is_unilateral: false,
+  },
+  {
+    code: 'straight_arm_pulldown_cable_standard',
+    attachment: 'straight_bar',
+    name: 'Cable Straight-Arm Pulldown',
+    exercise: 'straight_arm_pulldown',
+    equipment: 'cable',
+    grip: 'standard',
+    load_convention: 'total_weight',
+    is_unilateral: false,
+  },
+] satisfies ExerciseSetupSeed[];
+
+const pulloverSetups = [
+  {
+    code: 'pullover_dumbbell_standard',
+    attachment: null,
+    name: 'Dumbbell Pullover',
+    exercise: 'pullover',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: false,
+  },
+] satisfies ExerciseSetupSeed[];
+
+const shrugSetups = [
+  {
+    code: 'shrug_barbell_standard',
+    attachment: null,
+    name: 'Barbell Shrug',
+    exercise: 'shrug',
+    equipment: 'barbell',
+    grip: 'standard',
+    load_convention: 'total_weight',
+    is_unilateral: false,
+  },
+  {
+    code: 'shrug_dumbbell_standard',
+    attachment: null,
+    name: 'Dumbbell Shrug',
+    exercise: 'shrug',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: false,
+  },
+] satisfies ExerciseSetupSeed[];
+
+const muscleUpSetups = [
+  {
+    code: 'muscle_up_bodyweight_standard',
+    attachment: null,
+    name: 'Muscle-Up',
+    exercise: 'muscle_up',
+    equipment: 'fixed_bar',
+    grip: 'standard',
+    load_convention: 'added_to_bodyweight',
+    is_unilateral: false,
+  },
+  {
+    code: 'muscle_up_olympic_rings_standard',
+    attachment: null,
+    name: 'Ring Muscle-Up',
+    exercise: 'muscle_up',
+    equipment: 'olympic_rings',
+    grip: 'standard',
+    load_convention: 'added_to_bodyweight',
+    is_unilateral: false,
+  },
+] satisfies ExerciseSetupSeed[];
+
 export const backSetups = [
-  ...barbellBackSetups,
-  ...dumbbellBackSetups,
-  ...cableBackSetups,
-  ...fixedBarBackSetups,
-  ...olympicRingsBackSetups,
+  ...rowSetups,
+  ...pullUpSetups,
+  ...pulldownSetups,
+  ...pulloverSetups,
+  ...shrugSetups,
+  ...muscleUpSetups,
 ];

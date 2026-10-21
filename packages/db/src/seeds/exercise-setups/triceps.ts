@@ -1,6 +1,6 @@
 import type { ExerciseSetupSeed } from './types.js';
 
-const barbellTricepsSetups = [
+const jmPressSetups = [
   {
     code: 'jm_press_barbell_standard',
     attachment: null,
@@ -11,6 +11,9 @@ const barbellTricepsSetups = [
     load_convention: 'total_weight',
     is_unilateral: false,
   },
+] satisfies ExerciseSetupSeed[];
+
+const extensionSetups = [
   {
     code: 'overhead_triceps_extension_barbell_standard',
     attachment: null,
@@ -22,33 +25,10 @@ const barbellTricepsSetups = [
     is_unilateral: false,
   },
   {
-    code: 'skull_crusher_barbell_standard',
-    attachment: null,
-    name: 'Barbell Skull Crusher',
-    exercise: 'skull_crusher',
-    equipment: 'barbell',
-    grip: 'standard',
-    load_convention: 'total_weight',
-    is_unilateral: false,
-  },
-] satisfies ExerciseSetupSeed[];
-
-const dumbbellTricepsSetups = [
-  {
     code: 'overhead_triceps_extension_dumbbell_standard',
     attachment: null,
     name: 'Dumbbell Overhead Triceps Extension',
     exercise: 'overhead_triceps_extension',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: false,
-  },
-  {
-    code: 'triceps_kickback_dumbbell_standard',
-    attachment: null,
-    name: 'Dumbbell Triceps Kickback',
-    exercise: 'triceps_kickback',
     equipment: 'dumbbell',
     grip: 'standard',
     load_convention: 'per_implement',
@@ -65,14 +45,34 @@ const dumbbellTricepsSetups = [
     is_unilateral: true,
   },
   {
-    code: 'triceps_kickback_dumbbell_standard_unilateral',
-    attachment: null,
-    name: 'Single-Arm Dumbbell Triceps Kickback',
-    exercise: 'triceps_kickback',
-    equipment: 'dumbbell',
+    code: 'overhead_triceps_extension_cable_standard',
+    attachment: 'rope',
+    name: 'Cable Overhead Triceps Extension',
+    exercise: 'overhead_triceps_extension',
+    equipment: 'cable',
+    grip: 'standard',
+    load_convention: 'total_weight',
+    is_unilateral: false,
+  },
+  {
+    code: 'overhead_triceps_extension_cable_standard_unilateral',
+    attachment: 'rope',
+    name: 'Single-Arm Cable Overhead Triceps Extension',
+    exercise: 'overhead_triceps_extension',
+    equipment: 'cable',
     grip: 'standard',
     load_convention: 'per_implement',
     is_unilateral: true,
+  },
+  {
+    code: 'skull_crusher_barbell_standard',
+    attachment: null,
+    name: 'Barbell Skull Crusher',
+    exercise: 'skull_crusher',
+    equipment: 'barbell',
+    grip: 'standard',
+    load_convention: 'total_weight',
+    is_unilateral: false,
   },
   {
     code: 'skull_crusher_dumbbell_standard',
@@ -94,9 +94,26 @@ const dumbbellTricepsSetups = [
     load_convention: 'per_implement',
     is_unilateral: true,
   },
-] satisfies ExerciseSetupSeed[];
-
-const cableTricepsSetups = [
+  {
+    code: 'triceps_kickback_dumbbell_standard',
+    attachment: null,
+    name: 'Dumbbell Triceps Kickback',
+    exercise: 'triceps_kickback',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: false,
+  },
+  {
+    code: 'triceps_kickback_dumbbell_standard_unilateral',
+    attachment: null,
+    name: 'Single-Arm Dumbbell Triceps Kickback',
+    exercise: 'triceps_kickback',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: true,
+  },
   {
     code: 'triceps_pushdown_cable_standard',
     attachment: 'straight_bar',
@@ -124,16 +141,6 @@ const cableTricepsSetups = [
     exercise: 'triceps_pushdown',
     equipment: 'cable',
     grip: 'neutral',
-    load_convention: 'total_weight',
-    is_unilateral: false,
-  },
-  {
-    code: 'overhead_triceps_extension_cable_standard',
-    attachment: 'rope',
-    name: 'Cable Overhead Triceps Extension',
-    exercise: 'overhead_triceps_extension',
-    equipment: 'cable',
-    grip: 'standard',
     load_convention: 'total_weight',
     is_unilateral: false,
   },
@@ -167,20 +174,6 @@ const cableTricepsSetups = [
     load_convention: 'per_implement',
     is_unilateral: true,
   },
-  {
-    code: 'overhead_triceps_extension_cable_standard_unilateral',
-    attachment: 'rope',
-    name: 'Single-Arm Cable Overhead Triceps Extension',
-    exercise: 'overhead_triceps_extension',
-    equipment: 'cable',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: true,
-  },
 ] satisfies ExerciseSetupSeed[];
 
-export const tricepsSetups = [
-  ...barbellTricepsSetups,
-  ...dumbbellTricepsSetups,
-  ...cableTricepsSetups,
-];
+export const tricepsSetups = [...jmPressSetups, ...extensionSetups];

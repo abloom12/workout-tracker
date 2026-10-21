@@ -1,6 +1,6 @@
 import type { ExerciseSetupSeed } from './types.js';
 
-const barbellChestSetups = [
+const pressSetups = [
   {
     code: 'bench_press_barbell_standard',
     attachment: null,
@@ -30,6 +30,26 @@ const barbellChestSetups = [
     grip: 'wide',
     load_convention: 'total_weight',
     is_unilateral: false,
+  },
+  {
+    code: 'bench_press_dumbbell_standard',
+    attachment: null,
+    name: 'Dumbbell Bench Press',
+    exercise: 'bench_press',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: false,
+  },
+  {
+    code: 'bench_press_dumbbell_standard_unilateral',
+    attachment: null,
+    name: 'Single-Arm Dumbbell Bench Press',
+    exercise: 'bench_press',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: true,
   },
   {
     code: 'incline_bench_press_barbell_standard',
@@ -62,6 +82,26 @@ const barbellChestSetups = [
     is_unilateral: false,
   },
   {
+    code: 'incline_bench_press_dumbbell_standard',
+    attachment: null,
+    name: 'Incline Dumbbell Bench Press',
+    exercise: 'incline_bench_press',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: false,
+  },
+  {
+    code: 'incline_bench_press_dumbbell_standard_unilateral',
+    attachment: null,
+    name: 'Single-Arm Incline Dumbbell Bench Press',
+    exercise: 'incline_bench_press',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: true,
+  },
+  {
     code: 'decline_bench_press_barbell_standard',
     attachment: null,
     name: 'Decline Bench Press',
@@ -90,6 +130,26 @@ const barbellChestSetups = [
     grip: 'wide',
     load_convention: 'total_weight',
     is_unilateral: false,
+  },
+  {
+    code: 'decline_bench_press_dumbbell_standard',
+    attachment: null,
+    name: 'Decline Dumbbell Bench Press',
+    exercise: 'decline_bench_press',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: false,
+  },
+  {
+    code: 'decline_bench_press_dumbbell_standard_unilateral',
+    attachment: null,
+    name: 'Single-Arm Decline Dumbbell Bench Press',
+    exercise: 'decline_bench_press',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: true,
   },
   {
     code: 'larsen_press_barbell_standard',
@@ -122,6 +182,16 @@ const barbellChestSetups = [
     is_unilateral: false,
   },
   {
+    code: 'larsen_press_dumbbell_standard',
+    attachment: null,
+    name: 'Dumbbell Larsen Press',
+    exercise: 'larsen_press',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: false,
+  },
+  {
     code: 'floor_press_barbell_standard',
     attachment: null,
     name: 'Floor Press',
@@ -151,79 +221,6 @@ const barbellChestSetups = [
     load_convention: 'total_weight',
     is_unilateral: false,
   },
-] satisfies ExerciseSetupSeed[];
-
-const dumbbellChestSetups = [
-  {
-    code: 'bench_press_dumbbell_standard',
-    attachment: null,
-    name: 'Dumbbell Bench Press',
-    exercise: 'bench_press',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: false,
-  },
-  {
-    code: 'incline_bench_press_dumbbell_standard',
-    attachment: null,
-    name: 'Incline Dumbbell Bench Press',
-    exercise: 'incline_bench_press',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: false,
-  },
-  {
-    code: 'decline_bench_press_dumbbell_standard',
-    attachment: null,
-    name: 'Decline Dumbbell Bench Press',
-    exercise: 'decline_bench_press',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: false,
-  },
-  {
-    code: 'larsen_press_dumbbell_standard',
-    attachment: null,
-    name: 'Dumbbell Larsen Press',
-    exercise: 'larsen_press',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: false,
-  },
-  {
-    code: 'chest_fly_dumbbell_standard',
-    attachment: null,
-    name: 'Dumbbell Chest Fly',
-    exercise: 'chest_fly',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: false,
-  },
-  {
-    code: 'incline_chest_fly_dumbbell_standard',
-    attachment: null,
-    name: 'Incline Dumbbell Chest Fly',
-    exercise: 'incline_chest_fly',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: false,
-  },
-  {
-    code: 'decline_chest_fly_dumbbell_standard',
-    attachment: null,
-    name: 'Decline Dumbbell Chest Fly',
-    exercise: 'decline_chest_fly',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: false,
-  },
   {
     code: 'floor_press_dumbbell_standard',
     attachment: null,
@@ -233,36 +230,6 @@ const dumbbellChestSetups = [
     grip: 'standard',
     load_convention: 'per_implement',
     is_unilateral: false,
-  },
-  {
-    code: 'bench_press_dumbbell_standard_unilateral',
-    attachment: null,
-    name: 'Single-Arm Dumbbell Bench Press',
-    exercise: 'bench_press',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: true,
-  },
-  {
-    code: 'incline_bench_press_dumbbell_standard_unilateral',
-    attachment: null,
-    name: 'Single-Arm Incline Dumbbell Bench Press',
-    exercise: 'incline_bench_press',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: true,
-  },
-  {
-    code: 'decline_bench_press_dumbbell_standard_unilateral',
-    attachment: null,
-    name: 'Single-Arm Decline Dumbbell Bench Press',
-    exercise: 'decline_bench_press',
-    equipment: 'dumbbell',
-    grip: 'standard',
-    load_convention: 'per_implement',
-    is_unilateral: true,
   },
   {
     code: 'floor_press_dumbbell_standard_unilateral',
@@ -276,7 +243,17 @@ const dumbbellChestSetups = [
   },
 ] satisfies ExerciseSetupSeed[];
 
-const cableChestSetups = [
+const chestFlySetups = [
+  {
+    code: 'chest_fly_dumbbell_standard',
+    attachment: null,
+    name: 'Dumbbell Chest Fly',
+    exercise: 'chest_fly',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: false,
+  },
   {
     code: 'chest_fly_cable_standard',
     attachment: 'd_handle',
@@ -288,11 +265,41 @@ const cableChestSetups = [
     is_unilateral: false,
   },
   {
+    code: 'chest_fly_olympic_rings_standard',
+    attachment: null,
+    name: 'Ring Chest Fly',
+    exercise: 'chest_fly',
+    equipment: 'olympic_rings',
+    grip: 'standard',
+    load_convention: 'added_to_bodyweight',
+    is_unilateral: false,
+  },
+  {
+    code: 'incline_chest_fly_dumbbell_standard',
+    attachment: null,
+    name: 'Incline Dumbbell Chest Fly',
+    exercise: 'incline_chest_fly',
+    equipment: 'dumbbell',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: false,
+  },
+  {
     code: 'incline_chest_fly_cable_standard',
     attachment: 'd_handle',
     name: 'Incline Cable Chest Fly',
     exercise: 'incline_chest_fly',
     equipment: 'cable',
+    grip: 'standard',
+    load_convention: 'per_implement',
+    is_unilateral: false,
+  },
+  {
+    code: 'decline_chest_fly_dumbbell_standard',
+    attachment: null,
+    name: 'Decline Dumbbell Chest Fly',
+    exercise: 'decline_chest_fly',
+    equipment: 'dumbbell',
     grip: 'standard',
     load_convention: 'per_implement',
     is_unilateral: false,
@@ -369,17 +376,7 @@ const cableChestSetups = [
   },
 ] satisfies ExerciseSetupSeed[];
 
-const floorChestSetups = [
-  {
-    code: 'plyometric_push_up_bodyweight_standard',
-    attachment: null,
-    name: 'Plyometric Push-Up',
-    exercise: 'plyometric_push_up',
-    equipment: 'floor',
-    grip: 'standard',
-    load_convention: 'added_to_bodyweight',
-    is_unilateral: false,
-  },
+const pushUpSetups = [
   {
     code: 'push_up_bodyweight_standard',
     attachment: null,
@@ -411,29 +408,6 @@ const floorChestSetups = [
     is_unilateral: false,
   },
   {
-    code: 'archer_push_up_bodyweight_standard',
-    attachment: null,
-    name: 'Archer Push-Up',
-    exercise: 'archer_push_up',
-    equipment: 'floor',
-    grip: 'standard',
-    load_convention: 'added_to_bodyweight',
-    is_unilateral: true,
-  },
-] satisfies ExerciseSetupSeed[];
-
-const parallelBarsChestSetups = [
-  {
-    code: 'dips_bodyweight_standard',
-    attachment: null,
-    name: 'Dips',
-    exercise: 'dips',
-    equipment: 'parallel_bars',
-    grip: 'standard',
-    load_convention: 'added_to_bodyweight',
-    is_unilateral: false,
-  },
-  {
     code: 'push_up_parallel_bars_standard',
     attachment: null,
     name: 'Parallel Bar Push-Up',
@@ -443,9 +417,16 @@ const parallelBarsChestSetups = [
     load_convention: 'added_to_bodyweight',
     is_unilateral: false,
   },
-] satisfies ExerciseSetupSeed[];
-
-const benchChestSetups = [
+  {
+    code: 'push_up_olympic_rings_standard',
+    attachment: null,
+    name: 'Ring Push-Up',
+    exercise: 'push_up',
+    equipment: 'olympic_rings',
+    grip: 'standard',
+    load_convention: 'added_to_bodyweight',
+    is_unilateral: false,
+  },
   {
     code: 'incline_push_up_bodyweight_standard',
     attachment: null,
@@ -466,38 +447,15 @@ const benchChestSetups = [
     load_convention: 'added_to_bodyweight',
     is_unilateral: false,
   },
-] satisfies ExerciseSetupSeed[];
-
-const olympicRingsChestSetups = [
   {
-    code: 'dips_olympic_rings_standard',
+    code: 'archer_push_up_bodyweight_standard',
     attachment: null,
-    name: 'Ring Dips',
-    exercise: 'dips',
-    equipment: 'olympic_rings',
+    name: 'Archer Push-Up',
+    exercise: 'archer_push_up',
+    equipment: 'floor',
     grip: 'standard',
     load_convention: 'added_to_bodyweight',
-    is_unilateral: false,
-  },
-  {
-    code: 'push_up_olympic_rings_standard',
-    attachment: null,
-    name: 'Ring Push-Up',
-    exercise: 'push_up',
-    equipment: 'olympic_rings',
-    grip: 'standard',
-    load_convention: 'added_to_bodyweight',
-    is_unilateral: false,
-  },
-  {
-    code: 'chest_fly_olympic_rings_standard',
-    attachment: null,
-    name: 'Ring Chest Fly',
-    exercise: 'chest_fly',
-    equipment: 'olympic_rings',
-    grip: 'standard',
-    load_convention: 'added_to_bodyweight',
-    is_unilateral: false,
+    is_unilateral: true,
   },
   {
     code: 'archer_push_up_olympic_rings_standard',
@@ -509,14 +467,44 @@ const olympicRingsChestSetups = [
     load_convention: 'added_to_bodyweight',
     is_unilateral: true,
   },
+  {
+    code: 'plyometric_push_up_bodyweight_standard',
+    attachment: null,
+    name: 'Plyometric Push-Up',
+    exercise: 'plyometric_push_up',
+    equipment: 'floor',
+    grip: 'standard',
+    load_convention: 'added_to_bodyweight',
+    is_unilateral: false,
+  },
+] satisfies ExerciseSetupSeed[];
+
+const dipsSetups = [
+  {
+    code: 'dips_bodyweight_standard',
+    attachment: null,
+    name: 'Dips',
+    exercise: 'dips',
+    equipment: 'parallel_bars',
+    grip: 'standard',
+    load_convention: 'added_to_bodyweight',
+    is_unilateral: false,
+  },
+  {
+    code: 'dips_olympic_rings_standard',
+    attachment: null,
+    name: 'Ring Dips',
+    exercise: 'dips',
+    equipment: 'olympic_rings',
+    grip: 'standard',
+    load_convention: 'added_to_bodyweight',
+    is_unilateral: false,
+  },
 ] satisfies ExerciseSetupSeed[];
 
 export const chestSetups = [
-  ...barbellChestSetups,
-  ...dumbbellChestSetups,
-  ...cableChestSetups,
-  ...floorChestSetups,
-  ...parallelBarsChestSetups,
-  ...benchChestSetups,
-  ...olympicRingsChestSetups,
+  ...pressSetups,
+  ...chestFlySetups,
+  ...pushUpSetups,
+  ...dipsSetups,
 ];
