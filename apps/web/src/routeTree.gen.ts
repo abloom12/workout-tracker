@@ -13,9 +13,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as AppAdminRouteRouteImport } from './routes/_app/admin/route'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppMockupsRouteRouteImport } from './routes/_app/mockups/route'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
+import { Route as AppAdminIndexRouteImport } from './routes/_app/admin/index'
+import { Route as AppAdminCatalogueRouteImport } from './routes/_app/admin/catalogue'
+import { Route as AppAdminUsersRouteImport } from './routes/_app/admin/users'
 import { Route as AppExercisesIndexRouteImport } from './routes/_app/exercises/index'
 import { Route as AppMockupsIndexRouteImport } from './routes/_app/mockups/index'
 import { Route as AppMockupsLibraryRouteImport } from './routes/_app/mockups/library'
@@ -46,6 +50,11 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppAdminRouteRoute = AppAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -60,6 +69,21 @@ const AppSettingsRoute = AppSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
   getParentRoute: () => AppRouteRoute,
+} as any)
+const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppAdminRouteRoute,
+} as any)
+const AppAdminCatalogueRoute = AppAdminCatalogueRouteImport.update({
+  id: '/catalogue',
+  path: '/catalogue',
+  getParentRoute: () => AppAdminRouteRoute,
+} as any)
+const AppAdminUsersRoute = AppAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AppAdminRouteRoute,
 } as any)
 const AppExercisesIndexRoute = AppExercisesIndexRouteImport.update({
   id: '/exercises/',
@@ -118,15 +142,19 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/admin': typeof AppAdminRouteRouteWithChildren
   '/mockups': typeof AppMockupsRouteRouteWithChildren
   '/dashboard': typeof AppDashboardRoute
   '/settings': typeof AppSettingsRoute
+  '/admin/catalogue': typeof AppAdminCatalogueRoute
+  '/admin/users': typeof AppAdminUsersRoute
   '/mockups/library': typeof AppMockupsLibraryRoute
   '/mockups/library-filters': typeof AppMockupsLibraryFiltersRoute
   '/mockups/mockup-five': typeof AppMockupsMockupFiveRoute
   '/mockups/mockup-playground': typeof AppMockupsMockupPlaygroundRoute
   '/mockups/mockup-two': typeof AppMockupsMockupTwoRoute
   '/mockups/old-programs': typeof AppMockupsOldProgramsRoute
+  '/admin/': typeof AppAdminIndexRoute
   '/exercises/': typeof AppExercisesIndexRoute
   '/mockups/': typeof AppMockupsIndexRoute
   '/programs/': typeof AppProgramsIndexRoute
@@ -138,12 +166,15 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/dashboard': typeof AppDashboardRoute
   '/settings': typeof AppSettingsRoute
+  '/admin/catalogue': typeof AppAdminCatalogueRoute
+  '/admin/users': typeof AppAdminUsersRoute
   '/mockups/library': typeof AppMockupsLibraryRoute
   '/mockups/library-filters': typeof AppMockupsLibraryFiltersRoute
   '/mockups/mockup-five': typeof AppMockupsMockupFiveRoute
   '/mockups/mockup-playground': typeof AppMockupsMockupPlaygroundRoute
   '/mockups/mockup-two': typeof AppMockupsMockupTwoRoute
   '/mockups/old-programs': typeof AppMockupsOldProgramsRoute
+  '/admin': typeof AppAdminIndexRoute
   '/exercises': typeof AppExercisesIndexRoute
   '/mockups': typeof AppMockupsIndexRoute
   '/programs': typeof AppProgramsIndexRoute
@@ -155,15 +186,19 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/_app/admin': typeof AppAdminRouteRouteWithChildren
   '/_app/mockups': typeof AppMockupsRouteRouteWithChildren
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/settings': typeof AppSettingsRoute
+  '/_app/admin/catalogue': typeof AppAdminCatalogueRoute
+  '/_app/admin/users': typeof AppAdminUsersRoute
   '/_app/mockups/library': typeof AppMockupsLibraryRoute
   '/_app/mockups/library-filters': typeof AppMockupsLibraryFiltersRoute
   '/_app/mockups/mockup-five': typeof AppMockupsMockupFiveRoute
   '/_app/mockups/mockup-playground': typeof AppMockupsMockupPlaygroundRoute
   '/_app/mockups/mockup-two': typeof AppMockupsMockupTwoRoute
   '/_app/mockups/old-programs': typeof AppMockupsOldProgramsRoute
+  '/_app/admin/': typeof AppAdminIndexRoute
   '/_app/exercises/': typeof AppExercisesIndexRoute
   '/_app/mockups/': typeof AppMockupsIndexRoute
   '/_app/programs/': typeof AppProgramsIndexRoute
@@ -175,15 +210,19 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/signup'
+    | '/admin'
     | '/mockups'
     | '/dashboard'
     | '/settings'
+    | '/admin/catalogue'
+    | '/admin/users'
     | '/mockups/library'
     | '/mockups/library-filters'
     | '/mockups/mockup-five'
     | '/mockups/mockup-playground'
     | '/mockups/mockup-two'
     | '/mockups/old-programs'
+    | '/admin/'
     | '/exercises/'
     | '/mockups/'
     | '/programs/'
@@ -195,12 +234,15 @@ export interface FileRouteTypes {
     | '/signup'
     | '/dashboard'
     | '/settings'
+    | '/admin/catalogue'
+    | '/admin/users'
     | '/mockups/library'
     | '/mockups/library-filters'
     | '/mockups/mockup-five'
     | '/mockups/mockup-playground'
     | '/mockups/mockup-two'
     | '/mockups/old-programs'
+    | '/admin'
     | '/exercises'
     | '/mockups'
     | '/programs'
@@ -211,15 +253,19 @@ export interface FileRouteTypes {
     | '/_app'
     | '/login'
     | '/signup'
+    | '/_app/admin'
     | '/_app/mockups'
     | '/_app/dashboard'
     | '/_app/settings'
+    | '/_app/admin/catalogue'
+    | '/_app/admin/users'
     | '/_app/mockups/library'
     | '/_app/mockups/library-filters'
     | '/_app/mockups/mockup-five'
     | '/_app/mockups/mockup-playground'
     | '/_app/mockups/mockup-two'
     | '/_app/mockups/old-programs'
+    | '/_app/admin/'
     | '/_app/exercises/'
     | '/_app/mockups/'
     | '/_app/programs/'
@@ -263,6 +309,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/admin': {
+      id: '/_app/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AppAdminRouteRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/dashboard': {
       id: '/_app/dashboard'
       path: '/dashboard'
@@ -283,6 +336,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/settings'
       preLoaderRoute: typeof AppSettingsRouteImport
       parentRoute: typeof AppRouteRoute
+    }
+    '/_app/admin/': {
+      id: '/_app/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AppAdminIndexRouteImport
+      parentRoute: typeof AppAdminRouteRoute
+    }
+    '/_app/admin/catalogue': {
+      id: '/_app/admin/catalogue'
+      path: '/catalogue'
+      fullPath: '/admin/catalogue'
+      preLoaderRoute: typeof AppAdminCatalogueRouteImport
+      parentRoute: typeof AppAdminRouteRoute
+    }
+    '/_app/admin/users': {
+      id: '/_app/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AppAdminUsersRouteImport
+      parentRoute: typeof AppAdminRouteRoute
     }
     '/_app/exercises/': {
       id: '/_app/exercises/'
@@ -357,6 +431,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AppAdminRouteRouteChildren {
+  AppAdminCatalogueRoute: typeof AppAdminCatalogueRoute
+  AppAdminUsersRoute: typeof AppAdminUsersRoute
+  AppAdminIndexRoute: typeof AppAdminIndexRoute
+}
+
+const AppAdminRouteRouteChildren: AppAdminRouteRouteChildren = {
+  AppAdminCatalogueRoute: AppAdminCatalogueRoute,
+  AppAdminUsersRoute: AppAdminUsersRoute,
+  AppAdminIndexRoute: AppAdminIndexRoute,
+}
+
+const AppAdminRouteRouteWithChildren = AppAdminRouteRoute._addFileChildren(
+  AppAdminRouteRouteChildren,
+)
+
 interface AppMockupsRouteRouteChildren {
   AppMockupsLibraryRoute: typeof AppMockupsLibraryRoute
   AppMockupsLibraryFiltersRoute: typeof AppMockupsLibraryFiltersRoute
@@ -382,6 +472,7 @@ const AppMockupsRouteRouteWithChildren = AppMockupsRouteRoute._addFileChildren(
 )
 
 interface AppRouteRouteChildren {
+  AppAdminRouteRoute: typeof AppAdminRouteRouteWithChildren
   AppMockupsRouteRoute: typeof AppMockupsRouteRouteWithChildren
   AppDashboardRoute: typeof AppDashboardRoute
   AppSettingsRoute: typeof AppSettingsRoute
@@ -391,6 +482,7 @@ interface AppRouteRouteChildren {
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppAdminRouteRoute: AppAdminRouteRouteWithChildren,
   AppMockupsRouteRoute: AppMockupsRouteRouteWithChildren,
   AppDashboardRoute: AppDashboardRoute,
   AppSettingsRoute: AppSettingsRoute,

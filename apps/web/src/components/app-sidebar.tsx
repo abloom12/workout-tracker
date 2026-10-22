@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
   LogOut,
   Settings as SettingsIcon,
+  ShieldCheck,
   Table2,
 } from 'lucide-react';
 import { toast } from 'sonner';
@@ -49,7 +50,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarBrand />
-      <SidebarNavigation />
+      <SidebarNavigation user={user} />
       <SidebarUserMenu user={user} />
     </Sidebar>
   );
@@ -78,7 +79,14 @@ function SidebarBrand() {
   );
 }
 
-function SidebarNavigation() {
+function SidebarNavigation({ user }: { user: User }) {
+  const items =
+    user.role?.split(',').includes('admin') ?
+      [
+        ...navigation,
+        { title: 'Admin', to: '/admin', icon: ShieldCheck } as const,
+      ]
+    : navigation;
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   });
@@ -89,14 +97,14 @@ function SidebarNavigation() {
       <SidebarGroup>
         <SidebarGroupContent>
           <SidebarMenu>
-            {navigation.map((item) => (
+            {items.map((item) => (
               <SidebarMenuItem key={item.to}>
                 <SidebarMenuButton
                   asChild
                   isActive={
                     pathname === item.to ||
-                    (item.to === '/mockups' &&
-                      pathname.startsWith('/mockups/'))
+                    ((item.to === '/mockups' || item.to === '/admin') &&
+                      pathname.startsWith(`${item.to}/`))
                   }
                 >
                   <Link to={item.to} onClick={() => setOpenMobile(false)}>
