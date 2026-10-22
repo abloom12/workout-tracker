@@ -21,6 +21,7 @@
     "@tanstack/react-query-devtools": "5.103.1",
     "@tanstack/react-router": "1.170.38",
     "@tanstack/react-router-devtools": "1.167.2",
+    "@tanstack/react-table": "^9.3.1",
     "@trpc/client": "catalog:",
     "@trpc/tanstack-react-query": "catalog:",
     "better-auth": "catalog:",
