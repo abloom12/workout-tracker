@@ -115,6 +115,51 @@ pnpm dev:check
 
 Anonymous visitors cannot access protected Dashboard or Settings routes.
 
+### Admin access
+
+The admin section provides placeholder pages at `/admin` (Overview),
+`/admin/users`, and `/admin/catalogue`. The Catalogue page contains tabs for
+Exercises, Setups, Equipment, Attachments, Grips, Modifiers, and Muscles.
+Management controls and snapshot export/import are not implemented yet.
+
+The Admin sidebar link is visible only to users with the `admin` role. The
+parent admin route checks a fresh server session, bypassing the cookie cache,
+and redirects non-admin users to the Dashboard. These frontend guards are not
+API authorization: future catalogue endpoints must also enforce admin access
+on the server. Better Auth's existing admin endpoints already enforce their
+own server-side permissions.
+
+To promote your first account in development:
+
+1. Create an account normally through Sign Up.
+2. In Drizzle Studio, set that account's `user.role` field to `admin`, or run
+   the following SQL against your development database, substituting your email:
+
+   ```sql
+   UPDATE "user"
+   SET role = 'admin'
+   WHERE email = 'your-email@example.com'
+   RETURNING email, role;
+   ```
+
+3. Sign out and sign back in, then open Admin from the sidebar.
+
+Normal signups remain ordinary users. Repeat the promotion after resetting the
+user database; catalogue snapshots do not include user accounts or roles.
+
+### Development passwords
+
+With `NODE_ENV=development` in `apps/server/.env`, the server accepts passwords
+as short as one character. The Vite development signup form uses the same
+minimum. Production signup requires at least 12 characters; the server also
+keeps that minimum when `NODE_ENV` is unset or is anything other than
+`development`. The maximum remains 128 characters.
+
+Empty passwords are not supported by Better Auth. Login only requires a
+nonempty password, rather than enforcing the signup length policy. Never use
+development passwords for real accounts or run a public deployment with
+`NODE_ENV=development`.
+
 ## Database commands
 
 | Command            | Purpose                                        |
