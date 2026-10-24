@@ -1,40 +1,41 @@
-import { dirname, resolve } from 'node:path';
-import { loadEnvFile } from 'node:process';
-import { fileURLToPath } from 'node:url';
-import { afterAll, expect, test } from 'vitest';
+import { beforeEach, expect, test, vi } from 'vitest';
 
 import type { AppAuth } from '@acme/auth';
-import { createDB } from '@acme/db';
+import type * as DBModule from '@acme/db';
 
 import type { ApiContext, ApiSession } from '../index.js';
 import { createApi } from '../index.js';
 
-const testDirectory = dirname(fileURLToPath(import.meta.url));
+const queryMocks = vi.hoisted(() => ({
+  listExercises: vi.fn<typeof DBModule.listExercises>(),
+  listExerciseSetups: vi.fn<typeof DBModule.listExerciseSetups>(),
+}));
 
-if (!process.env.DATABASE_URL) {
-  loadEnvFile(resolve(testDirectory, '../../../../apps/server/.env'));
-}
+vi.mock('@acme/db', async (importOriginal) => ({
+  ...(await importOriginal<typeof DBModule>()),
+  ...queryMocks,
+}));
 
-const databaseURL = process.env.DATABASE_URL;
-
-if (!databaseURL) {
-  throw new Error('DATABASE_URL is required');
-}
-
-const db = createDB(databaseURL);
+const db = {} as DBModule.Database;
 const auth = {
   api: { getSession: () => Promise.resolve(null) },
 } as unknown as AppAuth;
 const { appRouter } = createApi(auth, db);
 
-function createCaller(session: ApiSession) {
-  return appRouter.createCaller({
-    db,
-    req: {} as ApiContext['req'],
-    res: {} as ApiContext['res'],
-    session,
-  });
-}
+const setupFixture: Awaited<
+  ReturnType<typeof DBModule.listExerciseSetups>
+>[number] = {
+  id: 101,
+  code: 'barbell_bench_press',
+  name: 'Barbell Bench Press',
+  exercise: { id: 1, code: 'bench_press', name: 'Bench Press' },
+  equipment: { id: 1, code: 'barbell', name: 'Barbell' },
+  grip: { id: 1, code: 'pronated', name: 'Pronated' },
+  allowedAttachments: [],
+  attachmentRequired: false,
+  loadConvention: 'total_weight',
+  isUnilateral: false,
+};
 
 function createTestSession(): NonNullable<ApiSession> {
   const now = new Date();
@@ -64,31 +65,41 @@ function createTestSession(): NonNullable<ApiSession> {
   };
 }
 
-afterAll(async () => {
-  await db.$client.end();
+function createTestCaller(session: ApiSession = createTestSession()) {
+  return appRouter.createCaller({
+    db,
+    req: {} as ApiContext['req'],
+    res: {} as ApiContext['res'],
+    session,
+  });
+}
+
+beforeEach(() => {
+  vi.resetAllMocks();
 });
 
-test('exercise.list rejects an anonymous caller', async () => {
-  const caller = createCaller(null);
-
-  await expect(caller.exercise.list()).rejects.toMatchObject({
+test('exercise.list rejects an anonymous caller before querying', async () => {
+  await expect(createTestCaller(null).exercise.list()).rejects.toMatchObject({
     code: 'UNAUTHORIZED',
   });
+  expect(queryMocks.listExerciseSetups).not.toHaveBeenCalled();
 });
 
-test('exercise.list returns the configured catalog to an authenticated caller', async () => {
-  const caller = createCaller(createTestSession());
-  const exercises = await caller.exercise.list();
+test('exercise.list preserves the setup response and IDs used by existing callers', async () => {
+  queryMocks.listExerciseSetups.mockResolvedValue([setupFixture]);
+  const caller = createTestCaller();
 
-  expect(exercises).toHaveLength(20);
-  const exerciseNames = exercises.map(({ name }) => name);
+  const setups = await caller.exercise.list();
 
-  expect(exerciseNames).toContain('Bench Press');
-  expect(exerciseNames).toContain('Sissy Squat');
+  expect(setups).toEqual([setupFixture]);
+  expect(setups[0]?.id).toBe(101);
+  expect(setups[0]?.exercise.id).toBe(1);
+  expect(queryMocks.listExerciseSetups).toHaveBeenCalledExactlyOnceWith(db);
+  expect(queryMocks.listExercises).not.toHaveBeenCalled();
+});
 
-  for (const exercise of exercises) {
-    expect(Object.keys(exercise).sort()).toEqual(['id', 'name']);
-    expect(Number.isInteger(exercise.id)).toBe(true);
-    expect(typeof exercise.name).toBe('string');
-  }
+test('exercise.list returns an empty collection without seed assumptions', async () => {
+  queryMocks.listExerciseSetups.mockResolvedValue([]);
+
+  await expect(createTestCaller().exercise.list()).resolves.toEqual([]);
 });

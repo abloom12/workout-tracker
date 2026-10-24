@@ -5,6 +5,7 @@ import type { AppAuth } from '@acme/auth';
 import type { Database } from '@acme/db';
 
 import type { ApiContext } from './trpc.js';
+import { catalogueRouter } from './routers/catalogue.js';
 import { exerciseRouter } from './routers/exercise.js';
 import { healthRouter } from './routers/health.js';
 import { router } from './trpc.js';
@@ -20,6 +21,7 @@ export type Api = {
 
 function createAppRouter() {
   return router({
+    catalogue: catalogueRouter,
     exercise: exerciseRouter,
     health: healthRouter,
   });
