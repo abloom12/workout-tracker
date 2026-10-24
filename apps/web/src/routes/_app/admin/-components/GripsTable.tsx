@@ -1,9 +1,15 @@
 import {
   createColumnHelper,
+  createSortedRowModel,
+  rowSortingFeature,
+  sortFn_alphanumeric,
+  sortFn_text,
   tableFeatures,
   useTable,
 } from '@tanstack/react-table';
+import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -18,7 +24,11 @@ type GripRow = { id: number; code: string; name: string };
 
 type GripsTableProps = { data?: GripRow[] };
 
-const features = tableFeatures({});
+const features = tableFeatures({
+  rowSortingFeature,
+  sortedRowModel: createSortedRowModel(),
+  sortFns: { alphanumeric: sortFn_alphanumeric, text: sortFn_text },
+});
 const columnHelper = createColumnHelper<typeof features, GripRow>();
 const columns = columnHelper.columns([
   columnHelper.accessor('id', { header: 'ID' }),
@@ -33,6 +43,8 @@ export function GripsTable({ data = emptyData }: GripsTableProps) {
     columns,
     data,
     getRowId: (row) => row.id.toString(),
+    enableMultiSort: false,
+    sortDescFirst: false,
   });
   const rows = table.getRowModel().rows;
 
@@ -43,9 +55,32 @@ export function GripsTable({ data = emptyData }: GripsTableProps) {
         {table.getHeaderGroups().map((group) => (
           <TableRow key={group.id}>
             {group.headers.map((header) => (
-              <TableHead key={header.id} colSpan={header.colSpan} scope="col">
+              <TableHead
+                key={header.id}
+                colSpan={header.colSpan}
+                scope="col"
+                aria-sort={
+                  header.column.getIsSorted() === 'asc' ? 'ascending'
+                  : header.column.getIsSorted() === 'desc' ?
+                    'descending'
+                  : 'none'
+                }
+              >
                 {header.isPlaceholder ? null : (
-                  <table.FlexRender header={header} />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="-ml-2.5"
+                    onClick={header.column.getToggleSortingHandler()}
+                  >
+                    <table.FlexRender header={header} />
+                    {header.column.getIsSorted() === 'asc' ?
+                      <ArrowUp aria-hidden="true" />
+                    : header.column.getIsSorted() === 'desc' ?
+                      <ArrowDown aria-hidden="true" />
+                    : <ArrowUpDown aria-hidden="true" />}
+                  </Button>
                 )}
               </TableHead>
             ))}

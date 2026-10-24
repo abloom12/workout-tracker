@@ -33,12 +33,7 @@ export function ExerciseLibrary() {
       .toLowerCase()
       .includes(normalizedSearch);
 
-    // Requires muscleGroup to be added to the exercise API response.
-    const matchesMuscle =
-      selectedMuscles.includes('all') ||
-      selectedMuscles.includes(exercise.exercise.muscleGroup);
-
-    return matchesSearch && matchesMuscle;
+    return matchesSearch;
   });
 
   return (
