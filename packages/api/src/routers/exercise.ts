@@ -1,7 +1,7 @@
-import { listExerciseSetups } from '@acme/db';
+import { listExercises } from '@acme/db';
 
 import { protectedProcedure, router } from '../trpc.js';
 
 export const exerciseRouter = router({
-  list: protectedProcedure.query(({ ctx }) => listExerciseSetups(ctx.db)),
+  list: protectedProcedure.query(({ ctx }) => listExercises(ctx.db)),
 });

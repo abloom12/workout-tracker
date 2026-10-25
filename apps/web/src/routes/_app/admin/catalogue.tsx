@@ -8,14 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Empty, EmptyTitle } from '@/components/ui/empty';
 import { Spinner } from '@/components/ui/spinner';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { AttachmentsTable } from './-components/AttachmentsTable';
-import { EquipmentTable } from './-components/EquipmentTable';
 import { ExercisesTable } from './-components/ExercisesTable';
-import { GripsTable } from './-components/GripsTable';
-import { ModifiersTable } from './-components/ModifiersTable';
-import { MusclesTable } from './-components/MusclesTable';
-import { SetupsTable } from './-components/SetupsTable';
 
 export const Route = createFileRoute('/_app/admin/catalogue')({
   loader: ({ context }) =>
@@ -24,16 +17,13 @@ export const Route = createFileRoute('/_app/admin/catalogue')({
         context.trpc.catalogue.exercises.list.queryOptions(),
       ),
       context.queryClient.query(
-        context.trpc.catalogue.setups.list.queryOptions(),
-      ),
-      context.queryClient.query(
         context.trpc.catalogue.equipment.list.queryOptions(),
       ),
       context.queryClient.query(
         context.trpc.catalogue.attachments.list.queryOptions(),
       ),
       context.queryClient.query(
-        context.trpc.catalogue.grips.list.queryOptions(),
+        context.trpc.catalogue.exercises.options.queryOptions(),
       ),
       context.queryClient.query(
         context.trpc.catalogue.modifiers.list.queryOptions(),
@@ -72,63 +62,15 @@ function RouteComponent() {
   const { data: exercises } = useSuspenseQuery(
     trpc.catalogue.exercises.list.queryOptions(),
   );
-  const { data: setups } = useSuspenseQuery(
-    trpc.catalogue.setups.list.queryOptions(),
-  );
   const { data: equipment } = useSuspenseQuery(
     trpc.catalogue.equipment.list.queryOptions(),
   );
-  const { data: attachments } = useSuspenseQuery(
-    trpc.catalogue.attachments.list.queryOptions(),
-  );
-  const { data: grips } = useSuspenseQuery(
-    trpc.catalogue.grips.list.queryOptions(),
-  );
-  const { data: modifiers } = useSuspenseQuery(
-    trpc.catalogue.modifiers.list.queryOptions(),
+  const { data: exerciseOptions } = useSuspenseQuery(
+    trpc.catalogue.exercises.options.queryOptions(),
   );
   const { data: muscles } = useSuspenseQuery(
     trpc.catalogue.muscles.list.queryOptions(),
   );
-
-  const catalogueTabs = [
-    {
-      value: 'exercises',
-      label: 'Exercises',
-      content: <ExercisesTable data={exercises} />,
-    },
-    {
-      value: 'setups',
-      label: 'Setups',
-      content: (
-        <SetupsTable
-          data={setups}
-          options={{ exercises, equipment, grips, attachments }}
-        />
-      ),
-    },
-    {
-      value: 'equipment',
-      label: 'Equipment',
-      content: <EquipmentTable data={equipment} />,
-    },
-    {
-      value: 'attachments',
-      label: 'Attachments',
-      content: <AttachmentsTable data={attachments} />,
-    },
-    { value: 'grips', label: 'Grips', content: <GripsTable data={grips} /> },
-    {
-      value: 'modifiers',
-      label: 'Modifiers',
-      content: <ModifiersTable data={modifiers} />,
-    },
-    {
-      value: 'muscles',
-      label: 'Muscles',
-      content: <MusclesTable data={muscles} />,
-    },
-  ];
 
   return (
     <section aria-labelledby="admin-catalogue-title" className="space-y-4">
@@ -140,27 +82,17 @@ function RouteComponent() {
           Shared definitions used throughout the exercise library.
         </p>
       </div>
-      <Tabs defaultValue="exercises">
-        <div className="overflow-x-auto">
-          <TabsList aria-label="Catalogue sections">
-            {catalogueTabs.map((tab) => (
-              <TabsTrigger key={tab.value} value={tab.value}>
-                {tab.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </div>
-        {catalogueTabs.map((tab) => (
-          <TabsContent key={tab.value} value={tab.value}>
-            <Card>
-              <CardHeader>
-                <CardTitle>{tab.label}</CardTitle>
-              </CardHeader>
-              <CardContent>{tab.content}</CardContent>
-            </Card>
-          </TabsContent>
-        ))}
-      </Tabs>
+      <Card>
+        <CardHeader>
+          <CardTitle>Exercises</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ExercisesTable
+            data={exercises}
+            options={{ ...exerciseOptions, equipment, muscles }}
+          />
+        </CardContent>
+      </Card>
     </section>
   );
 }
