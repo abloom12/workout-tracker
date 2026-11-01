@@ -69,11 +69,22 @@ export const Route = createFileRoute('/_app/mockups/mockup-playground')({
   component: RouteComponent,
 });
 
-type Muscle = 'Chest' | 'Back' | 'Legs' | 'Shoulders' | 'Arms' | 'Core';
+const muscleGroups = {
+  Chest: ['Chest'],
+  Back: ['Lats', 'Traps', 'Upper Back', 'Lower Back'],
+  Shoulders: ['Front Delts', 'Side Delts', 'Rear Delts'],
+  Arms: ['Biceps', 'Triceps', 'Forearms'],
+  Legs: ['Quads', 'Hamstrings', 'Glutes', 'Adductors', 'Calves'],
+  Core: ['Core'],
+} as const;
+
+type MuscleGroup = keyof typeof muscleGroups;
+type Muscle = (typeof muscleGroups)[MuscleGroup][number];
 type LibraryExercise = {
   id: string;
   name: string;
-  muscle: Muscle;
+  primaryMuscles: Muscle[];
+  secondaryMuscles: Muscle[];
   equipment: string;
 };
 type Prescription = {
@@ -100,71 +111,166 @@ type DropPosition = { workoutId: string; index: number };
 type History = { current: Workout[]; past: Workout[][] };
 type UpdateWorkouts = (transform: (current: Workout[]) => Workout[]) => void;
 
-const muscleColors: Record<Muscle, string> = {
+const muscleGroupColors: Record<MuscleGroup, string> = {
   Chest: 'bg-emerald-500',
   Back: 'bg-sky-500',
-  Legs: 'bg-amber-500',
   Shoulders: 'bg-violet-400',
   Arms: 'bg-rose-400',
+  Legs: 'bg-amber-500',
   Core: 'bg-stone-400',
 };
-const muscles = Object.keys(muscleColors) as Muscle[];
+const groupNames = Object.keys(muscleGroups) as MuscleGroup[];
+const muscles: Muscle[] = groupNames.flatMap((group) => [
+  ...muscleGroups[group],
+]);
 const libraryExercises: LibraryExercise[] = [
-  { id: 'bench', name: 'Bench press', muscle: 'Chest', equipment: 'Barbell' },
+  {
+    id: 'bench',
+    name: 'Bench press',
+    primaryMuscles: ['Chest'],
+    secondaryMuscles: ['Triceps', 'Front Delts'],
+    equipment: 'Barbell',
+  },
+  {
+    id: 'dips',
+    name: 'Chest dips',
+    primaryMuscles: ['Chest', 'Triceps'],
+    secondaryMuscles: ['Front Delts'],
+    equipment: 'Dip bars',
+  },
   {
     id: 'pullup',
     name: 'Weighted pull-up',
-    muscle: 'Back',
+    primaryMuscles: ['Lats'],
+    secondaryMuscles: ['Biceps', 'Upper Back', 'Forearms'],
     equipment: 'Pull-up bar',
   },
-  { id: 'row', name: 'Dumbbell row', muscle: 'Back', equipment: 'Dumbbell' },
-  { id: 'squat', name: 'Back squat', muscle: 'Legs', equipment: 'Barbell' },
+  {
+    id: 'row',
+    name: 'Dumbbell row',
+    primaryMuscles: ['Lats', 'Upper Back'],
+    secondaryMuscles: ['Biceps', 'Rear Delts', 'Forearms'],
+    equipment: 'Dumbbell',
+  },
+  {
+    id: 'squat',
+    name: 'Back squat',
+    primaryMuscles: ['Quads', 'Glutes'],
+    secondaryMuscles: ['Adductors', 'Lower Back', 'Core'],
+    equipment: 'Barbell',
+  },
   {
     id: 'rdl',
     name: 'Romanian deadlift',
-    muscle: 'Legs',
+    primaryMuscles: ['Hamstrings', 'Glutes'],
+    secondaryMuscles: ['Lower Back', 'Forearms'],
     equipment: 'Barbell',
   },
-  { id: 'calf', name: 'Calf raise', muscle: 'Legs', equipment: 'Machine' },
+  {
+    id: 'calf',
+    name: 'Calf raise',
+    primaryMuscles: ['Calves'],
+    secondaryMuscles: [],
+    equipment: 'Machine',
+  },
   {
     id: 'incline',
     name: 'Incline dumbbell press',
-    muscle: 'Chest',
+    primaryMuscles: ['Chest'],
+    secondaryMuscles: ['Front Delts', 'Triceps'],
     equipment: 'Dumbbell',
   },
-  { id: 'pulldown', name: 'Lat pulldown', muscle: 'Back', equipment: 'Cable' },
+  {
+    id: 'pulldown',
+    name: 'Lat pulldown',
+    primaryMuscles: ['Lats'],
+    secondaryMuscles: ['Biceps', 'Upper Back', 'Forearms'],
+    equipment: 'Cable',
+  },
   {
     id: 'lateral',
     name: 'Lateral raise',
-    muscle: 'Shoulders',
+    primaryMuscles: ['Side Delts'],
+    secondaryMuscles: ['Traps'],
     equipment: 'Dumbbell',
   },
-  { id: 'legpress', name: 'Leg press', muscle: 'Legs', equipment: 'Machine' },
-  { id: 'legcurl', name: 'Leg curl', muscle: 'Legs', equipment: 'Machine' },
-  { id: 'hipthrust', name: 'Hip thrust', muscle: 'Legs', equipment: 'Barbell' },
-  { id: 'fly', name: 'Cable fly', muscle: 'Chest', equipment: 'Cable' },
+  {
+    id: 'legpress',
+    name: 'Leg press',
+    primaryMuscles: ['Quads', 'Glutes'],
+    secondaryMuscles: ['Adductors'],
+    equipment: 'Machine',
+  },
+  {
+    id: 'legcurl',
+    name: 'Leg curl',
+    primaryMuscles: ['Hamstrings'],
+    secondaryMuscles: ['Calves'],
+    equipment: 'Machine',
+  },
+  {
+    id: 'hipthrust',
+    name: 'Hip thrust',
+    primaryMuscles: ['Glutes'],
+    secondaryMuscles: ['Hamstrings', 'Quads'],
+    equipment: 'Barbell',
+  },
+  {
+    id: 'fly',
+    name: 'Cable fly',
+    primaryMuscles: ['Chest'],
+    secondaryMuscles: ['Front Delts'],
+    equipment: 'Cable',
+  },
   {
     id: 'supportedrow',
     name: 'Chest-supported row',
-    muscle: 'Back',
+    primaryMuscles: ['Upper Back', 'Lats'],
+    secondaryMuscles: ['Biceps', 'Rear Delts'],
     equipment: 'Dumbbell',
   },
   {
     id: 'facepull',
     name: 'Face pull',
-    muscle: 'Shoulders',
+    primaryMuscles: ['Rear Delts'],
+    secondaryMuscles: ['Traps', 'Upper Back'],
     equipment: 'Cable',
   },
-  { id: 'curl', name: 'Dumbbell curl', muscle: 'Arms', equipment: 'Dumbbell' },
+  {
+    id: 'curl',
+    name: 'Dumbbell curl',
+    primaryMuscles: ['Biceps'],
+    secondaryMuscles: ['Forearms'],
+    equipment: 'Dumbbell',
+  },
   {
     id: 'pushdown',
     name: 'Triceps pushdown',
-    muscle: 'Arms',
+    primaryMuscles: ['Triceps'],
+    secondaryMuscles: [],
     equipment: 'Cable',
   },
-  { id: 'hammer', name: 'Hammer curl', muscle: 'Arms', equipment: 'Dumbbell' },
-  { id: 'deadbug', name: 'Dead bug', muscle: 'Core', equipment: 'Bodyweight' },
-  { id: 'plank', name: 'Plank', muscle: 'Core', equipment: 'Bodyweight' },
+  {
+    id: 'hammer',
+    name: 'Hammer curl',
+    primaryMuscles: ['Biceps', 'Forearms'],
+    secondaryMuscles: [],
+    equipment: 'Dumbbell',
+  },
+  {
+    id: 'deadbug',
+    name: 'Dead bug',
+    primaryMuscles: ['Core'],
+    secondaryMuscles: [],
+    equipment: 'Bodyweight',
+  },
+  {
+    id: 'plank',
+    name: 'Plank',
+    primaryMuscles: ['Core'],
+    secondaryMuscles: ['Glutes', 'Front Delts'],
+    equipment: 'Bodyweight',
+  },
 ];
 const blockTemplates: BlockTemplate[] = [
   {
@@ -352,12 +458,23 @@ function getSets(exercises: WorkoutExercise[]) {
   return exercises.reduce((total, exercise) => total + exercise.sets, 0);
 }
 
+function getMuscleGroup(muscle: Muscle) {
+  return groupNames.find((group) =>
+    muscleGroups[group].some((name) => name === muscle),
+  );
+}
+
+function getMuscleColor(muscle: Muscle) {
+  const group = getMuscleGroup(muscle);
+  return group ? muscleGroupColors[group] : 'bg-stone-400';
+}
+
 function getMuscleSets(exercises: WorkoutExercise[]) {
   return muscles.map((muscle) => ({
     muscle,
     sets: getSets(
-      exercises.filter(
-        (exercise) => getExercise(exercise.exerciseId)?.muscle === muscle,
+      exercises.filter((exercise) =>
+        getExercise(exercise.exerciseId)?.primaryMuscles.includes(muscle),
       ),
     ),
   }));
@@ -789,21 +906,21 @@ function CycleOverview({
 }
 
 function MuscleStrip({ exercises }: { exercises: WorkoutExercise[] }) {
-  const total = getSets(exercises);
+  const distribution = getMuscleSets(exercises).filter(({ sets }) => sets > 0);
+  // Primary-muscle sets overlap, so normalize against muscle totals, not workout sets.
+  const total = distribution.reduce((sum, { sets }) => sum + sets, 0);
   return (
     <div
       aria-hidden="true"
       className="bg-muted flex h-1.5 w-full gap-0.5 overflow-hidden rounded-full"
     >
-      {getMuscleSets(exercises)
-        .filter(({ sets }) => sets > 0)
-        .map(({ muscle, sets }) => (
-          <span
-            key={muscle}
-            className={cn('h-full rounded-full', muscleColors[muscle])}
-            style={{ width: `${(sets / total) * 100}%` }}
-          />
-        ))}
+      {distribution.map(({ muscle, sets }) => (
+        <span
+          key={muscle}
+          className={cn('h-full rounded-full', getMuscleColor(muscle))}
+          style={{ flex: sets / total }}
+        />
+      ))}
     </div>
   );
 }
@@ -1225,6 +1342,26 @@ function DragHandle({
   );
 }
 
+function PrimaryMuscleLabels({ muscles }: { muscles: Muscle[] }) {
+  return (
+    <span className="inline-flex flex-wrap items-center gap-x-3 gap-y-1">
+      <span className="sr-only">Primary muscles: </span>
+      {muscles.map((muscle) => (
+        <span key={muscle} className="inline-flex items-center gap-1.5">
+          <span
+            aria-hidden="true"
+            className={cn(
+              'size-1.5 shrink-0 rounded-full',
+              getMuscleColor(muscle),
+            )}
+          />
+          {muscle}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 function WorkoutExerciseRow({
   exercise,
   leading,
@@ -1244,15 +1381,16 @@ function WorkoutExerciseRow({
         <p className="text-xs leading-relaxed font-medium">
           {definition?.name}
         </p>
-        <p className="text-muted-foreground mt-0.5 flex items-center gap-1.5 text-[10px]">
-          <span
-            aria-hidden="true"
-            className={cn(
-              'size-1.5 shrink-0 rounded-full',
-              definition && muscleColors[definition.muscle],
-            )}
-          />
-          {definition?.muscle} <span className="opacity-50">/</span>{' '}
+        <p
+          className="text-muted-foreground mt-0.5 flex flex-wrap items-center gap-1.5 text-[10px]"
+          title={
+            definition?.secondaryMuscles.length ?
+              `Secondary: ${definition.secondaryMuscles.join(', ')}`
+            : undefined
+          }
+        >
+          <PrimaryMuscleLabels muscles={definition?.primaryMuscles ?? []} />
+          <span className="opacity-50">/</span>
           {definition?.equipment}
         </p>
         <ModifierControl exercise={exercise} onChange={onChange} />
@@ -1403,11 +1541,14 @@ function ExercisePrescription({
 
 function ExerciseLibrary() {
   const [query, setQuery] = useState('');
-  const [muscle, setMuscle] = useState('All');
+  const [group, setGroup] = useState('All');
   const visibleExercises = libraryExercises.filter(
     (exercise) =>
-      (muscle === 'All' || exercise.muscle === muscle) &&
-      `${exercise.name} ${exercise.equipment} ${exercise.muscle}`
+      (group === 'All' ||
+        exercise.primaryMuscles.some(
+          (muscle) => getMuscleGroup(muscle) === group,
+        )) &&
+      `${exercise.name} ${exercise.equipment} ${exercise.primaryMuscles.join(' ')} ${exercise.primaryMuscles.map(getMuscleGroup).join(' ')}`
         .toLowerCase()
         .includes(query.trim().toLowerCase()),
   );
@@ -1495,16 +1636,16 @@ function ExerciseLibrary() {
               className="text-muted-foreground size-3"
             />
             <NativeSelect
-              aria-label="Filter exercises by primary muscle"
-              value={muscle}
-              onChange={(event) => setMuscle(event.target.value)}
+              aria-label="Filter exercises by primary muscle group"
+              value={group}
+              onChange={(event) => setGroup(event.target.value)}
               size="sm"
               className="flex-1 [&>select]:h-7 [&>select]:border-0 [&>select]:bg-transparent [&>select]:pl-0 [&>select]:text-[11px]"
             >
               <NativeSelectOption value="All">
                 All muscle groups
               </NativeSelectOption>
-              {muscles.map((group) => (
+              {groupNames.map((group) => (
                 <NativeSelectOption key={group} value={group}>
                   {group}
                 </NativeSelectOption>
@@ -1522,7 +1663,7 @@ function ExerciseLibrary() {
               <LibraryEmptyState
                 onClear={() => {
                   setQuery('');
-                  setMuscle('All');
+                  setGroup('All');
                 }}
               />
             )}
@@ -1581,15 +1722,15 @@ function LibraryExerciseCard({ exercise }: { exercise: LibraryExercise }) {
         <ItemTitle className="line-clamp-none text-[11px] leading-relaxed">
           {exercise.name}
         </ItemTitle>
-        <ItemDescription className="flex items-center gap-1.5 text-[10px] group-data-[size=xs]/item:text-[10px]">
-          <span
-            aria-hidden="true"
-            className={cn(
-              'size-1.5 shrink-0 rounded-full',
-              muscleColors[exercise.muscle],
-            )}
-          />
-          {exercise.muscle}
+        <ItemDescription
+          className="flex flex-wrap items-center gap-1.5 text-[10px] group-data-[size=xs]/item:text-[10px]"
+          title={
+            exercise.secondaryMuscles.length ?
+              `Secondary: ${exercise.secondaryMuscles.join(', ')}`
+            : undefined
+          }
+        >
+          <PrimaryMuscleLabels muscles={exercise.primaryMuscles} />
           <span className="opacity-40">/</span>
           {exercise.equipment}
         </ItemDescription>
@@ -1680,14 +1821,14 @@ function ProgramBalance({ exercises }: { exercises: WorkoutExercise[] }) {
         {distribution.map(({ muscle, sets }) => (
           <div
             key={muscle}
-            className="grid grid-cols-[65px_minmax(0,1fr)_22px] items-center gap-3"
+            className="grid grid-cols-[90px_minmax(0,1fr)_22px] items-center gap-3"
           >
             <span className="text-muted-foreground text-[10px]">{muscle}</span>
             <div className="dark:bg-muted h-1.5 overflow-hidden rounded-full bg-stone-200/60">
               <div
                 className={cn(
                   'h-full rounded-full transition-[width] duration-200 motion-reduce:transition-none',
-                  muscleColors[muscle],
+                  getMuscleColor(muscle),
                 )}
                 style={{ width: `${(sets / maximum) * 100}%` }}
               />
@@ -1699,8 +1840,9 @@ function ProgramBalance({ exercises }: { exercises: WorkoutExercise[] }) {
         ))}
         <Separator className="my-3" />
         <p className="text-muted-foreground text-[9px] leading-relaxed">
-          A composition check, not a score. Compound movements also train
-          muscles beyond the primary group shown.
+          Colours identify groups; each row counts an individual muscle. Sets
+          count toward every primary muscle, so these totals overlap. Secondary
+          involvement is excluded.
         </p>
       </CardContent>
     </Card>
