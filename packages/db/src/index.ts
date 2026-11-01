@@ -12,6 +12,7 @@ export {
   updateExercise,
 } from './queries/exercises.js';
 export { listModifiers } from './queries/modifiers.js';
+export { listMovementPatterns } from './queries/movement-patterns.js';
 export { listMuscles } from './queries/muscles.js';
 export { getUserAccess } from './queries/users.js';
 export * from './schema.js';

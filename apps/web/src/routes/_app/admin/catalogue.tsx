@@ -31,6 +31,9 @@ export const Route = createFileRoute('/_app/admin/catalogue')({
       context.queryClient.query(
         context.trpc.catalogue.muscles.list.queryOptions(),
       ),
+      context.queryClient.query(
+        context.trpc.catalogue.movementPatterns.list.queryOptions(),
+      ),
     ]),
   pendingComponent: () => <Spinner />,
   errorComponent: CatalogueError,
@@ -71,13 +74,19 @@ function RouteComponent() {
   const { data: muscles } = useSuspenseQuery(
     trpc.catalogue.muscles.list.queryOptions(),
   );
+  const { data: movementPatterns } = useSuspenseQuery(
+    trpc.catalogue.movementPatterns.list.queryOptions(),
+  );
 
   return (
     <section aria-labelledby="admin-catalogue-title" className="space-y-4">
       <div className="space-y-2">
-        <h2 id="admin-catalogue-title" className="text-xl font-semibold">
+        <h1
+          id="admin-catalogue-title"
+          className="text-3xl font-semibold tracking-tight"
+        >
           Catalogue
-        </h2>
+        </h1>
         <p className="text-muted-foreground">
           Shared definitions used throughout the exercise library.
         </p>
@@ -89,7 +98,12 @@ function RouteComponent() {
         <CardContent>
           <ExercisesTable
             data={exercises}
-            options={{ ...exerciseOptions, equipment, muscles }}
+            options={{
+              ...exerciseOptions,
+              equipment,
+              muscles,
+              movementPatterns,
+            }}
           />
         </CardContent>
       </Card>

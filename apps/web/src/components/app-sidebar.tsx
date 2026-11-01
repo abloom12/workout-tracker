@@ -33,6 +33,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 import { useSidebar } from '@/hooks/use-sidebar';
 import { authClient } from '@/lib/auth-client';
@@ -42,6 +45,12 @@ const navigation = [
   { title: 'Programs', to: '/programs', icon: Table2 },
   { title: 'Exercises', to: '/exercises', icon: Dumbbell },
   { title: 'Mockups', to: '/mockups', icon: Table2 },
+] as const;
+
+const adminNavigation = [
+  { title: 'Overview', to: '/admin' },
+  { title: 'Users', to: '/admin/users' },
+  { title: 'Catalogue', to: '/admin/catalogue' },
 ] as const;
 
 type AppSidebarProps = ComponentProps<typeof Sidebar> & { user: User };
@@ -80,13 +89,6 @@ function SidebarBrand() {
 }
 
 function SidebarNavigation({ user }: { user: User }) {
-  const items =
-    user.role?.split(',').includes('admin') ?
-      [
-        ...navigation,
-        { title: 'Admin', to: '/admin', icon: ShieldCheck } as const,
-      ]
-    : navigation;
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   });
@@ -97,13 +99,13 @@ function SidebarNavigation({ user }: { user: User }) {
       <SidebarGroup>
         <SidebarGroupContent>
           <SidebarMenu>
-            {items.map((item) => (
+            {navigation.map((item) => (
               <SidebarMenuItem key={item.to}>
                 <SidebarMenuButton
                   asChild
                   isActive={
                     pathname === item.to ||
-                    ((item.to === '/mockups' || item.to === '/admin') &&
+                    (item.to === '/mockups' &&
                       pathname.startsWith(`${item.to}/`))
                   }
                 >
@@ -114,10 +116,53 @@ function SidebarNavigation({ user }: { user: User }) {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
+            {user.role?.split(',').includes('admin') && (
+              <SidebarAdminNavigation pathname={pathname} />
+            )}
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>
     </SidebarContent>
+  );
+}
+
+function SidebarAdminNavigation({ pathname }: { pathname: string }) {
+  const { setOpenMobile } = useSidebar();
+
+  return (
+    <SidebarMenuItem>
+      <SidebarMenuButton
+        asChild
+        isActive={pathname === '/admin' || pathname.startsWith('/admin/')}
+      >
+        <Link
+          to="/admin"
+          activeOptions={{ exact: true }}
+          onClick={() => setOpenMobile(false)}
+        >
+          <ShieldCheck aria-hidden="true" />
+          <span>Admin</span>
+        </Link>
+      </SidebarMenuButton>
+      <SidebarMenuSub aria-label="Admin navigation">
+        {adminNavigation.map((item) => (
+          <SidebarMenuSubItem key={item.to}>
+            <SidebarMenuSubButton
+              asChild
+              isActive={pathname === item.to || pathname === `${item.to}/`}
+            >
+              <Link
+                to={item.to}
+                activeOptions={{ exact: true }}
+                onClick={() => setOpenMobile(false)}
+              >
+                <span>{item.title}</span>
+              </Link>
+            </SidebarMenuSubButton>
+          </SidebarMenuSubItem>
+        ))}
+      </SidebarMenuSub>
+    </SidebarMenuItem>
   );
 }
 

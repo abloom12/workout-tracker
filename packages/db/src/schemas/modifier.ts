@@ -1,4 +1,4 @@
-import { integer, pgEnum, pgTable, text } from 'drizzle-orm/pg-core';
+import { pgEnum, pgTable, text, uuid } from 'drizzle-orm/pg-core';
 
 export const modifierValueKind = pgEnum('modifier_value_kind', [
   'weight',
@@ -7,8 +7,7 @@ export const modifierValueKind = pgEnum('modifier_value_kind', [
 ]);
 
 export const modifier = pgTable('modifier', {
-  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
-  code: text('code').notNull().unique(),
+  id: uuid('id').defaultRandom().primaryKey(),
   name: text('name').notNull().unique(),
   value_kind: modifierValueKind('value_kind').notNull(),
 });

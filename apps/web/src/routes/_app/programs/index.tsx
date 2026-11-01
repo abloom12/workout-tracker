@@ -50,7 +50,7 @@ function RouteComponent() {
         const setupId: unknown = source.data.id;
         const workoutId = target.id;
 
-        if (typeof setupId !== 'number' || typeof workoutId !== 'string') {
+        if (typeof setupId !== 'string' || typeof workoutId !== 'string') {
           return;
         }
 

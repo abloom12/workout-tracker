@@ -1,13 +1,13 @@
 import type { exercise_equipment } from '../schemas/exercise.js';
 
 export const equipment = [
-  { code: 'barbell', name: 'Barbell' },
-  { code: 'trap_bar', name: 'Trap Bar' },
-  { code: 'dumbbell', name: 'Dumbbell' },
-  { code: 'cable', name: 'Cable' },
-  { code: 'none', name: 'None' },
-  { code: 'parallel_bars', name: 'Parallel Bars' },
-  { code: 'fixed_bar', name: 'Fixed Bar' },
-  { code: 'nordic_curl_anchor', name: 'Nordic Curl Anchor' },
-  { code: 'olympic_rings', name: 'Olympic Rings' },
+  { name: 'Barbell' },
+  { name: 'Trap Bar' },
+  { name: 'Dumbbell' },
+  { name: 'Cable' },
+  { name: 'None' },
+  { name: 'Parallel Bars' },
+  { name: 'Straight Bar' },
+  { name: 'Nordic Curl Anchor' },
+  { name: 'Olympic Rings' },
 ] satisfies (typeof exercise_equipment.$inferInsert)[];

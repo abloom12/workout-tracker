@@ -1,3 +1,4 @@
+CREATE TYPE "public"."exercise_mechanics" AS ENUM('compound', 'isolation');--> statement-breakpoint
 CREATE TYPE "public"."exercise_muscle_role" AS ENUM('primary', 'secondary');--> statement-breakpoint
 CREATE TYPE "public"."grip_orientation" AS ENUM('overhand', 'underhand', 'neutral');--> statement-breakpoint
 CREATE TYPE "public"."grip_width" AS ENUM('close', 'standard', 'wide');--> statement-breakpoint
@@ -56,59 +57,65 @@ CREATE TABLE "verification" (
 );
 --> statement-breakpoint
 CREATE TABLE "exercise" (
-	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "exercise_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
-	"code" text NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
-	"equipment_id" integer NOT NULL,
+	"equipment_id" uuid NOT NULL,
 	"grip_orientation" "grip_orientation",
 	"grip_width" "grip_width",
-	CONSTRAINT "exercise_code_unique" UNIQUE("code"),
+	"is_unilateral" boolean DEFAULT false NOT NULL,
+	"mechanics" "exercise_mechanics",
 	CONSTRAINT "exercise_name_unique" UNIQUE("name")
 );
 --> statement-breakpoint
 CREATE TABLE "exercise_attachment" (
-	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "exercise_attachment_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
-	"code" text NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
-	CONSTRAINT "exercise_attachment_code_unique" UNIQUE("code"),
 	CONSTRAINT "exercise_attachment_name_unique" UNIQUE("name")
 );
 --> statement-breakpoint
 CREATE TABLE "exercise_equipment" (
-	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "exercise_equipment_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
-	"code" text NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
-	CONSTRAINT "exercise_equipment_code_unique" UNIQUE("code"),
 	CONSTRAINT "exercise_equipment_name_unique" UNIQUE("name")
 );
 --> statement-breakpoint
+CREATE TABLE "exercise_movement_pattern" (
+	"exercise_id" uuid NOT NULL,
+	"movement_pattern_id" integer NOT NULL,
+	CONSTRAINT "exercise_movement_pattern_exercise_id_movement_pattern_id_pk" PRIMARY KEY("exercise_id","movement_pattern_id")
+);
+--> statement-breakpoint
 CREATE TABLE "exercise_muscle" (
-	"exercise_id" integer NOT NULL,
+	"exercise_id" uuid NOT NULL,
 	"muscle_id" integer NOT NULL,
 	"role" "exercise_muscle_role" NOT NULL,
 	CONSTRAINT "exercise_muscle_exercise_id_muscle_id_pk" PRIMARY KEY("exercise_id","muscle_id")
 );
 --> statement-breakpoint
+CREATE TABLE "movement_pattern" (
+	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "movement_pattern_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
+	"name" text NOT NULL,
+	CONSTRAINT "movement_pattern_name_unique" UNIQUE("name")
+);
+--> statement-breakpoint
 CREATE TABLE "muscle" (
 	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "muscle_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
-	"code" text NOT NULL,
 	"name" text NOT NULL,
-	CONSTRAINT "muscle_code_unique" UNIQUE("code"),
 	CONSTRAINT "muscle_name_unique" UNIQUE("name")
 );
 --> statement-breakpoint
 CREATE TABLE "modifier" (
-	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "modifier_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
-	"code" text NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
 	"value_kind" "modifier_value_kind" NOT NULL,
-	CONSTRAINT "modifier_code_unique" UNIQUE("code"),
 	CONSTRAINT "modifier_name_unique" UNIQUE("name")
 );
 --> statement-breakpoint
 ALTER TABLE "account" ADD CONSTRAINT "account_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "session" ADD CONSTRAINT "session_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "exercise" ADD CONSTRAINT "exercise_equipment_id_exercise_equipment_id_fk" FOREIGN KEY ("equipment_id") REFERENCES "public"."exercise_equipment"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "exercise_movement_pattern" ADD CONSTRAINT "exercise_movement_pattern_exercise_id_exercise_id_fk" FOREIGN KEY ("exercise_id") REFERENCES "public"."exercise"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "exercise_movement_pattern" ADD CONSTRAINT "exercise_movement_pattern_movement_pattern_id_movement_pattern_id_fk" FOREIGN KEY ("movement_pattern_id") REFERENCES "public"."movement_pattern"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "exercise_muscle" ADD CONSTRAINT "exercise_muscle_exercise_id_exercise_id_fk" FOREIGN KEY ("exercise_id") REFERENCES "public"."exercise"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "exercise_muscle" ADD CONSTRAINT "exercise_muscle_muscle_id_muscle_id_fk" FOREIGN KEY ("muscle_id") REFERENCES "public"."muscle"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX "account_userId_idx" ON "account" USING btree ("user_id");--> statement-breakpoint

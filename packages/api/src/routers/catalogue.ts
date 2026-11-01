@@ -3,13 +3,17 @@ import { z } from 'zod';
 
 import {
   createExercise,
+  exerciseMechanics,
   exerciseMuscleRole,
   ExerciseWriteError,
   getUserAccess,
+  gripOrientation,
+  gripWidth,
   listAttachments,
   listEquipment,
   listExercises,
   listModifiers,
+  listMovementPatterns,
   listMuscles,
   saveExercises,
   updateExercise,
@@ -20,7 +24,18 @@ import { protectedProcedure, router } from '../trpc.js';
 const catalogueId = z.int().positive();
 const exerciseInput = z.strictObject({
   name: z.string().trim().min(1, 'Name is required').max(200),
-  equipmentId: catalogueId,
+  equipmentId: z.uuid(),
+  gripOrientation: z.enum(gripOrientation.enumValues).nullable().optional(),
+  gripWidth: z.enum(gripWidth.enumValues).nullable().optional(),
+  isUnilateral: z.boolean().optional(),
+  mechanics: z.enum(exerciseMechanics.enumValues).nullable().optional(),
+  movementPatternIds: z
+    .array(catalogueId)
+    .max(100)
+    .refine((ids) => new Set(ids).size === ids.length, {
+      message: 'Movement patterns must not be repeated',
+    })
+    .optional(),
   muscles: z
     .array(
       z.strictObject({
@@ -36,15 +51,6 @@ const exerciseInput = z.strictObject({
       { message: 'Muscles must not be repeated' },
     ),
 });
-
-function generateExerciseCode(name: string) {
-  return name
-    .normalize('NFKD')
-    .replace(/\p{M}/gu, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '_')
-    .replace(/^_+|_+$/g, '');
-}
 
 const exerciseWriteProcedure = protectedProcedure.use(async ({ ctx, next }) => {
   // Check the current database role rather than trusting the cookie cache.
@@ -65,8 +71,6 @@ function throwExerciseWriteError(error: unknown, exerciseName?: string): never {
 
   if (error instanceof ExerciseWriteError) {
     const messages = {
-      code_conflict:
-        'That name generates a code already in use. Choose a different exercise name.',
       name_conflict: 'An exercise with that name already exists.',
       conflict: 'An exercise with those values already exists.',
       invalid_reference:
@@ -98,24 +102,16 @@ export const catalogueRouter = router({
   exercises: router({
     options: protectedProcedure.query(() => ({
       muscleRoles: exerciseMuscleRole.enumValues,
+      gripOrientations: gripOrientation.enumValues,
+      gripWidths: gripWidth.enumValues,
+      mechanics: exerciseMechanics.enumValues,
     })),
     list: protectedProcedure.query(({ ctx }) => listExercises(ctx.db)),
     create: exerciseWriteProcedure
-      .input(
-        exerciseInput.refine(
-          ({ name }) => generateExerciseCode(name).length > 0,
-          {
-            message: 'Name must contain a letter or number to generate a code',
-            path: ['name'],
-          },
-        ),
-      )
+      .input(exerciseInput)
       .mutation(async ({ ctx, input }) => {
         try {
-          return await createExercise(ctx.db, {
-            ...input,
-            code: generateExerciseCode(input.name),
-          });
+          return await createExercise(ctx.db, input);
         } catch (error) {
           throwExerciseWriteError(error);
         }
@@ -124,19 +120,7 @@ export const catalogueRouter = router({
       .input(
         z.strictObject({
           changes: z
-            .array(
-              exerciseInput
-                .safeExtend({ id: catalogueId.optional() })
-                .refine(
-                  ({ id, name }) =>
-                    id !== undefined || generateExerciseCode(name).length > 0,
-                  {
-                    message:
-                      'Name must contain a letter or number to generate a code',
-                    path: ['name'],
-                  },
-                ),
-            )
+            .array(exerciseInput.safeExtend({ id: z.uuid().optional() }))
             .min(1)
             .refine(
               (changes) => {
@@ -151,14 +135,7 @@ export const catalogueRouter = router({
       )
       .mutation(async ({ ctx, input }) => {
         try {
-          return await saveExercises(
-            ctx.db,
-            input.changes.map(({ id, ...change }) =>
-              id === undefined ?
-                { ...change, code: generateExerciseCode(change.name) }
-              : { ...change, id },
-            ),
-          );
+          return await saveExercises(ctx.db, input.changes);
         } catch (error) {
           const exerciseName =
             (
@@ -171,7 +148,7 @@ export const catalogueRouter = router({
         }
       }),
     update: exerciseWriteProcedure
-      .input(exerciseInput.safeExtend({ id: catalogueId }))
+      .input(exerciseInput.safeExtend({ id: z.uuid() }))
       .mutation(async ({ ctx, input }) => {
         try {
           const exercise = await updateExercise(ctx.db, input.id, input);
@@ -197,6 +174,9 @@ export const catalogueRouter = router({
   }),
   modifiers: router({
     list: protectedProcedure.query(({ ctx }) => listModifiers(ctx.db)),
+  }),
+  movementPatterns: router({
+    list: protectedProcedure.query(({ ctx }) => listMovementPatterns(ctx.db)),
   }),
   muscles: router({
     list: protectedProcedure.query(({ ctx }) => listMuscles(ctx.db)),

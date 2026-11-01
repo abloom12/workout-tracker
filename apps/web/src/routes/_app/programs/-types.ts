@@ -10,7 +10,7 @@ export type PlannedSetDraft = {
 
 export type WorkoutExerciseDraft = {
   id: string;
-  setupId: number;
+  setupId: string;
   sets: PlannedSetDraft[];
 };
 

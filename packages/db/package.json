@@ -15,6 +15,7 @@
     "db:seed": "tsx src/seed.ts",
     "db:studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push",
+    "db:rebuild": "rm -rf src/migrations && pnpm db:generate && pnpm db:migrate && pnpm db:seed",
     "format": "prettier --check . --ignore-path ../../.gitignore --ignore-path .prettierignore",
     "lint": "eslint .",
     "test": "vitest run",

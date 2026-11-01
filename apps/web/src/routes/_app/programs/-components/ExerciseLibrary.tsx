@@ -101,7 +101,7 @@ export function ExerciseLibrary() {
   );
 }
 
-function ExerciseLibraryItem({ id, name }: { id: number; name: string }) {
+function ExerciseLibraryItem({ id, name }: { id: string; name: string }) {
   const { ref, handleRef } = useDraggable({
     id: `library:${id}`,
     type: 'library-exercise',

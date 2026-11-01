@@ -7,11 +7,13 @@ import {
   exercise_attachment,
   exercise_equipment,
   modifier,
+  movement_pattern,
   muscle,
 } from './schema.js';
 import { attachments } from './seeds/attachments.js';
 import { equipment } from './seeds/equipment.js';
 import { modifiers } from './seeds/modifiers.js';
+import { movementPatterns } from './seeds/movement-patterns.js';
 import { muscles } from './seeds/muscles.js';
 
 const seedDirectory = dirname(fileURLToPath(import.meta.url));
@@ -35,7 +37,7 @@ try {
         .insert(exercise_attachment)
         .values(seed)
         .onConflictDoUpdate({
-          target: exercise_attachment.code,
+          target: exercise_attachment.name,
           set: { name: seed.name },
         });
     }
@@ -45,7 +47,7 @@ try {
         .insert(exercise_equipment)
         .values(seed)
         .onConflictDoUpdate({
-          target: exercise_equipment.code,
+          target: exercise_equipment.name,
           set: { name: seed.name },
         });
     }
@@ -55,8 +57,18 @@ try {
         .insert(modifier)
         .values(seed)
         .onConflictDoUpdate({
-          target: modifier.code,
+          target: modifier.name,
           set: { name: seed.name, value_kind: seed.value_kind },
+        });
+    }
+
+    for (const seed of movementPatterns) {
+      await tx
+        .insert(movement_pattern)
+        .values(seed)
+        .onConflictDoUpdate({
+          target: movement_pattern.name,
+          set: { name: seed.name },
         });
     }
 
@@ -64,7 +76,7 @@ try {
       await tx
         .insert(muscle)
         .values(seed)
-        .onConflictDoUpdate({ target: muscle.code, set: { name: seed.name } });
+        .onConflictDoUpdate({ target: muscle.name, set: { name: seed.name } });
     }
   });
 } finally {

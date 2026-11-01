@@ -7,9 +7,12 @@ export const Route = createFileRoute('/_app/admin/users')({
 function RouteComponent() {
   return (
     <section aria-labelledby="admin-users-title" className="space-y-2">
-      <h2 id="admin-users-title" className="text-xl font-semibold">
+      <h1
+        id="admin-users-title"
+        className="text-3xl font-semibold tracking-tight"
+      >
         Users
-      </h2>
+      </h1>
       <p className="text-muted-foreground">
         User management controls will be added here.
       </p>

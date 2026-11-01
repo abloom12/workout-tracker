@@ -8,9 +8,6 @@ export const Route = createFileRoute('/_app/mockups')({
 
 const mockups = [
   { label: 'Mockup home', to: '/mockups' },
-  { label: 'mockup empty 1', to: '/mockups/mockup-five' },
-  { label: 'Mockup 2', to: '/mockups/mockup-two' },
-  { label: 'Library variations', to: '/mockups/library' },
   { label: 'Library filters', to: '/mockups/library-filters' },
   { label: 'playground', to: '/mockups/mockup-playground' },
 ] as const;
