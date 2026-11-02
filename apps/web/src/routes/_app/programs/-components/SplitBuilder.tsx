@@ -38,7 +38,7 @@ export function SplitBuilder({ workouts, onAddWorkout }: SplitBuilderProps) {
               className="border-border pointer-events-none absolute top-5 bottom-5 left-[19px] border-l-2 border-dashed"
             />
 
-            <ol className="relative flex flex-col gap-3">
+            <ol className="relative flex flex-col gap-5">
               {workouts.map((workout, index) => (
                 <WorkoutCard
                   key={workout.id}

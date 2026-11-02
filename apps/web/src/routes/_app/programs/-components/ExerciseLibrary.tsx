@@ -167,7 +167,7 @@ function ExerciseLibraryItem({
         <GripVertical />
       </Button>
 
-      <div className="">
+      <div>
         <p className="mb-0.5 text-sm">{name}</p>
 
         <div className="flex gap-2">
@@ -204,9 +204,17 @@ function ExerciseLibraryItem({
 
 export function ExerciseLibraryItemDragPreview({ name }: { name: string }) {
   return (
-    <div className="bg-card flex items-center rounded-lg border py-1">
-      <GripVertical />
-      <p>{name}</p>
+    <div className="bg-card flex items-center rounded-lg border py-3">
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon"
+        className="cursor-grab touch-none"
+        tabIndex={-1}
+      >
+        <GripVertical />
+      </Button>
+      <p className="mb-0.5 text-sm">{name}</p>
     </div>
   );
 }

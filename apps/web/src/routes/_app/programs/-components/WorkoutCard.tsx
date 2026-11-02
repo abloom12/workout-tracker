@@ -11,6 +11,7 @@ import {
   ItemMedia,
   ItemTitle,
 } from '@/components/ui/item';
+import { cn } from '@/lib/cn';
 import type { WorkoutDraft, WorkoutExerciseDraft } from '../-types';
 
 const routeApi = getRouteApi('/_app/programs/');
@@ -71,13 +72,18 @@ export function WorkoutCard({ position, workout }: WorkoutCardProps) {
             </ItemGroup>
           )}
 
-          <div className="flex min-h-28 items-center justify-center rounded-lg border border-dashed">
+          <div
+            className={cn(
+              'flex items-center justify-center rounded-lg border border-dashed',
+              workout.exercises.length === 0 ? 'min-h-32' : 'min-h-10',
+            )}
+          >
             <div className="text-muted-foreground flex items-center gap-1">
               <ArrowDownToLine aria-hidden="true" className="size-3.5" />
               <p className="text-xs">
                 {isDropTarget ?
                   'Release to place here'
-                : 'Drop an exercise here to get started'}
+                : 'Drop an exercise here'}
               </p>
             </div>
           </div>

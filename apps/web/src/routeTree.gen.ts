@@ -22,6 +22,7 @@ import { Route as AppAdminCatalogueRouteImport } from './routes/_app/admin/catal
 import { Route as AppAdminUsersRouteImport } from './routes/_app/admin/users'
 import { Route as AppExercisesIndexRouteImport } from './routes/_app/exercises/index'
 import { Route as AppMockupsIndexRouteImport } from './routes/_app/mockups/index'
+import { Route as AppMockupsCardlessRouteImport } from './routes/_app/mockups/cardless'
 import { Route as AppMockupsLibraryFiltersRouteImport } from './routes/_app/mockups/library-filters'
 import { Route as AppMockupsMockupPlaygroundRouteImport } from './routes/_app/mockups/mockup-playground'
 import { Route as AppMockupsOldProgramsRouteImport } from './routes/_app/mockups/old-programs'
@@ -92,6 +93,11 @@ const AppMockupsIndexRoute = AppMockupsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppMockupsRouteRoute,
 } as any)
+const AppMockupsCardlessRoute = AppMockupsCardlessRouteImport.update({
+  id: '/cardless',
+  path: '/cardless',
+  getParentRoute: () => AppMockupsRouteRoute,
+} as any)
 const AppMockupsLibraryFiltersRoute =
   AppMockupsLibraryFiltersRouteImport.update({
     id: '/library-filters',
@@ -130,6 +136,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof AppSettingsRoute
   '/admin/catalogue': typeof AppAdminCatalogueRoute
   '/admin/users': typeof AppAdminUsersRoute
+  '/mockups/cardless': typeof AppMockupsCardlessRoute
   '/mockups/library-filters': typeof AppMockupsLibraryFiltersRoute
   '/mockups/mockup-playground': typeof AppMockupsMockupPlaygroundRoute
   '/mockups/old-programs': typeof AppMockupsOldProgramsRoute
@@ -147,6 +154,7 @@ export interface FileRoutesByTo {
   '/settings': typeof AppSettingsRoute
   '/admin/catalogue': typeof AppAdminCatalogueRoute
   '/admin/users': typeof AppAdminUsersRoute
+  '/mockups/cardless': typeof AppMockupsCardlessRoute
   '/mockups/library-filters': typeof AppMockupsLibraryFiltersRoute
   '/mockups/mockup-playground': typeof AppMockupsMockupPlaygroundRoute
   '/mockups/old-programs': typeof AppMockupsOldProgramsRoute
@@ -168,6 +176,7 @@ export interface FileRoutesById {
   '/_app/settings': typeof AppSettingsRoute
   '/_app/admin/catalogue': typeof AppAdminCatalogueRoute
   '/_app/admin/users': typeof AppAdminUsersRoute
+  '/_app/mockups/cardless': typeof AppMockupsCardlessRoute
   '/_app/mockups/library-filters': typeof AppMockupsLibraryFiltersRoute
   '/_app/mockups/mockup-playground': typeof AppMockupsMockupPlaygroundRoute
   '/_app/mockups/old-programs': typeof AppMockupsOldProgramsRoute
@@ -189,6 +198,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/admin/catalogue'
     | '/admin/users'
+    | '/mockups/cardless'
     | '/mockups/library-filters'
     | '/mockups/mockup-playground'
     | '/mockups/old-programs'
@@ -206,6 +216,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/admin/catalogue'
     | '/admin/users'
+    | '/mockups/cardless'
     | '/mockups/library-filters'
     | '/mockups/mockup-playground'
     | '/mockups/old-programs'
@@ -226,6 +237,7 @@ export interface FileRouteTypes {
     | '/_app/settings'
     | '/_app/admin/catalogue'
     | '/_app/admin/users'
+    | '/_app/mockups/cardless'
     | '/_app/mockups/library-filters'
     | '/_app/mockups/mockup-playground'
     | '/_app/mockups/old-programs'
@@ -336,6 +348,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppMockupsIndexRouteImport
       parentRoute: typeof AppMockupsRouteRoute
     }
+    '/_app/mockups/cardless': {
+      id: '/_app/mockups/cardless'
+      path: '/cardless'
+      fullPath: '/mockups/cardless'
+      preLoaderRoute: typeof AppMockupsCardlessRouteImport
+      parentRoute: typeof AppMockupsRouteRoute
+    }
     '/_app/mockups/library-filters': {
       id: '/_app/mockups/library-filters'
       path: '/library-filters'
@@ -391,6 +410,7 @@ const AppAdminRouteRouteWithChildren = AppAdminRouteRoute._addFileChildren(
 )
 
 interface AppMockupsRouteRouteChildren {
+  AppMockupsCardlessRoute: typeof AppMockupsCardlessRoute
   AppMockupsLibraryFiltersRoute: typeof AppMockupsLibraryFiltersRoute
   AppMockupsMockupPlaygroundRoute: typeof AppMockupsMockupPlaygroundRoute
   AppMockupsOldProgramsRoute: typeof AppMockupsOldProgramsRoute
@@ -398,6 +418,7 @@ interface AppMockupsRouteRouteChildren {
 }
 
 const AppMockupsRouteRouteChildren: AppMockupsRouteRouteChildren = {
+  AppMockupsCardlessRoute: AppMockupsCardlessRoute,
   AppMockupsLibraryFiltersRoute: AppMockupsLibraryFiltersRoute,
   AppMockupsMockupPlaygroundRoute: AppMockupsMockupPlaygroundRoute,
   AppMockupsOldProgramsRoute: AppMockupsOldProgramsRoute,
