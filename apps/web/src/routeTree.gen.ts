@@ -15,17 +15,11 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as AppAdminRouteRouteImport } from './routes/_app/admin/route'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
-import { Route as AppMockupsRouteRouteImport } from './routes/_app/mockups/route'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppAdminIndexRouteImport } from './routes/_app/admin/index'
 import { Route as AppAdminCatalogueRouteImport } from './routes/_app/admin/catalogue'
 import { Route as AppAdminUsersRouteImport } from './routes/_app/admin/users'
 import { Route as AppExercisesIndexRouteImport } from './routes/_app/exercises/index'
-import { Route as AppMockupsIndexRouteImport } from './routes/_app/mockups/index'
-import { Route as AppMockupsCardlessRouteImport } from './routes/_app/mockups/cardless'
-import { Route as AppMockupsLibraryFiltersRouteImport } from './routes/_app/mockups/library-filters'
-import { Route as AppMockupsMockupPlaygroundRouteImport } from './routes/_app/mockups/mockup-playground'
-import { Route as AppMockupsOldProgramsRouteImport } from './routes/_app/mockups/old-programs'
 import { Route as AppProgramsIndexRouteImport } from './routes/_app/programs/index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -57,11 +51,6 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppMockupsRouteRoute = AppMockupsRouteRouteImport.update({
-  id: '/mockups',
-  path: '/mockups',
-  getParentRoute: () => AppRouteRoute,
-} as any)
 const AppSettingsRoute = AppSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -87,33 +76,6 @@ const AppExercisesIndexRoute = AppExercisesIndexRouteImport.update({
   path: '/exercises/',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppMockupsIndexRoute = AppMockupsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AppMockupsRouteRoute,
-} as any)
-const AppMockupsCardlessRoute = AppMockupsCardlessRouteImport.update({
-  id: '/cardless',
-  path: '/cardless',
-  getParentRoute: () => AppMockupsRouteRoute,
-} as any)
-const AppMockupsLibraryFiltersRoute =
-  AppMockupsLibraryFiltersRouteImport.update({
-    id: '/library-filters',
-    path: '/library-filters',
-    getParentRoute: () => AppMockupsRouteRoute,
-  } as any)
-const AppMockupsMockupPlaygroundRoute =
-  AppMockupsMockupPlaygroundRouteImport.update({
-    id: '/mockup-playground',
-    path: '/mockup-playground',
-    getParentRoute: () => AppMockupsRouteRoute,
-  } as any)
-const AppMockupsOldProgramsRoute = AppMockupsOldProgramsRouteImport.update({
-  id: '/old-programs',
-  path: '/old-programs',
-  getParentRoute: () => AppMockupsRouteRoute,
-} as any)
 const AppProgramsIndexRoute = AppProgramsIndexRouteImport.update({
   id: '/programs/',
   path: '/programs/',
@@ -125,18 +87,12 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/admin': typeof AppAdminRouteRouteWithChildren
-  '/mockups': typeof AppMockupsRouteRouteWithChildren
   '/dashboard': typeof AppDashboardRoute
   '/settings': typeof AppSettingsRoute
   '/admin/catalogue': typeof AppAdminCatalogueRoute
   '/admin/users': typeof AppAdminUsersRoute
-  '/mockups/cardless': typeof AppMockupsCardlessRoute
-  '/mockups/library-filters': typeof AppMockupsLibraryFiltersRoute
-  '/mockups/mockup-playground': typeof AppMockupsMockupPlaygroundRoute
-  '/mockups/old-programs': typeof AppMockupsOldProgramsRoute
   '/admin/': typeof AppAdminIndexRoute
   '/exercises/': typeof AppExercisesIndexRoute
-  '/mockups/': typeof AppMockupsIndexRoute
   '/programs/': typeof AppProgramsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -147,13 +103,8 @@ export interface FileRoutesByTo {
   '/settings': typeof AppSettingsRoute
   '/admin/catalogue': typeof AppAdminCatalogueRoute
   '/admin/users': typeof AppAdminUsersRoute
-  '/mockups/cardless': typeof AppMockupsCardlessRoute
-  '/mockups/library-filters': typeof AppMockupsLibraryFiltersRoute
-  '/mockups/mockup-playground': typeof AppMockupsMockupPlaygroundRoute
-  '/mockups/old-programs': typeof AppMockupsOldProgramsRoute
   '/admin': typeof AppAdminIndexRoute
   '/exercises': typeof AppExercisesIndexRoute
-  '/mockups': typeof AppMockupsIndexRoute
   '/programs': typeof AppProgramsIndexRoute
 }
 export interface FileRoutesById {
@@ -163,18 +114,12 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/_app/admin': typeof AppAdminRouteRouteWithChildren
-  '/_app/mockups': typeof AppMockupsRouteRouteWithChildren
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/settings': typeof AppSettingsRoute
   '/_app/admin/catalogue': typeof AppAdminCatalogueRoute
   '/_app/admin/users': typeof AppAdminUsersRoute
-  '/_app/mockups/cardless': typeof AppMockupsCardlessRoute
-  '/_app/mockups/library-filters': typeof AppMockupsLibraryFiltersRoute
-  '/_app/mockups/mockup-playground': typeof AppMockupsMockupPlaygroundRoute
-  '/_app/mockups/old-programs': typeof AppMockupsOldProgramsRoute
   '/_app/admin/': typeof AppAdminIndexRoute
   '/_app/exercises/': typeof AppExercisesIndexRoute
-  '/_app/mockups/': typeof AppMockupsIndexRoute
   '/_app/programs/': typeof AppProgramsIndexRoute
 }
 export interface FileRouteTypes {
@@ -184,18 +129,12 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/admin'
-    | '/mockups'
     | '/dashboard'
     | '/settings'
     | '/admin/catalogue'
     | '/admin/users'
-    | '/mockups/cardless'
-    | '/mockups/library-filters'
-    | '/mockups/mockup-playground'
-    | '/mockups/old-programs'
     | '/admin/'
     | '/exercises/'
-    | '/mockups/'
     | '/programs/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -206,13 +145,8 @@ export interface FileRouteTypes {
     | '/settings'
     | '/admin/catalogue'
     | '/admin/users'
-    | '/mockups/cardless'
-    | '/mockups/library-filters'
-    | '/mockups/mockup-playground'
-    | '/mockups/old-programs'
     | '/admin'
     | '/exercises'
-    | '/mockups'
     | '/programs'
   id:
     | '__root__'
@@ -221,18 +155,12 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/_app/admin'
-    | '/_app/mockups'
     | '/_app/dashboard'
     | '/_app/settings'
     | '/_app/admin/catalogue'
     | '/_app/admin/users'
-    | '/_app/mockups/cardless'
-    | '/_app/mockups/library-filters'
-    | '/_app/mockups/mockup-playground'
-    | '/_app/mockups/old-programs'
     | '/_app/admin/'
     | '/_app/exercises/'
-    | '/_app/mockups/'
     | '/_app/programs/'
   fileRoutesById: FileRoutesById
 }
@@ -287,13 +215,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/mockups': {
-      id: '/_app/mockups'
-      path: '/mockups'
-      fullPath: '/mockups'
-      preLoaderRoute: typeof AppMockupsRouteRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
     '/_app/settings': {
       id: '/_app/settings'
       path: '/settings'
@@ -329,41 +250,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppExercisesIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/mockups/': {
-      id: '/_app/mockups/'
-      path: '/'
-      fullPath: '/mockups/'
-      preLoaderRoute: typeof AppMockupsIndexRouteImport
-      parentRoute: typeof AppMockupsRouteRoute
-    }
-    '/_app/mockups/cardless': {
-      id: '/_app/mockups/cardless'
-      path: '/cardless'
-      fullPath: '/mockups/cardless'
-      preLoaderRoute: typeof AppMockupsCardlessRouteImport
-      parentRoute: typeof AppMockupsRouteRoute
-    }
-    '/_app/mockups/library-filters': {
-      id: '/_app/mockups/library-filters'
-      path: '/library-filters'
-      fullPath: '/mockups/library-filters'
-      preLoaderRoute: typeof AppMockupsLibraryFiltersRouteImport
-      parentRoute: typeof AppMockupsRouteRoute
-    }
-    '/_app/mockups/mockup-playground': {
-      id: '/_app/mockups/mockup-playground'
-      path: '/mockup-playground'
-      fullPath: '/mockups/mockup-playground'
-      preLoaderRoute: typeof AppMockupsMockupPlaygroundRouteImport
-      parentRoute: typeof AppMockupsRouteRoute
-    }
-    '/_app/mockups/old-programs': {
-      id: '/_app/mockups/old-programs'
-      path: '/old-programs'
-      fullPath: '/mockups/old-programs'
-      preLoaderRoute: typeof AppMockupsOldProgramsRouteImport
-      parentRoute: typeof AppMockupsRouteRoute
-    }
     '/_app/programs/': {
       id: '/_app/programs/'
       path: '/programs'
@@ -390,29 +276,8 @@ const AppAdminRouteRouteWithChildren = AppAdminRouteRoute._addFileChildren(
   AppAdminRouteRouteChildren,
 )
 
-interface AppMockupsRouteRouteChildren {
-  AppMockupsCardlessRoute: typeof AppMockupsCardlessRoute
-  AppMockupsLibraryFiltersRoute: typeof AppMockupsLibraryFiltersRoute
-  AppMockupsMockupPlaygroundRoute: typeof AppMockupsMockupPlaygroundRoute
-  AppMockupsOldProgramsRoute: typeof AppMockupsOldProgramsRoute
-  AppMockupsIndexRoute: typeof AppMockupsIndexRoute
-}
-
-const AppMockupsRouteRouteChildren: AppMockupsRouteRouteChildren = {
-  AppMockupsCardlessRoute: AppMockupsCardlessRoute,
-  AppMockupsLibraryFiltersRoute: AppMockupsLibraryFiltersRoute,
-  AppMockupsMockupPlaygroundRoute: AppMockupsMockupPlaygroundRoute,
-  AppMockupsOldProgramsRoute: AppMockupsOldProgramsRoute,
-  AppMockupsIndexRoute: AppMockupsIndexRoute,
-}
-
-const AppMockupsRouteRouteWithChildren = AppMockupsRouteRoute._addFileChildren(
-  AppMockupsRouteRouteChildren,
-)
-
 interface AppRouteRouteChildren {
   AppAdminRouteRoute: typeof AppAdminRouteRouteWithChildren
-  AppMockupsRouteRoute: typeof AppMockupsRouteRouteWithChildren
   AppDashboardRoute: typeof AppDashboardRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppExercisesIndexRoute: typeof AppExercisesIndexRoute
@@ -421,7 +286,6 @@ interface AppRouteRouteChildren {
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppAdminRouteRoute: AppAdminRouteRouteWithChildren,
-  AppMockupsRouteRoute: AppMockupsRouteRouteWithChildren,
   AppDashboardRoute: AppDashboardRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppExercisesIndexRoute: AppExercisesIndexRoute,
