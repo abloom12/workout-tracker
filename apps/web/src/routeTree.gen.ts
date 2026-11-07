@@ -27,7 +27,6 @@ import { Route as AppMockupsLibraryFiltersRouteImport } from './routes/_app/mock
 import { Route as AppMockupsMockupPlaygroundRouteImport } from './routes/_app/mockups/mockup-playground'
 import { Route as AppMockupsOldProgramsRouteImport } from './routes/_app/mockups/old-programs'
 import { Route as AppProgramsIndexRouteImport } from './routes/_app/programs/index'
-import { Route as AppWorkoutsIndexRouteImport } from './routes/_app/workouts/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -120,11 +119,6 @@ const AppProgramsIndexRoute = AppProgramsIndexRouteImport.update({
   path: '/programs/',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppWorkoutsIndexRoute = AppWorkoutsIndexRouteImport.update({
-  id: '/workouts/',
-  path: '/workouts/',
-  getParentRoute: () => AppRouteRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -144,7 +138,6 @@ export interface FileRoutesByFullPath {
   '/exercises/': typeof AppExercisesIndexRoute
   '/mockups/': typeof AppMockupsIndexRoute
   '/programs/': typeof AppProgramsIndexRoute
-  '/workouts/': typeof AppWorkoutsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -162,7 +155,6 @@ export interface FileRoutesByTo {
   '/exercises': typeof AppExercisesIndexRoute
   '/mockups': typeof AppMockupsIndexRoute
   '/programs': typeof AppProgramsIndexRoute
-  '/workouts': typeof AppWorkoutsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -184,7 +176,6 @@ export interface FileRoutesById {
   '/_app/exercises/': typeof AppExercisesIndexRoute
   '/_app/mockups/': typeof AppMockupsIndexRoute
   '/_app/programs/': typeof AppProgramsIndexRoute
-  '/_app/workouts/': typeof AppWorkoutsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -206,7 +197,6 @@ export interface FileRouteTypes {
     | '/exercises/'
     | '/mockups/'
     | '/programs/'
-    | '/workouts/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -224,7 +214,6 @@ export interface FileRouteTypes {
     | '/exercises'
     | '/mockups'
     | '/programs'
-    | '/workouts'
   id:
     | '__root__'
     | '/'
@@ -245,7 +234,6 @@ export interface FileRouteTypes {
     | '/_app/exercises/'
     | '/_app/mockups/'
     | '/_app/programs/'
-    | '/_app/workouts/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -383,13 +371,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProgramsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/workouts/': {
-      id: '/_app/workouts/'
-      path: '/workouts'
-      fullPath: '/workouts/'
-      preLoaderRoute: typeof AppWorkoutsIndexRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
   }
 }
 
@@ -436,7 +417,6 @@ interface AppRouteRouteChildren {
   AppSettingsRoute: typeof AppSettingsRoute
   AppExercisesIndexRoute: typeof AppExercisesIndexRoute
   AppProgramsIndexRoute: typeof AppProgramsIndexRoute
-  AppWorkoutsIndexRoute: typeof AppWorkoutsIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
@@ -446,7 +426,6 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppSettingsRoute: AppSettingsRoute,
   AppExercisesIndexRoute: AppExercisesIndexRoute,
   AppProgramsIndexRoute: AppProgramsIndexRoute,
-  AppWorkoutsIndexRoute: AppWorkoutsIndexRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(

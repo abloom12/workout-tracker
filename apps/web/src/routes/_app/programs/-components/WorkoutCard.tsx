@@ -4,6 +4,8 @@ import { getRouteApi } from '@tanstack/react-router';
 import { ArrowDownToLine, Pencil } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+// import { InputGroup, InputGroupInput } from '@/components/ui/input-group';
+import { Input } from '@/components/ui/input';
 import {
   Item,
   ItemContent,
@@ -75,7 +77,7 @@ export function WorkoutCard({ position, workout }: WorkoutCardProps) {
           <div
             className={cn(
               'flex items-center justify-center rounded-lg border border-dashed',
-              workout.exercises.length === 0 ? 'min-h-32' : 'min-h-10',
+              workout.exercises.length === 0 ? 'min-h-40' : 'min-h-10',
             )}
           >
             <div className="text-muted-foreground flex items-center gap-1">
@@ -108,9 +110,14 @@ function WorkoutExercise({
 
   return (
     <Item id={index.toString()}>
-      <ItemMedia></ItemMedia>
-      <ItemContent>
-        <ItemTitle>{setup?.name ?? 'Unavailable exercise'}</ItemTitle>
+      <ItemMedia>{index}</ItemMedia>
+      <ItemContent className="flex flex-row gap-2">
+        <ItemTitle className="shrink-0">
+          {setup?.name ?? 'Unavailable exercise'}
+        </ItemTitle>
+        <Input />
+        <Input />
+        <Input />
       </ItemContent>
     </Item>
   );

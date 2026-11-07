@@ -5,12 +5,12 @@ import {
   useRouterState,
 } from '@tanstack/react-router';
 
-import { AppSidebar } from '@/components/app-sidebar';
-import { SiteHeader } from '@/components/site-header';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { authClient } from '@/lib/auth-client';
 import { getAuthRedirect } from '@/lib/auth-redirect';
 import { cn } from '@/lib/cn';
+import { AppSidebar } from './-components/app-sidebar/sidebar';
+import { SiteHeader } from './-components/site-header';
 
 export const Route = createFileRoute('/_app')({
   beforeLoad: async ({ location }) => {
