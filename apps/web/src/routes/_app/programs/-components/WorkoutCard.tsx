@@ -33,7 +33,7 @@ export function WorkoutCard({ position, workout }: WorkoutCardProps) {
   );
 
   return (
-    <li className="grid min-w-0 grid-cols-[40px_minmax(0,1fr)] items-start gap-3">
+    <div className="grid min-w-0 grid-cols-[40px_minmax(0,1fr)] items-start gap-3">
       <span
         aria-hidden="true"
         className="bg-card border-border relative z-10 flex size-10 items-center justify-center rounded-full border text-sm font-semibold tabular-nums"
@@ -91,7 +91,7 @@ export function WorkoutCard({ position, workout }: WorkoutCardProps) {
           </div>
         </div>
       </section>
-    </li>
+    </div>
   );
 }
 

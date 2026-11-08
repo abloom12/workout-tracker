@@ -23,7 +23,7 @@ function RouteComponent() {
   function addWorkout() {
     const workout: WorkoutDraft = {
       id: crypto.randomUUID(),
-      name: '',
+      name: 'name-',
       exercises: [],
     };
 

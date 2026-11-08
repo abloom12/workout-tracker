@@ -7,7 +7,6 @@ import { GripVertical, Search } from 'lucide-react';
 
 import type { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   InputGroup,
   InputGroupAddon,
@@ -79,9 +78,9 @@ export function ExerciseLibrary() {
   });
 
   return (
-    <Card className="min-h-0 min-w-0 overflow-hidden">
-      <CardHeader className="shrink-0">
-        <CardTitle className="mb-2">Exercise library</CardTitle>
+    <div className="flex flex-col overflow-hidden">
+      <div className="shrink-0">
+        <h2 className="mb-2">Exercise library</h2>
 
         <InputGroup className="mb-2 shrink-0">
           <InputGroupAddon>
@@ -100,7 +99,7 @@ export function ExerciseLibrary() {
           variant="outline"
           size="sm"
           spacing={1}
-          className="flex flex-wrap *:grow"
+          className="flex flex-wrap"
           value={selectedMuscles}
           onValueChange={(values) => {
             setSelectedMuscles((current) => {
@@ -114,21 +113,19 @@ export function ExerciseLibrary() {
           }}
         >
           <ToggleGroupItem value="all">All</ToggleGroupItem>
-          <ToggleGroupItem value="chest">Chest</ToggleGroupItem>
-          <ToggleGroupItem value="back">Back</ToggleGroupItem>
-          <ToggleGroupItem value="shoulders">Shoulders</ToggleGroupItem>
-          <ToggleGroupItem value="biceps">Biceps</ToggleGroupItem>
-          <ToggleGroupItem value="triceps">Triceps</ToggleGroupItem>
-          <ToggleGroupItem value="legs">Legs</ToggleGroupItem>
-          <ToggleGroupItem value="core">Core</ToggleGroupItem>
+          {(Object.keys(muscleGroups) as MuscleGroup[]).map((group) => (
+            <ToggleGroupItem key={group} value={group}>
+              {group.charAt(0).toUpperCase() + group.slice(1)}
+            </ToggleGroupItem>
+          ))}
         </ToggleGroup>
-      </CardHeader>
+      </div>
 
-      <Separator />
+      <Separator className="my-2" />
 
       <ScrollArea className="min-h-0 flex-1">
-        <CardContent>
-          <ul className="space-y-3">
+        <div>
+          <ul className="space-y-2">
             {filteredExercises.map((exercise) => (
               <ExerciseLibraryItem
                 key={exercise.id}
@@ -138,9 +135,9 @@ export function ExerciseLibrary() {
               />
             ))}
           </ul>
-        </CardContent>
+        </div>
       </ScrollArea>
-    </Card>
+    </div>
   );
 }
 
@@ -156,7 +153,7 @@ function ExerciseLibraryItem({
   });
 
   return (
-    <li ref={ref} className="flex items-center rounded-lg border py-3">
+    <li ref={ref} className="flex items-center rounded-lg border py-1.5">
       <Button
         ref={handleRef}
         type="button"
@@ -168,7 +165,7 @@ function ExerciseLibraryItem({
       </Button>
 
       <div>
-        <p className="mb-0.5 text-sm">{name}</p>
+        <p className="text-sm">{name}</p>
 
         <div className="flex gap-2">
           {muscles
