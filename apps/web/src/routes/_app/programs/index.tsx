@@ -1,35 +1,50 @@
-import { useState } from 'react';
 import { DragDropProvider, DragOverlay } from '@dnd-kit/react';
 import { createFileRoute } from '@tanstack/react-router';
+import { cva } from 'class-variance-authority';
 
 import { Spinner } from '@/components/ui/spinner';
-import type { WorkoutDraft } from './-types';
+import { cn } from '@/lib/cn';
 import {
   ExerciseLibrary,
   ExerciseLibraryItemDragPreview,
-} from './-components/ExerciseLibrary';
-import { SplitBuilder } from './-components/SplitBuilder';
+} from './-components/exercise-library';
 
 export const Route = createFileRoute('/_app/programs/')({
   loader: ({ context }) =>
     context.queryClient.query(context.trpc.exercise.list.queryOptions()),
   pendingComponent: () => <Spinner />,
-  component: RouteComponent,
+  component: ProgramEditor,
 });
 
-function RouteComponent() {
-  const [workouts, setWorkouts] = useState<WorkoutDraft[]>([]);
+const layoutVariants = cva('grid', {
+  variants: {
+    layout: {
+      'library-left-editor-right': [
+        'grid-cols-[240px_minmax(0,1fr)_340px]',
+        'grid-rows-[minmax(0,1fr)]',
+        "[grid-template-areas:'library_workout_editor']",
+      ],
+      'library-right-editor-left': [
+        'grid-cols-[340px_minmax(0,1fr)_240px]',
+        'grid-rows-[minmax(0,1fr)]',
+        "[grid-template-areas:'editor_workout_library']",
+      ],
+      'library-left-editor-bottom': [
+        'grid-cols-[240px_minmax(0,1fr)]',
+        'grid-rows-[minmax(0,1fr)_280px]',
+        "[grid-template-areas:'library_workout'_'library_editor']",
+      ],
+      'library-right-editor-bottom': [
+        'grid-cols-[minmax(0,1fr)_240px]',
+        'grid-rows-[minmax(0,1fr)_280px]',
+        "[grid-template-areas:'workout_library'_'editor_library']",
+      ],
+    },
+  },
+  defaultVariants: { layout: 'library-left-editor-right' },
+});
 
-  function addWorkout() {
-    const workout: WorkoutDraft = {
-      id: crypto.randomUUID(),
-      name: 'name-',
-      exercises: [],
-    };
-
-    setWorkouts((current) => [...current, workout]);
-  }
-
+function ProgramEditor() {
   return (
     <DragDropProvider
       onDragStart={(event) => console.log(event)}
@@ -42,33 +57,24 @@ function RouteComponent() {
       }}
       onDragEnd={(event) => {
         if (event.canceled) return;
-
-        const { source, target } = event.operation;
-        if (!source || !target) return;
-        if (source.type !== 'library-exercise') return;
-
-        const setupId: unknown = source.data.id;
-        const workoutId = target.id;
-
-        if (typeof setupId !== 'string' || typeof workoutId !== 'string') {
-          return;
-        }
-
-        const exercise = { id: crypto.randomUUID(), setupId, sets: [] };
-
-        setWorkouts((current) =>
-          current.map((workout) =>
-            workout.id === workoutId ?
-              { ...workout, exercises: [...workout.exercises, exercise] }
-            : workout,
-          ),
-        );
       }}
     >
-      <div className="@container/program-editor flex min-h-0 min-w-0 flex-1 flex-col">
-        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_320px] grid-rows-[minmax(0,1fr)] gap-4">
-          <SplitBuilder workouts={workouts} onAddWorkout={addWorkout} />
+      <div>I'm the header</div>
+
+      <div
+        className={cn(
+          layoutVariants({ layout: 'library-left-editor-right' }),
+          '@container/program-editor',
+        )}
+      >
+        <div className="min-h-0 min-w-0 overflow-y-auto [grid-area:library]">
           <ExerciseLibrary />
+        </div>
+        <div className="min-h-0 min-w-0 overflow-auto [grid-area:workout]">
+          <div>I'm the grid</div>
+        </div>
+        <div className="min-h-0 min-w-0 overflow-auto [grid-area:editor]">
+          <div>I'm the editor</div>
         </div>
       </div>
 

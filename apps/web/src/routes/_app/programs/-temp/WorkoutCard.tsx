@@ -14,7 +14,7 @@ import {
   ItemTitle,
 } from '@/components/ui/item';
 import { cn } from '@/lib/cn';
-import type { WorkoutDraft, WorkoutExerciseDraft } from '../-types';
+import type { WorkoutDraft, WorkoutExerciseDraft } from './types';
 
 const routeApi = getRouteApi('/_app/programs/');
 

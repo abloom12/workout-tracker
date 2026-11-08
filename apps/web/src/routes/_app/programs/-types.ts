@@ -1,26 +1,5 @@
-export type PlannedSetDraft = {
-  id: string;
-  setType: 'warmup' | 'working';
-  repsMin: number | null;
-  repsMax: number | null;
-  isAmrap: boolean;
-  targetWeightLb: number | null;
-  durationSeconds: number | null;
-};
+type Exercise = { id: number };
 
-export type WorkoutExerciseDraft = {
-  id: string;
-  setupId: string;
-  sets: PlannedSetDraft[];
-};
+type Workout = { id: number; name: string; exercises: Exercise[] };
 
-export type WorkoutDraft = {
-  id: string;
-  name: string;
-  exercises: WorkoutExerciseDraft[];
-};
-
-export type EditorDraft = {
-  split: { name: string; workoutIds: string[] };
-  workoutsById: Record<string, WorkoutDraft>;
-};
+export type Program = { id: number; name: string; workouts: Workout[] };
