@@ -11,7 +11,7 @@ const RootLayout = () => (
   <>
     <Outlet />
     <Toaster />
-    {import.meta.env.DEV && <TanStackRouterDevtools />}
+    {import.meta.env.DEV && <TanStackRouterDevtools position="top-right" />}
   </>
 );
 

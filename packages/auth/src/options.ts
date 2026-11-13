@@ -1,4 +1,6 @@
 import type { BetterAuthOptions } from 'better-auth';
+import { getEnvVar } from 'better-auth';
+import { admin } from 'better-auth/plugins';
 import { z } from 'zod';
 
 export const authOptionsSchema = z.object({
@@ -12,6 +14,7 @@ export type AuthOptions = z.infer<typeof authOptionsSchema>;
 export const sharedAuthOptions = {
   appName: 'Workout Tracker',
   advanced: { database: { generateId: 'uuid' } },
+  plugins: [admin()],
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 12,
@@ -29,6 +32,10 @@ export const sharedAuthOptions = {
 export function createAuthOptions(options: AuthOptions) {
   return {
     ...sharedAuthOptions,
+    emailAndPassword: {
+      ...sharedAuthOptions.emailAndPassword,
+      minPasswordLength: getEnvVar('NODE_ENV') === 'development' ? 1 : 12,
+    },
     baseURL: options.baseURL,
     trustedOrigins: [options.appOrigin],
     secret: options.secret,

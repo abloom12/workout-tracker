@@ -13,8 +13,14 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as AppAdminRouteRouteImport } from './routes/_app/admin/route'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
+import { Route as AppAdminIndexRouteImport } from './routes/_app/admin/index'
+import { Route as AppAdminCatalogueRouteImport } from './routes/_app/admin/catalogue'
+import { Route as AppAdminUsersRouteImport } from './routes/_app/admin/users'
+import { Route as AppExercisesIndexRouteImport } from './routes/_app/exercises/index'
+import { Route as AppProgramsIndexRouteImport } from './routes/_app/programs/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -35,6 +41,11 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppAdminRouteRoute = AppAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -45,13 +56,44 @@ const AppSettingsRoute = AppSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppAdminRouteRoute,
+} as any)
+const AppAdminCatalogueRoute = AppAdminCatalogueRouteImport.update({
+  id: '/catalogue',
+  path: '/catalogue',
+  getParentRoute: () => AppAdminRouteRoute,
+} as any)
+const AppAdminUsersRoute = AppAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AppAdminRouteRoute,
+} as any)
+const AppExercisesIndexRoute = AppExercisesIndexRouteImport.update({
+  id: '/exercises/',
+  path: '/exercises/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppProgramsIndexRoute = AppProgramsIndexRouteImport.update({
+  id: '/programs/',
+  path: '/programs/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/admin': typeof AppAdminRouteRouteWithChildren
   '/dashboard': typeof AppDashboardRoute
   '/settings': typeof AppSettingsRoute
+  '/admin/catalogue': typeof AppAdminCatalogueRoute
+  '/admin/users': typeof AppAdminUsersRoute
+  '/admin/': typeof AppAdminIndexRoute
+  '/exercises/': typeof AppExercisesIndexRoute
+  '/programs/': typeof AppProgramsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -59,6 +101,11 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/dashboard': typeof AppDashboardRoute
   '/settings': typeof AppSettingsRoute
+  '/admin/catalogue': typeof AppAdminCatalogueRoute
+  '/admin/users': typeof AppAdminUsersRoute
+  '/admin': typeof AppAdminIndexRoute
+  '/exercises': typeof AppExercisesIndexRoute
+  '/programs': typeof AppProgramsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -66,22 +113,55 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/_app/admin': typeof AppAdminRouteRouteWithChildren
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/settings': typeof AppSettingsRoute
+  '/_app/admin/catalogue': typeof AppAdminCatalogueRoute
+  '/_app/admin/users': typeof AppAdminUsersRoute
+  '/_app/admin/': typeof AppAdminIndexRoute
+  '/_app/exercises/': typeof AppExercisesIndexRoute
+  '/_app/programs/': typeof AppProgramsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/signup' | '/dashboard' | '/settings'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/admin'
+    | '/dashboard'
+    | '/settings'
+    | '/admin/catalogue'
+    | '/admin/users'
+    | '/admin/'
+    | '/exercises/'
+    | '/programs/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/signup' | '/dashboard' | '/settings'
+  to:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/dashboard'
+    | '/settings'
+    | '/admin/catalogue'
+    | '/admin/users'
+    | '/admin'
+    | '/exercises'
+    | '/programs'
   id:
     | '__root__'
     | '/'
     | '/_app'
     | '/login'
     | '/signup'
+    | '/_app/admin'
     | '/_app/dashboard'
     | '/_app/settings'
+    | '/_app/admin/catalogue'
+    | '/_app/admin/users'
+    | '/_app/admin/'
+    | '/_app/exercises/'
+    | '/_app/programs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -121,6 +201,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/admin': {
+      id: '/_app/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AppAdminRouteRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/dashboard': {
       id: '/_app/dashboard'
       path: '/dashboard'
@@ -135,17 +222,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/admin/': {
+      id: '/_app/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AppAdminIndexRouteImport
+      parentRoute: typeof AppAdminRouteRoute
+    }
+    '/_app/admin/catalogue': {
+      id: '/_app/admin/catalogue'
+      path: '/catalogue'
+      fullPath: '/admin/catalogue'
+      preLoaderRoute: typeof AppAdminCatalogueRouteImport
+      parentRoute: typeof AppAdminRouteRoute
+    }
+    '/_app/admin/users': {
+      id: '/_app/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AppAdminUsersRouteImport
+      parentRoute: typeof AppAdminRouteRoute
+    }
+    '/_app/exercises/': {
+      id: '/_app/exercises/'
+      path: '/exercises'
+      fullPath: '/exercises/'
+      preLoaderRoute: typeof AppExercisesIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/programs/': {
+      id: '/_app/programs/'
+      path: '/programs'
+      fullPath: '/programs/'
+      preLoaderRoute: typeof AppProgramsIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
   }
 }
 
+interface AppAdminRouteRouteChildren {
+  AppAdminCatalogueRoute: typeof AppAdminCatalogueRoute
+  AppAdminUsersRoute: typeof AppAdminUsersRoute
+  AppAdminIndexRoute: typeof AppAdminIndexRoute
+}
+
+const AppAdminRouteRouteChildren: AppAdminRouteRouteChildren = {
+  AppAdminCatalogueRoute: AppAdminCatalogueRoute,
+  AppAdminUsersRoute: AppAdminUsersRoute,
+  AppAdminIndexRoute: AppAdminIndexRoute,
+}
+
+const AppAdminRouteRouteWithChildren = AppAdminRouteRoute._addFileChildren(
+  AppAdminRouteRouteChildren,
+)
+
 interface AppRouteRouteChildren {
+  AppAdminRouteRoute: typeof AppAdminRouteRouteWithChildren
   AppDashboardRoute: typeof AppDashboardRoute
   AppSettingsRoute: typeof AppSettingsRoute
+  AppExercisesIndexRoute: typeof AppExercisesIndexRoute
+  AppProgramsIndexRoute: typeof AppProgramsIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppAdminRouteRoute: AppAdminRouteRouteWithChildren,
   AppDashboardRoute: AppDashboardRoute,
   AppSettingsRoute: AppSettingsRoute,
+  AppExercisesIndexRoute: AppExercisesIndexRoute,
+  AppProgramsIndexRoute: AppProgramsIndexRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(

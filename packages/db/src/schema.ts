@@ -1,2 +1,3 @@
-export * from './schemas/auth-schema.js';
-export * from './schemas/exercise-schema.js';
+export * from './schemas/auth.js';
+export * from './schemas/exercise.js';
+export * from './schemas/modifier.js';

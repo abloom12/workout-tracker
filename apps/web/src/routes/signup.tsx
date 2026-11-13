@@ -32,13 +32,20 @@ export const Route = createFileRoute('/signup')({
   },
 });
 
+const minPasswordLength = import.meta.env.DEV ? 1 : 12;
+
 const signupSchema = z
   .object({
     name: z.string().trim().min(1, 'Name is required'),
     email: z.email('Invalid email address'),
     password: z
       .string()
-      .min(12, 'Password must be at least 12 characters')
+      .min(
+        minPasswordLength,
+        minPasswordLength === 1 ?
+          'Password is required'
+        : `Password must be at least ${minPasswordLength} characters`,
+      )
       .max(128, 'Password must be at most 128 characters'),
     confirm: z.string(),
   })

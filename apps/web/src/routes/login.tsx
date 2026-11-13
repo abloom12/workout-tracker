@@ -28,7 +28,7 @@ export const Route = createFileRoute('/login')({
 
 const loginSchema = z.object({
   email: z.email(),
-  password: z.string().min(12).max(128),
+  password: z.string().min(1, 'Password is required').max(128),
 });
 
 function RouteComponent() {

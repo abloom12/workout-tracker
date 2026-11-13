@@ -4,11 +4,12 @@
   "version": "1.0.0",
   "engines": {
     "node": "24.21.0",
-    "pnpm": "10.34.5"
+    "pnpm": "12.18.0"
   },
-  "packageManager": "pnpm@10.34.5",
+  "packageManager": "pnpm@12.18.0+sha512.9d7882d5dc82147ecfc4e062aa34834e0ad0296710a1837a1115ae012127d36b7109e321ac1598a1dd0a65597681b1e99917e12ed0d749eae91187943363beb3",
   "scripts": {
     "build": "turbo run build",
+    "build:pkg": "turbo run build -F='./packages/*'",
     "dev": "turbo watch dev -F=@acme/web -F=@acme/server",
     "dev:check": "turbo watch dev typecheck lint --continue=always -F=@acme/web -F=@acme/server -F=@acme/api -F=@acme/auth -F=@acme/db",
     "dev:server": "turbo watch dev -F=@acme/server",
@@ -21,6 +22,7 @@
     "db:push": "pnpm -F @acme/db run db:push",
     "db:seed": "pnpm -F @acme/db run db:seed",
     "db:studio": "pnpm -F @acme/db run db:studio",
+    "db:reset": "pnpm db:down -v && pnpm db:up --wait && pnpm -F @acme/db run db:rebuild",
     "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
     "format:fix": "turbo run format --continue -- --write --cache --cache-location .cache/.prettiercache",
     "lint": "turbo run lint --continue -- --cache --cache-location .cache/.eslintcache",
@@ -28,12 +30,18 @@
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "turbo": "2.11.2",
+    "@tanstack/intent": "0.5.6",
+    "turbo": "2.11.11",
     "typescript": "catalog:"
   },
   "pnpm": {
     "overrides": {
       "@esbuild-kit/core-utils>esbuild": "0.25.12"
     }
+  },
+  "intent": {
+    "skills": [
+      "*"
+    ]
   }
 }

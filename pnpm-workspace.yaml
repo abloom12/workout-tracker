@@ -3,21 +3,29 @@ packages:
   - packages/*
   - tooling/*
 
+allowBuilds:
+  esbuild: true
+
 catalog:
   "@eslint/js": 10.0.1
   "@total-typescript/ts-reset": 0.6.1
-  "@trpc/client": 11.16.0
-  "@trpc/server": 11.19.0
-  "@trpc/tanstack-react-query": 11.16.0
   "@types/node": 24.12.2
-  better-auth: 1.7.5
   dotenv: 17.4.2
-  eslint: 10.10.0
-  prettier: 3.9.8
+  eslint: 10.14.0
+  prettier: 3.10.1
   tsdown: 0.21.10
+  tsx: 4.23.15
   typescript: 6.0.2
-  vitest: 5.0.1
-  zod: 4.6.5
+  vitest: 5.1.0
+  zod: 4.6.7
+
+  # auth
+  "@better-auth/drizzle-adapter": 1.7.22
+  better-auth: 1.7.22
+  # trpc
+  "@trpc/client": 11.28.0
+  "@trpc/server": 11.28.0
+  "@trpc/tanstack-react-query": 11.28.0
 
 publicHoistPattern:
   - "@ianvs/prettier-plugin-sort-imports"

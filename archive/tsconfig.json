@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "noCheck": true,
+    "noEmit": true,
+    "allowJs": true,
+    "jsx": "preserve"
+  },
+  "include": ["**/*"]
+}
