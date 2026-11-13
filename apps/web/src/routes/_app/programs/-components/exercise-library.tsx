@@ -49,7 +49,7 @@ const muscleColors: Record<MuscleGroup, string> = {
 
 const routeApi = getRouteApi('/_app/programs/');
 
-export function ExerciseLibrary() {
+export function ExerciseLibrary({ className }: { className?: string }) {
   const [search, setSearch] = useState('');
   const [selectedMuscles, setSelectedMuscles] = useState<string[]>(['all']);
 
@@ -78,7 +78,7 @@ export function ExerciseLibrary() {
   });
 
   return (
-    <div className="flex flex-col overflow-hidden">
+    <div className={cn('flex flex-col overflow-hidden', className)}>
       <div className="shrink-0">
         <h2 className="mb-2">Exercise library</h2>
 

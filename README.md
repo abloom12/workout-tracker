@@ -13,7 +13,7 @@ slices.
 ## Prerequisites
 
 - Node.js 24.21.0
-- pnpm 10.34.5
+- pnpm 12.18.0
 - Docker with Docker Compose
 
 The required Node and pnpm versions are recorded in `.nvmrc` and
