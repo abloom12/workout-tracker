@@ -1,6 +1,7 @@
 import { Tabs as TabsPrimitive } from 'radix-ui';
 
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { cn } from '@/lib/cn';
 
 export function SplitBuilder() {
   return (
