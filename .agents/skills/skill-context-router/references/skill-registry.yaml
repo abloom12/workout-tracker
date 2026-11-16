@@ -1,5 +1,5 @@
 # Project-owned skills only.
 # Dependency-provided skills are indexed in
-# .agents/references/intent-skills.md.
+# .agents/references/intent-skills.md
 
 skills: {}
